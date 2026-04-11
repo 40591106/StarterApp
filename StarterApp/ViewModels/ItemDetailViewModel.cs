@@ -6,21 +6,21 @@ using StarterApp.Services;
 
 namespace StarterApp.ViewModels;
 
-[QueryProperty(nameof(ItemId), nameof("ItemId"))]
+[QueryProperty(nameof(ItemId), ("itemId"))]
 public partial class ItemDetailViewModel : ObservableObject
 {
     private readonly IItemRepository _itemRepository;
     private readonly IAuthenticationService _authService;
     private readonly INavigationService _navigationService;
 
-    [observbleProperty]
-    private ItemDetailViewModel? _item;
+    [ObservableProperty]
+    private Item? _item;
 
-    [observableProperty]
+    [ObservableProperty]
     private bool _isLoading;
 
-    [observableProperty]
-    private string _errorMessage; = string.Empty;
+    [ObservableProperty]
+    private string _errorMessage = string.Empty;
 
     private int _itemId;
     public int ItemId

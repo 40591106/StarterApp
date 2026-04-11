@@ -1,7 +1,16 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using StarterApp.Database.Data.Repositories;
+using StarterApp.Database.Models;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+
+namespace StarterApp.ViewModels;
+
 public class ItemsListViewModel : ObservableObject
 {
     private readonly IItemRepository _itemRepository;
-    private ObservableCollection<Item> _items;
+    private ObservableCollection<Item>? _items;
 
     public ObservableCollection<Item> Items
     {
