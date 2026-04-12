@@ -9,4 +9,11 @@ public partial class ItemsListPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        var vm = BindingContext as ItemsListViewModel;
+        vm?.LoadItemsCommand.Execute(null);
+    }
 }

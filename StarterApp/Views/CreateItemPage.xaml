@@ -70,14 +70,14 @@
                          Orientation="Horizontal"
                          Spacing="15">
                 <Button Text="Back"
-                        Command="{Binding NavigateBackAsyncCommand}"
+                        Command="{Binding NavigateBackCommand}"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray700}}"
                         TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
                         CornerRadius="8"
                         HeightRequest="50"
                         HorizontalOptions="FillAndExpand" />
                 <Button Text="Save"
-                        Command="{Binding SaveItemAsyncCommand}"
+                        Command="{Binding SaveItemCommand}"
                         BackgroundColor="{StaticResource Primary}"
                         TextColor="White"
                         CornerRadius="8"

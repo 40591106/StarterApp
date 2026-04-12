@@ -30,16 +30,17 @@ public static class MauiProgram
             };
             builder.Services.AddSingleton(httpClient);
             builder.Services.AddSingleton<IAuthenticationService, ApiAuthenticationService>();
-            builder.Services.AddDbContext<AppDbContext>();
-            builder.Services.AddScoped<IItemRepository, ItemRepository>();
+            
         }
         else
         {
-            builder.Services.AddDbContext<AppDbContext>();
+            
             builder.Services.AddSingleton<IAuthenticationService, LocalAuthenticationService>();
-            builder.Services.AddScoped<IItemRepository, ItemRepository>();
+            
         }
 
+        builder.Services.AddDbContext<AppDbContext>();
+        builder.Services.AddScoped<IItemRepository, ItemRepository>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
 
         // Shell

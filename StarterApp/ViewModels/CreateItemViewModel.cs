@@ -57,12 +57,18 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
-    public CreateItemViewModel(IItemRepository itemRepository, IAuthenticationService authService, INavigationService navigationService)
-    {
-        _itemRepository = itemRepository;
-        _authService = authService;
-        _navigationService = navigationService;
-    }
+public ICommand SaveItemCommand { get; }
+public ICommand NavigateBackCommand { get; }
+
+public CreateItemViewModel(IItemRepository itemRepository, IAuthenticationService authService, INavigationService navigationService)
+{
+    _itemRepository = itemRepository;
+    _authService = authService;
+    _navigationService = navigationService;
+    
+    SaveItemCommand = new AsyncRelayCommand(SaveItemAsync);
+    NavigateBackCommand = new AsyncRelayCommand(NavigateBackAsync);
+}
 
     private async Task LoadItemAsync()
     {
@@ -102,7 +108,7 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
+
     private async Task SaveItemAsync()
     {
         ErrorMessage = string.Empty;
@@ -155,7 +161,6 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
     private async Task NavigateBackAsync()
     {
         await _navigationService.NavigateToAsync("ItemsListPage");

@@ -6,11 +6,6 @@
              x:DataType="vm:ItemDetailViewModel"
              Title="Item Details">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit"
-                     Command="{Binding NavigateToEditAsyncCommand}"
-                     IsVisible="{Binding CanEdit}" />
-    </ContentPage.ToolbarItems>
 
     <ScrollView>
         <Grid Padding="20" RowSpacing="15">
@@ -27,8 +22,7 @@
             <StackLayout Grid.Row="1" Spacing="15">
 
                 <Label Text="{Binding ErrorMessage}"
-                       TextColor="Red"
-                       IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}" />
+                       TextColor="Red"/>
 
                 <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}"
                         Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
@@ -53,12 +47,21 @@
                     </StackLayout>
                 </Border>
 
+
+                <Button Text="Edit Item"
+        Command="{Binding NavigateToEditAsyncCommand}"
+        BackgroundColor="{StaticResource Primary}"
+        TextColor="White"
+        CornerRadius="8"
+        HeightRequest="50" />
+        
                 <Button Text="Back"
                         Command="{Binding NavigateBackAsyncCommand}"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray700}}"
                         TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
                         CornerRadius="8"
                         HeightRequest="50" />
+
 
             </StackLayout>
         </Grid>
