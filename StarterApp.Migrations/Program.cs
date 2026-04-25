@@ -44,9 +44,9 @@ if (!context.Users.Any())
 if (!context.Items.Any())
 {
     context.Items.AddRange(
-        new Item { Title = "Power Drill", Description = "A powerful drill for all your DIY needs.", DailyRate = 15.00m, CategoryId = 1, Location = "Edinburgh", OwnerId = 8, IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-        new Item { Title = "Camping Tent", Description = "4 person tent, great for festivals.", DailyRate = 20.00m, CategoryId = 2, Location = "Glasgow", OwnerId = 8, IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-        new Item { Title = "Board Game Collection", Description = "Selection of popular board games.", DailyRate = 5.00m, CategoryId = 3, Location = "Livingston", OwnerId = 8, IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+        new Item { Title = "Power Drill", Description = "A powerful drill for all your DIY needs.", DailyRate = 15.00m, CategoryId = 1, Latitude = 55.9533, Longitude = -3.1883, OwnerId = 8, IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+        new Item { Title = "Camping Tent", Description = "4 person tent, great for festivals.", DailyRate = 20.00m, CategoryId = 2, Latitude = 55.8642, Longitude = -4.2518, OwnerId = 8, IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+        new Item { Title = "Board Game Collection", Description = "Selection of popular board games.", DailyRate = 5.00m, CategoryId = 3, Latitude = 55.8864, Longitude = -3.5217, OwnerId = 8, IsAvailable = true, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
     );
     await context.SaveChangesAsync();
 }

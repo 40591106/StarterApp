@@ -35,8 +35,9 @@ public partial class CreateItemViewModel : ObservableObject
     private Category? _selectedCategory;
 
     [ObservableProperty]
-    private string _location = string.Empty;
-
+    private double _latitude;
+    [ObservableProperty]
+    private double _longitude;
     [ObservableProperty]
     private bool _isLoading;
 
@@ -102,7 +103,8 @@ public partial class CreateItemViewModel : ObservableObject
             Title = _currentItem!.Title;
             Description = _currentItem.Description;
             DailyRate = _currentItem.DailyRate;
-            Location = _currentItem.Location;
+            Latitude = _currentItem.Latitude;
+            Longitude = _currentItem.Longitude;
             SelectedCategory = Categories.FirstOrDefault(c => c.Id == _currentItem.CategoryId);
 
             OnPropertyChanged(nameof(PageTitle));
@@ -140,7 +142,8 @@ public partial class CreateItemViewModel : ObservableObject
                     Description = Description.Trim(),
                     DailyRate = DailyRate,
                     CategoryId = SelectedCategory?.Id ?? 1,
-                    Location = Location.Trim(),
+                    Latitude = Latitude,
+                    Longitude = Longitude,
                     OwnerId = _authService.CurrentUser!.Id
                 };
                 await _itemRepository.CreateAsync(item);
@@ -152,7 +155,8 @@ public partial class CreateItemViewModel : ObservableObject
                 _currentItem.Description = Description.Trim();
                 _currentItem.DailyRate = DailyRate;
                 _currentItem.CategoryId = CategoryId;
-                _currentItem.Location = Location.Trim();
+                _currentItem.Latitude = Latitude;
+                _currentItem.Longitude = Longitude;
                 await _itemRepository.UpdateAsync(_currentItem);
                 SuccessMessage = "Item updated successfully!";
             }
