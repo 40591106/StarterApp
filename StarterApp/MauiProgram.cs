@@ -20,7 +20,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        const bool useSharedApi = true;
+        const bool useSharedApi = false;
 
         if (useSharedApi)
         {
@@ -30,17 +30,16 @@ public static class MauiProgram
             };
             builder.Services.AddSingleton(httpClient);
             builder.Services.AddSingleton<IAuthenticationService, ApiAuthenticationService>();
-            
+            builder.Services.AddSingleton<IApiService, ApiService>();
+            builder.Services.AddScoped<IItemRepository, ApiItemRepository>();
         }
         else
         {
-            
+            builder.Services.AddDbContext<AppDbContext>();
             builder.Services.AddSingleton<IAuthenticationService, LocalAuthenticationService>();
-            
+            builder.Services.AddScoped<IItemRepository, ItemRepository>();
         }
 
-        builder.Services.AddDbContext<AppDbContext>();
-        builder.Services.AddScoped<IItemRepository, ItemRepository>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
 
         // Shell

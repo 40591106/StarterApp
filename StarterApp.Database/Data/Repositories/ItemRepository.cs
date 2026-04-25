@@ -12,6 +12,11 @@ public class ItemRepository : IItemRepository
         _context = context;
     }
 
+    public async Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm)
+    {
+        // TODO: implement PostGIS spatial query in Week 2
+        return await _context.Items.ToListAsync();
+    }
     public async Task<List<Item>> GetAllAsync()
     {
         return await _context.Items.ToListAsync();
@@ -20,6 +25,11 @@ public class ItemRepository : IItemRepository
     public async Task<Item?> GetByIdAsync(int id)
     {
         return await _context.Items.FindAsync(id);
+    }
+
+    public async Task<List<Category>> GetCategoriesAsync()
+    {
+        return await _context.Categories.ToListAsync();
     }
 
     public async Task<Item> CreateAsync(Item item)
