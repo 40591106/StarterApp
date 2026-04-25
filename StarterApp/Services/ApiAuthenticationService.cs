@@ -36,6 +36,7 @@ public class ApiAuthenticationService : IAuthenticationService
             var token = await response.Content.ReadFromJsonAsync<TokenResponse>();
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token!.Token);
+            await SecureStorage.SetAsync("auth_token", token!.Token);
 
             var meResponse = await _httpClient.GetAsync("users/me");
             var profile = await meResponse.Content.ReadFromJsonAsync<UserProfileResponse>();
@@ -90,6 +91,7 @@ public class ApiAuthenticationService : IAuthenticationService
         _currentUser = null;
         _currentUserRoles.Clear();
         _httpClient.DefaultRequestHeaders.Authorization = null;
+        SecureStorage.Remove("auth_token");
         AuthenticationStateChanged?.Invoke(this, false);
         return Task.CompletedTask;
     }

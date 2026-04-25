@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using StarterApp.Database.Data.Repositories;
 using StarterApp.Database.Models;
 
@@ -20,6 +21,9 @@ public class ApiItemRepository : IItemRepository
 
     public async Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm)
         => await _apiService.GetItemsAsync(); // TODO: replace with GetNearbyItemsAsync in Week 2
+
+    public async Task<List<Category>> GetCategoriesAsync()
+        => await _apiService.GetCategoriesAsync();
 
     public async Task<Item> CreateAsync(Item item)
         => await _apiService.CreateItemAsync(new CreateItemRequest(

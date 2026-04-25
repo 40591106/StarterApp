@@ -29,6 +29,12 @@ public partial class CreateItemViewModel : ObservableObject
     private int _categoryId;
 
     [ObservableProperty]
+    private List<Category> _categories = new();
+
+    [ObservableProperty]
+    private Category? _selectedCategory;
+
+    [ObservableProperty]
     private string _location = string.Empty;
 
     [ObservableProperty]
@@ -57,24 +63,32 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
-public ICommand SaveItemCommand { get; }
-public ICommand NavigateBackCommand { get; }
+    public ICommand SaveItemCommand { get; }
+    public ICommand NavigateBackCommand { get; }
 
-public CreateItemViewModel(IItemRepository itemRepository, IAuthenticationService authService, INavigationService navigationService)
-{
-    _itemRepository = itemRepository;
-    _authService = authService;
-    _navigationService = navigationService;
-    
-    SaveItemCommand = new AsyncRelayCommand(SaveItemAsync);
-    NavigateBackCommand = new AsyncRelayCommand(NavigateBackAsync);
-}
+    public CreateItemViewModel(IItemRepository itemRepository, IAuthenticationService authService, INavigationService navigationService)
+    {
+        _itemRepository = itemRepository;
+        _authService = authService;
+        _navigationService = navigationService;
 
+        SaveItemCommand = new AsyncRelayCommand(SaveItemAsync);
+        NavigateBackCommand = new AsyncRelayCommand(NavigateBackAsync);
+
+        _ = Task.Run(LoadCategoriesAsync); // load categories on startup for create mode
+    }
+
+    private async Task LoadCategoriesAsync()
+    {
+        var categories = await _itemRepository.GetCategoriesAsync();
+        Categories = categories;
+    }
     private async Task LoadItemAsync()
     {
         if (_itemId == 0)
         {
             IsNewItem = true;
+            await LoadCategoriesAsync();
             return;
         }
 
@@ -82,19 +96,14 @@ public CreateItemViewModel(IItemRepository itemRepository, IAuthenticationServic
         try
         {
             IsNewItem = false;
+            await LoadCategoriesAsync(); // load categories first
             _currentItem = await _itemRepository.GetByIdAsync(_itemId);
 
-            if (_currentItem == null)
-            {
-                ErrorMessage = "Item not found";
-                return;
-            }
-
-            Title = _currentItem.Title;
+            Title = _currentItem!.Title;
             Description = _currentItem.Description;
             DailyRate = _currentItem.DailyRate;
-            CategoryId = _currentItem.CategoryId;
             Location = _currentItem.Location;
+            SelectedCategory = Categories.FirstOrDefault(c => c.Id == _currentItem.CategoryId);
 
             OnPropertyChanged(nameof(PageTitle));
         }
@@ -130,7 +139,7 @@ public CreateItemViewModel(IItemRepository itemRepository, IAuthenticationServic
                     Title = Title.Trim(),
                     Description = Description.Trim(),
                     DailyRate = DailyRate,
-                    CategoryId = CategoryId,
+                    CategoryId = SelectedCategory?.Id ?? 1,
                     Location = Location.Trim(),
                     OwnerId = _authService.CurrentUser!.Id
                 };

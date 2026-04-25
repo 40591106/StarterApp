@@ -20,7 +20,7 @@ public interface IApiService
     //Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radius = 5.0, string? category = null);
 
     // Categories (Week 1)
-    //Task<List<Category>> GetCategoriesAsync();
+    Task<List<Category>> GetCategoriesAsync();
 
     // Rentals (Week 3)
     //Task<Rental> RequestRentalAsync(int itemId, DateTime startDate, DateTime endDate);
