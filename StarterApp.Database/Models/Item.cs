@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StarterApp.Database.Models;
 
-[Table("Items")]
+[Table("items")]
 [PrimaryKey(nameof(Id))]
 public class Item
 {
@@ -17,8 +17,14 @@ public class Item
     public decimal DailyRate { get; set; }
     [Required]
     public int CategoryId { get; set; }
+    public string? Category { get; set; }
+    
+    [ForeignKey(nameof(CategoryId))]
+public Category? CategoryNavigation { get; set; }
+    public double Longitude { get; set; } = 0.0;
     [Required]
-    public string Location { get; set; } = string.Empty;
+    public double Latitude { get; set; } = 0.0;
+    [Required]
     public bool IsAvailable { get; set; } = true;
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
@@ -26,5 +32,6 @@ public class Item
     // Foreign key
     public int OwnerId { get; set; }
     [ForeignKey(nameof(OwnerId))]
+    
     public User Owner { get; set; } = null!;
 }
