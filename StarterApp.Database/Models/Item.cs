@@ -21,10 +21,8 @@ public class Item
     
     [ForeignKey(nameof(CategoryId))]
 public Category? CategoryNavigation { get; set; }
-    public double Longitude { get; set; } = 0.0;
-    [Required]
-    public double Latitude { get; set; } = 0.0;
-    [Required]
+    public double? Longitude { get; set; } = 0.0;
+    public double? Latitude { get; set; } = 0.0;
     public bool IsAvailable { get; set; } = true;
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
