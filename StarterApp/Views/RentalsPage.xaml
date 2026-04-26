@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="StarterApp.Views.RentalsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StarterApp.ViewModels"
+             Title="Rentals">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh"
+                     Command="{Binding LoadRentalsCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,Auto,*"
+            Padding="20"
+            RowSpacing="10">
+
+        <!-- Tab Toggle -->
+        <Grid Grid.Row="0"
+                ColumnDefinitions="*,*">
+            <Button Grid.Column="0"
+                    Text="Incoming"
+                    Command="{Binding ShowIncomingTabCommand}"
+                    BackgroundColor="{Binding IncomingTabColor}"
+                    TextColor="White"/>
+            <Button Grid.Column="1"
+                    Text="Outgoing"
+                    Command="{Binding ShowOutgoingTabCommand}"
+                    BackgroundColor="{Binding OutgoingTabColor}"
+                    TextColor="White"/>
+        </Grid>
+
+        <!-- Loading / Error -->
+        <StackLayout Grid.Row="1">
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               HorizontalOptions="Center"/>
+            <Label Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"
+                   TextColor="Red"
+                   HorizontalOptions="Center"/>
+        </StackLayout>
+
+        <!-- Incoming List -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding IncomingRentals}"
+                        IsVisible="{Binding ShowIncoming}">
+            <CollectionView.EmptyView>
+                <Label Text="No incoming rental requests."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,5"
+                            Padding="15"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                            StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <Grid RowDefinitions="Auto,Auto,Auto"
+                                RowSpacing="5">
+                            <Label Grid.Row="0"
+                                   Text="{Binding ItemTitle}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="1"
+                                   Text="{Binding BorrowerName, StringFormat='From: {0}'}"
+                                   FontSize="14"/>
+                            <Grid Grid.Row="2"
+                                    ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0"
+                                       Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy}'}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding Status}"
+                                       FontSize="12"
+                                       FontAttributes="Bold"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Outgoing List -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding OutgoingRentals}"
+                        IsVisible="{Binding ShowOutgoing}">
+            <CollectionView.EmptyView>
+                <Label Text="No outgoing rental requests."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,5"
+                            Padding="15"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                            StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <Grid RowDefinitions="Auto,Auto,Auto"
+                                RowSpacing="5">
+                            <Label Grid.Row="0"
+                                   Text="{Binding ItemTitle}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="1"
+                                   Text="{Binding OwnerName, StringFormat='Owner: {0}'}"
+                                   FontSize="14"/>
+                            <Grid Grid.Row="2"
+                                    ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0"
+                                       Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy}'}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding Status}"
+                                       FontSize="12"
+                                       FontAttributes="Bold"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
