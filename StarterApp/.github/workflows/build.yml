@@ -18,11 +18,14 @@ jobs:
       with:
         dotnet-version: '10.0.x'
 
-    - name: Install MAUI workload
-      run: dotnet workload install maui-android
-
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore StarterApp.Database/StarterApp.Database.csproj
 
-    - name: Build
-      run: dotnet build --no-restore -c Debug
+    - name: Build Database project
+      run: dotnet build StarterApp.Database/StarterApp.Database.csproj --no-restore -c Debug
+
+    - name: Restore Migrations
+      run: dotnet restore StarterApp.Migrations/StarterApp.Migrations.csproj
+
+    - name: Build Migrations project
+      run: dotnet build StarterApp.Migrations/StarterApp.Migrations.csproj --no-restore -c Debug
