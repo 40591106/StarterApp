@@ -8,18 +8,20 @@
 
 
     <ScrollView>
-        <Grid Padding="20" RowSpacing="15">
+        <Grid Padding="20"
+                RowSpacing="15">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <ActivityIndicator Grid.Row="0"
                                IsRunning="{Binding IsLoading}"
                                IsVisible="{Binding IsLoading}"
-                               HorizontalOptions="Center" />
+                               HorizontalOptions="Center"/>
 
-            <StackLayout Grid.Row="1" Spacing="15">
+            <StackLayout Grid.Row="1"
+                    Spacing="15">
 
                 <Label Text="{Binding ErrorMessage}"
                        TextColor="Red"/>
@@ -29,38 +31,49 @@
                         StrokeThickness="1"
                         Padding="20">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="12" />
+                        <RoundRectangle CornerRadius="12"/>
                     </Border.StrokeShape>
                     <StackLayout Spacing="10">
                         <Label Text="{Binding Item.Title}"
                                FontSize="22"
-                               FontAttributes="Bold" />
+                               FontAttributes="Bold"/>
                         <Label Text="{Binding Item.Category}"
                                FontSize="14"
-                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
                         <Label Text="{Binding Item.DailyRate, StringFormat='£{0:F2} per day'}"
                                FontSize="18"
                                FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
                         <Label Text="{Binding Item.Description}"
-                               FontSize="14" />
+                               FontSize="14"/>
                     </StackLayout>
                 </Border>
 
 
                 <Button Text="Edit Item"
-        Command="{Binding NavigateToEditAsyncCommand}"
-        BackgroundColor="{StaticResource Primary}"
-        TextColor="White"
-        CornerRadius="8"
-        HeightRequest="50" />
-        
+                        Command="{Binding NavigateToEditAsyncCommand}"
+                        IsVisible="{Binding CanEdit}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="50"/>
+
+                <Button Text="Request to Rent"
+                        Command="{Binding NavigateToRentAsyncCommand}"
+                        IsVisible="{Binding CanRent}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="50"/>
+
                 <Button Text="Back"
                         Command="{Binding NavigateBackAsyncCommand}"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray700}}"
                         TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
                         CornerRadius="8"
-                        HeightRequest="50" />
+                        HeightRequest="50"/>
+
+
 
 
             </StackLayout>

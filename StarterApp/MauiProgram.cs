@@ -20,7 +20,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        const bool useSharedApi = true;
+        const bool useSharedApi = false;
 
         if (useSharedApi)
         {
@@ -32,12 +32,14 @@ public static class MauiProgram
             builder.Services.AddSingleton<IAuthenticationService, ApiAuthenticationService>();
             builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddScoped<IItemRepository, ApiItemRepository>();
+            builder.Services.AddScoped<IRentalRepository, ApiRentalRepository>();
         }
         else
         {
             builder.Services.AddDbContext<AppDbContext>();
             builder.Services.AddSingleton<IAuthenticationService, LocalAuthenticationService>();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
+            builder.Services.AddScoped<IRentalRepository, RentalRepository>();
         }
 
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -70,6 +72,12 @@ public static class MauiProgram
         builder.Services.AddTransient<ItemDetailPage>();
         builder.Services.AddTransient<CreateItemViewModel>();
         builder.Services.AddTransient<CreateItemPage>();
+
+        // Rentals
+        builder.Services.AddTransient<RentalsViewModel>();
+        builder.Services.AddTransient<RentalsPage>();
+        builder.Services.AddTransient<CreateRentalViewModel>();
+        builder.Services.AddTransient<CreateRentalPage>();
 
         // Temp
         builder.Services.AddSingleton<TempViewModel>();

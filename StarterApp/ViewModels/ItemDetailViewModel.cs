@@ -37,17 +37,20 @@ public partial class ItemDetailViewModel : ObservableObject
     }
 
     public bool CanEdit => Item?.OwnerId == _authService.CurrentUser?.Id;
-public ICommand NavigateToEditAsyncCommand { get; }
-public ICommand NavigateBackAsyncCommand { get; }
+    public bool CanRent => !CanEdit;
+    public ICommand NavigateToEditAsyncCommand { get; }
+    public ICommand NavigateToRentAsyncCommand { get; }
+    public ICommand NavigateBackAsyncCommand { get; }
     public ItemDetailViewModel(IItemRepository itemRepository, IAuthenticationService authService, INavigationService navigationService)
-{
-    _itemRepository = itemRepository;
-    _authService = authService;
-    _navigationService = navigationService;
-    
-    NavigateToEditAsyncCommand = new AsyncRelayCommand(NavigateToEditAsync);
-    NavigateBackAsyncCommand = new AsyncRelayCommand(NavigateBackAsync);
-}
+    {
+        _itemRepository = itemRepository;
+        _authService = authService;
+        _navigationService = navigationService;
+
+        NavigateToEditAsyncCommand = new AsyncRelayCommand(NavigateToEditAsync);
+        NavigateToRentAsyncCommand = new AsyncRelayCommand(NavigateToRentAsync);
+        NavigateBackAsyncCommand = new AsyncRelayCommand(NavigateBackAsync);
+    }
 
     private async Task LoadItemAsync()
     {
@@ -58,6 +61,7 @@ public ICommand NavigateBackAsyncCommand { get; }
             Item = await _itemRepository.GetByIdAsync(_itemId);
             System.Diagnostics.Debug.WriteLine($"ITEM LOADED: {Item?.Title ?? "null"}");
             OnPropertyChanged(nameof(CanEdit));
+            OnPropertyChanged(nameof(CanRent));
         }
         catch (Exception ex)
         {
@@ -71,14 +75,20 @@ public ICommand NavigateBackAsyncCommand { get; }
         }
     }
 
-private async Task NavigateToEditAsync()
-{
-    System.Diagnostics.Debug.WriteLine("EDIT COMMAND FIRED");
-    await _navigationService.NavigateToAsync($"CreateItemPage?itemId={_itemId}");
-}
+    private async Task NavigateToEditAsync()
+    {
+        System.Diagnostics.Debug.WriteLine("EDIT COMMAND FIRED");
+        await _navigationService.NavigateToAsync($"CreateItemPage?itemId={_itemId}");
+    }
 
-private async Task NavigateBackAsync()
-{
-    await Shell.Current.GoToAsync("..");
-}
+    private async Task NavigateToRentAsync()
+    {
+        System.Diagnostics.Debug.WriteLine("RENT COMMAND FIRED");
+        await _navigationService.NavigateToAsync($"CreateRentalPage?itemId={_itemId}");
+    }
+
+    private async Task NavigateBackAsync()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }

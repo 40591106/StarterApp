@@ -39,7 +39,8 @@ public class AppDbContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<Category> Categories { get; set; }
-    
+    public DbSet<Rental> Rentals { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -63,6 +64,23 @@ public class AppDbContext : DbContext
             entity.Property(e => e.Description).HasMaxLength(500);
         });
 
+        modelBuilder.Entity<Rental>(entity =>
+        {
+            entity.HasOne(r => r.Borrower)
+                  .WithMany()
+                  .HasForeignKey(r => r.BorrowerId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(r => r.Owner)
+                  .WithMany()
+                  .HasForeignKey(r => r.OwnerId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(r => r.Item)
+                  .WithMany()
+                  .HasForeignKey(r => r.ItemId)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
         // Configure UserRole entity
         modelBuilder.Entity<UserRole>(entity =>
         {

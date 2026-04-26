@@ -21,6 +21,13 @@ public class ApiService : IApiService
                 new AuthenticationHeaderValue("Bearer", token);
     }
 
+    private async Task HandleUnauthorizedAsync()
+    {
+        SecureStorage.Remove("auth_token");
+        _httpClient.DefaultRequestHeaders.Authorization = null;
+        await Shell.Current.GoToAsync("//LoginPage");
+    }
+
     public async Task<List<Item>> GetItemsAsync(string? category = null, string? search = null, int page = 1)
     {
         var query = $"items?page={page}";
@@ -28,6 +35,11 @@ public class ApiService : IApiService
         if (!string.IsNullOrEmpty(search)) query += $"&search={search}";
 
         var response = await _httpClient.GetAsync(query);
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadFromJsonAsync<ItemsListResponse>();
         return result?.Items ?? new List<Item>();
@@ -36,6 +48,11 @@ public class ApiService : IApiService
     public async Task<Item?> GetItemByIdAsync(int id)
     {
         var response = await _httpClient.GetAsync($"items/{id}");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound) return null;
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<Item>();
@@ -45,6 +62,11 @@ public class ApiService : IApiService
     {
         await SetAuthHeader();
         var response = await _httpClient.PostAsJsonAsync("items", request);
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
@@ -57,6 +79,11 @@ public class ApiService : IApiService
     {
         await SetAuthHeader();
         var response = await _httpClient.PutAsJsonAsync($"items/{id}", request);
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
@@ -68,6 +95,11 @@ public class ApiService : IApiService
     public async Task<List<Category>> GetCategoriesAsync()
     {
         var response = await _httpClient.GetAsync("categories");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadFromJsonAsync<CategoriesResponse>();
         return result?.Categories ?? new List<Category>();

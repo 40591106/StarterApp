@@ -103,8 +103,8 @@ public partial class CreateItemViewModel : ObservableObject
             Title = _currentItem!.Title;
             Description = _currentItem.Description;
             DailyRate = _currentItem.DailyRate;
-            Latitude = _currentItem.Latitude;
-            Longitude = _currentItem.Longitude;
+            Latitude = _currentItem.Latitude ?? 0.0;
+            Longitude = _currentItem.Longitude ?? 0.0;
             SelectedCategory = Categories.FirstOrDefault(c => c.Id == _currentItem.CategoryId);
 
             OnPropertyChanged(nameof(PageTitle));

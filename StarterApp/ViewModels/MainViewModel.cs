@@ -89,23 +89,12 @@ public partial class MainViewModel : BaseViewModel
         }
     }
 
-    /// @brief Navigates to the user profile page
-    /// @details Relay command that navigates to the profile management page
-    /// @return A task representing the asynchronous navigation operation
     [RelayCommand]
-    private async Task NavigateToProfileAsync()
+    private async Task NavigateToRentalsAsync()
     {
-        await _navigationService.NavigateToAsync("TempPage");
+        await _navigationService.NavigateToAsync("RentalsPage");
     }
 
-    /// @brief Navigates to the settings page
-    /// @details Relay command that navigates to the application settings page
-    /// @return A task representing the asynchronous navigation operation
-    [RelayCommand]
-    private async Task NavigateToSettingsAsync()
-    {
-        await _navigationService.NavigateToAsync("TempPage");
-    }
 
     /// @brief Navigates to the settings page
     /// @details Relay command that navigates to the application settings page
@@ -116,20 +105,6 @@ public partial class MainViewModel : BaseViewModel
         await _navigationService.NavigateToAsync("ItemsListPage");
     }
 
-    /// @brief Navigates to the user list page
-    /// @details Relay command that navigates to the user management page, admin only
-    /// @return A task representing the asynchronous navigation operation
-    [RelayCommand]
-    private async Task NavigateToUserListAsync()
-    {
-        if (!IsAdmin)
-        {
-            await Application.Current.MainPage.DisplayAlert("Access Denied", "You don't have permission to access admin features.", "OK");
-            return;
-        }
-
-        await _navigationService.NavigateToAsync("UserListPage");
-    }
 
     /// @brief Refreshes the dashboard data
     /// @details Relay command that reloads user data and simulates a refresh operation
