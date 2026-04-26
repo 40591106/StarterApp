@@ -23,7 +23,7 @@ jobs:
         run: dotnet workload restore ./StarterApp/StarterApp.csproj
 
       - name: Restore dependencies
-        run: dotnet restore ./StarterApp/StarterApp.csproj
+        run: dotnet restore ./StarterApp/StarterApp.csproj -r android-x64
 
       - name: Build
-        run: dotnet build ./StarterApp/StarterApp.csproj --configuration Release --no-restore
+        run: dotnet build ./StarterApp/StarterApp.csproj --configuration Release --no-restore -r android-x64
