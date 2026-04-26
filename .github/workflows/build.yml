@@ -23,7 +23,7 @@ jobs:
         run: dotnet workload restore ./StarterApp/StarterApp.csproj
 
       - name: Restore dependencies
-        run: dotnet restore ./StarterApp.sln
+        run: dotnet restore ./StarterApp.sln -p:TargetFrameworks=net10.0-android
 
       - name: Build
-        run: dotnet build ./StarterApp.sln --configuration Release --no-restore
+        run: dotnet build ./StarterApp.sln --configuration Release --no-restore -p:TargetFrameworks=net10.0-android
