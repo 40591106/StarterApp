@@ -1,55 +1,63 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="StarterApp.Views.CreateRentalPage"
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:StarterApp.ViewModels"
-             xmlns:sys="clr-namespace:System;assembly=netstandard"
-             Title="Request to Rent">
+<ContentPage
+  x:Class="StarterApp.Views.CreateRentalPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:vm="clr-namespace:StarterApp.ViewModels"
+  xmlns:sys="clr-namespace:System;assembly=netstandard"
+  Title="Request to Rent"
+>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Back" Command="{Binding NavigateBackCommand}" />
+  </ContentPage.ToolbarItems>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Back"
-                     Command="{Binding NavigateBackCommand}" />
-    </ContentPage.ToolbarItems>
+  <ScrollView>
+    <Grid Padding="20" RowSpacing="20" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+      <!-- Start Date -->
+      <Label Grid.Row="0" Text="Start Date" FontSize="16" FontAttributes="Bold" />
+      <DatePicker
+        Grid.Row="1"
+        Date="{Binding StartDate}"
+        MinimumDate="{x:Static sys:DateTime.Today}"
+        Format="dd MMM yyyy"
+      />
 
-    <ScrollView>
-        <Grid Padding="20" RowSpacing="20" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+      <!-- End Date -->
+      <Label Grid.Row="2" Text="End Date" FontSize="16" FontAttributes="Bold" />
+      <DatePicker
+        Grid.Row="3"
+        Date="{Binding EndDate}"
+        MinimumDate="{x:Static sys:DateTime.Today}"
+        Format="dd MMM yyyy"
+      />
 
-            <!-- Start Date -->
-            <Label Grid.Row="0"
-                   Text="Start Date"
-                   FontSize="16"
-                   FontAttributes="Bold" />
-            <DatePicker Grid.Row="1"
-                        Date="{Binding StartDate}"
-                        MinimumDate="{x:Static sys:DateTime.Today}"
-                        Format="dd MMM yyyy" />
+      <!-- Error Message -->
+      <Label
+        Grid.Row="4"
+        Text="{Binding ErrorMessage}"
+        IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"
+        TextColor="Red"
+        HorizontalOptions="Center"
+      />
 
-            <!-- End Date -->
-            <Label Grid.Row="2"
-                   Text="End Date"
-                   FontSize="16"
-                   FontAttributes="Bold" />
-            <DatePicker Grid.Row="3"
-                        Date="{Binding EndDate}"
-                        MinimumDate="{x:Static sys:DateTime.Today}"
-                        Format="dd MMM yyyy" />
+      <Label
+        Text="{Binding EstimatedTotal, StringFormat='Estimated Total: £{0:F2}'}"
+        FontSize="16"
+        FontAttributes="Bold"
+        HorizontalOptions="Center"
+        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+      />
 
-            <!-- Error Message -->
-            <Label Grid.Row="4"
-                   Text="{Binding ErrorMessage}"
-                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"
-                   TextColor="Red"
-                   HorizontalOptions="Center" />
-
-            <!-- Submit Button -->
-            <Button Grid.Row="5"
-                    Text="Submit Request"
-                    Command="{Binding SubmitCommand}"
-                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
-                    TextColor="White"
-                    HeightRequest="50" />
-
-        </Grid>
-    </ScrollView>
+      <!-- Submit Button -->
+      <Button
+        Grid.Row="5"
+        Text="Submit Request"
+        Command="{Binding SubmitCommand}"
+        IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+        TextColor="White"
+        HeightRequest="50"
+      />
+    </Grid>
+  </ScrollView>
 </ContentPage>

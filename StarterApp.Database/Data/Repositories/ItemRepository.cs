@@ -17,29 +17,28 @@ public class ItemRepository : IItemRepository
         // TODO: implement PostGIS spatial query in Week 2
         return await _context.Items.ToListAsync();
     }
-    public async Task<List<Item>> GetAllAsync()
-{
-    var items = await _context.Items
-        .Include(i => i.CategoryNavigation)
-        .ToListAsync();
-    
-    foreach (var item in items)
-        item.Category = item.CategoryNavigation?.Name;
-    
-    return items;
-}
 
-public async Task<Item?> GetByIdAsync(int id)
-{
-    var item = await _context.Items
-        .Include(i => i.CategoryNavigation)
-        .FirstOrDefaultAsync(i => i.Id == id);
-    
-    if (item != null)
-        item.Category = item.CategoryNavigation?.Name;
-    
-    return item;
-}
+    public async Task<List<Item>> GetAllAsync()
+    {
+        var items = await _context.Items.Include(i => i.CategoryNavigation).ToListAsync();
+
+        foreach (var item in items)
+            item.Category = item.CategoryNavigation?.Name;
+
+        return items;
+    }
+
+    public async Task<Item?> GetByIdAsync(int id)
+    {
+        var item = await _context
+            .Items.Include(i => i.CategoryNavigation)
+            .FirstOrDefaultAsync(i => i.Id == id);
+
+        if (item != null)
+            item.Category = item.CategoryNavigation?.Name;
+
+        return item;
+    }
 
     public async Task<List<Category>> GetCategoriesAsync()
     {

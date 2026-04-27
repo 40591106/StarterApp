@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace StarterApp.Database.Models;
 
@@ -12,13 +12,15 @@ public class Rental
 
     [Required]
     public int ItemId { get; set; }
+
     [ForeignKey(nameof(ItemId))]
     public Item? Item { get; set; }
-
+    public bool IsPending => Status == "Requested";
     public string ItemTitle { get; set; } = string.Empty;
 
     [Required]
     public int BorrowerId { get; set; }
+
     [ForeignKey(nameof(BorrowerId))]
     public User? Borrower { get; set; }
 
@@ -26,6 +28,7 @@ public class Rental
 
     [Required]
     public int OwnerId { get; set; }
+
     [ForeignKey(nameof(OwnerId))]
     public User? Owner { get; set; }
 
@@ -33,6 +36,7 @@ public class Rental
 
     [Required]
     public DateTime StartDate { get; set; }
+
     [Required]
     public DateTime EndDate { get; set; }
 

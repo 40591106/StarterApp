@@ -15,16 +15,12 @@ public class AuthResult
         {
             IsSuccess = true,
             User = user,
-            Roles = roles
+            Roles = roles,
         };
     }
 
     public static AuthResult Failure(string errorMessage)
     {
-        return new AuthResult
-        {
-            IsSuccess = false,
-            ErrorMessage = errorMessage
-        };
+        return new AuthResult { IsSuccess = false, ErrorMessage = errorMessage };
     }
 }

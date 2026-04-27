@@ -5,11 +5,13 @@ using StarterApp.Services;
 
 namespace StarterApp.ViewModels;
 
+[QueryProperty(nameof(DailyRate), "dailyRate")]
 [QueryProperty(nameof(ItemId), "itemId")]
 public partial class CreateRentalViewModel : ObservableObject
 {
     private readonly IRentalRepository _rentalRepository;
-private readonly IAuthenticationService _authService;
+    private readonly IAuthenticationService _authService;
+
     [ObservableProperty]
     private int _itemId;
 
@@ -25,7 +27,15 @@ private readonly IAuthenticationService _authService;
     [ObservableProperty]
     private bool _isLoading;
 
-    public CreateRentalViewModel(IRentalRepository rentalRepository, IAuthenticationService authService)
+    [ObservableProperty]
+    private decimal _dailyRate;
+
+    public decimal EstimatedTotal => (decimal)(EndDate - StartDate).Days * DailyRate;
+
+    public CreateRentalViewModel(
+        IRentalRepository rentalRepository,
+        IAuthenticationService authService
+    )
     {
         _rentalRepository = rentalRepository;
         _authService = authService;
@@ -63,4 +73,10 @@ private readonly IAuthenticationService _authService;
     {
         await Shell.Current.GoToAsync("..");
     }
+
+    partial void OnStartDateChanged(DateTime value) => OnPropertyChanged(nameof(EstimatedTotal));
+
+    partial void OnEndDateChanged(DateTime value) => OnPropertyChanged(nameof(EstimatedTotal));
+
+    partial void OnDailyRateChanged(decimal value) => OnPropertyChanged(nameof(EstimatedTotal));
 }

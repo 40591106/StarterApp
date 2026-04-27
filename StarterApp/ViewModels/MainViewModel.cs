@@ -2,7 +2,6 @@
 /// @brief Main dashboard view model for authenticated users
 /// @author StarterApp Development Team
 /// @date 2025
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StarterApp.Database.Models;
@@ -80,7 +79,8 @@ public partial class MainViewModel : BaseViewModel
             "Logout",
             "Are you sure you want to logout?",
             "Yes",
-            "No");
+            "No"
+        );
 
         if (result)
         {
@@ -95,7 +95,6 @@ public partial class MainViewModel : BaseViewModel
         await _navigationService.NavigateToAsync("RentalsPage");
     }
 
-
     /// @brief Navigates to the settings page
     /// @details Relay command that navigates to the application settings page
     /// @return A task representing the asynchronous navigation operation
@@ -104,7 +103,6 @@ public partial class MainViewModel : BaseViewModel
     {
         await _navigationService.NavigateToAsync("ItemsListPage");
     }
-
 
     /// @brief Refreshes the dashboard data
     /// @details Relay command that reloads user data and simulates a refresh operation

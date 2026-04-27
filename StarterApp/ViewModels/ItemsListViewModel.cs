@@ -1,10 +1,10 @@
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StarterApp.Database.Data.Repositories;
 using StarterApp.Database.Models;
 using StarterApp.Services;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace StarterApp.ViewModels;
 

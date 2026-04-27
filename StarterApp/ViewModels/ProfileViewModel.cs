@@ -2,7 +2,6 @@
 /// @brief User profile management view model
 /// @author StarterApp Development Team
 /// @date 2025
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StarterApp.Database.Models;
@@ -17,7 +16,7 @@ public partial class ProfileViewModel : BaseViewModel
 {
     /// @brief Authentication service for managing user authentication
     private readonly IAuthenticationService _authService;
-    
+
     /// @brief Navigation service for managing page navigation
     private readonly INavigationService _navigationService;
 
@@ -50,7 +49,10 @@ public partial class ProfileViewModel : BaseViewModel
     /// @param authService The authentication service instance
     /// @param navigationService The navigation service instance
     /// @details Sets up the required services, initializes the title, and loads user data
-    public ProfileViewModel(IAuthenticationService authService, INavigationService navigationService)
+    public ProfileViewModel(
+        IAuthenticationService authService,
+        INavigationService navigationService
+    )
     {
         _authService = authService;
         _navigationService = navigationService;
@@ -87,7 +89,11 @@ public partial class ProfileViewModel : BaseViewModel
 
             if (success)
             {
-                await Application.Current.MainPage.DisplayAlert("Success", "Password changed successfully!", "OK");
+                await Application.Current.MainPage.DisplayAlert(
+                    "Success",
+                    "Password changed successfully!",
+                    "OK"
+                );
                 ClearPasswordFields();
                 IsChangingPassword = false;
             }

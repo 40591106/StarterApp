@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace StarterApp.Database.Models;
 
@@ -9,14 +9,19 @@ namespace StarterApp.Database.Models;
 public class User
 {
     public int Id { get; set; }
+
     [Required]
     public string FirstName { get; set; } = string.Empty;
+
     [Required]
     public string LastName { get; set; } = string.Empty;
+
     [Required]
     public string Email { get; set; } = string.Empty;
+
     [Required]
     public string PasswordHash { get; set; } = string.Empty;
+
     [Required]
     public string PasswordSalt { get; set; } = string.Empty;
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
@@ -26,7 +31,7 @@ public class User
 
     // Navigation properties
     public List<UserRole> UserRoles { get; set; } = new List<UserRole>();
-    
+
     [NotMapped]
     public string FullName => $"{FirstName} {LastName}";
 }

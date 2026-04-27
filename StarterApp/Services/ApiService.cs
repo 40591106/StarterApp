@@ -17,8 +17,10 @@ public class ApiService : IApiService
     {
         var token = await SecureStorage.GetAsync("auth_token");
         if (!string.IsNullOrEmpty(token))
-            _httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                token
+            );
     }
 
     private async Task HandleUnauthorizedAsync()
@@ -28,11 +30,17 @@ public class ApiService : IApiService
         await Shell.Current.GoToAsync("//LoginPage");
     }
 
-    public async Task<List<Item>> GetItemsAsync(string? category = null, string? search = null, int page = 1)
+    public async Task<List<Item>> GetItemsAsync(
+        string? category = null,
+        string? search = null,
+        int page = 1
+    )
     {
         var query = $"items?page={page}";
-        if (!string.IsNullOrEmpty(category)) query += $"&category={category}";
-        if (!string.IsNullOrEmpty(search)) query += $"&search={search}";
+        if (!string.IsNullOrEmpty(category))
+            query += $"&category={category}";
+        if (!string.IsNullOrEmpty(search))
+            query += $"&search={search}";
 
         var response = await _httpClient.GetAsync(query);
         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
@@ -53,7 +61,8 @@ public class ApiService : IApiService
             await HandleUnauthorizedAsync();
             throw new Exception("Session expired. Please log in again.");
         }
-        if (response.StatusCode == System.Net.HttpStatusCode.NotFound) return null;
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            return null;
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<Item>();
     }
@@ -72,7 +81,8 @@ public class ApiService : IApiService
             var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
             throw new Exception(error?.Message ?? "Failed to create item");
         }
-        return await response.Content.ReadFromJsonAsync<Item>() ?? throw new Exception("Invalid response");
+        return await response.Content.ReadFromJsonAsync<Item>()
+            ?? throw new Exception("Invalid response");
     }
 
     public async Task<Item> UpdateItemAsync(int id, UpdateItemRequest request)
@@ -89,7 +99,8 @@ public class ApiService : IApiService
             var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
             throw new Exception(error?.Message ?? "Failed to update item");
         }
-        return await response.Content.ReadFromJsonAsync<Item>() ?? throw new Exception("Invalid response");
+        return await response.Content.ReadFromJsonAsync<Item>()
+            ?? throw new Exception("Invalid response");
     }
 
     public async Task<List<Category>> GetCategoriesAsync()
@@ -106,6 +117,8 @@ public class ApiService : IApiService
     }
 
     private record ItemsListResponse(List<Item> Items, int TotalItems, int Page, int PageSize);
+
     private record CategoriesResponse(List<Category> Categories);
+
     private record ErrorResponse(string Error, string Message);
 }

@@ -1,8 +1,8 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StarterApp.Database.Data.Repositories;
 using StarterApp.Database.Models;
-using System.Collections.ObjectModel;
 using StarterApp.Services;
 
 namespace StarterApp.ViewModels;
@@ -29,10 +29,8 @@ public partial class RentalsViewModel : ObservableObject
 
     public bool ShowOutgoing => !ShowIncoming;
 
-    public Color IncomingTabColor => ShowIncoming
-    ? Colors.DarkBlue : Colors.Gray;
-    public Color OutgoingTabColor => !ShowIncoming
-        ? Colors.DarkBlue : Colors.Gray;
+    public Color IncomingTabColor => ShowIncoming ? Colors.DarkBlue : Colors.Gray;
+    public Color OutgoingTabColor => !ShowIncoming ? Colors.DarkBlue : Colors.Gray;
 
     public RentalsViewModel(IRentalRepository rentalRepository, IAuthenticationService authService)
     {
@@ -65,12 +63,58 @@ public partial class RentalsViewModel : ObservableObject
             var incoming = await _rentalRepository.GetIncomingAsync(currentUserId);
             var outgoing = await _rentalRepository.GetOutgoingAsync(currentUserId);
 
-            IncomingRentals = new ObservableCollection<Rental>(incoming);
-            OutgoingRentals = new ObservableCollection<Rental>(outgoing);
+            var activeStatuses = new[] { "Requested", "Approved", "Out for Rent", "Returned" };
+
+            IncomingRentals = new ObservableCollection<Rental>(
+                incoming.Where(r => activeStatuses.Contains(r.Status))
+            );
+            OutgoingRentals = new ObservableCollection<Rental>(
+                outgoing.Where(r => activeStatuses.Contains(r.Status))
+            );
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Error loading rentals: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ApproveRentalAsync(Rental rental)
+    {
+        IsLoading = true;
+        ErrorMessage = string.Empty;
+        try
+        {
+            await _rentalRepository.UpdateStatusAsync(rental.Id, "Approved");
+            await LoadRentalsAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error approving rental: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task RejectRentalAsync(Rental rental)
+    {
+        IsLoading = true;
+        ErrorMessage = string.Empty;
+        try
+        {
+            await _rentalRepository.UpdateStatusAsync(rental.Id, "Rejected");
+            await LoadRentalsAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error rejecting rental: {ex.Message}";
         }
         finally
         {

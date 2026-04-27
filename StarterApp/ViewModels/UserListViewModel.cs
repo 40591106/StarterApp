@@ -1,11 +1,11 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using StarterApp.Database.Data;
 using StarterApp.Database.Models;
 using StarterApp.Services;
-using CommunityToolkit.Mvvm.Input;
 
 namespace StarterApp.ViewModels;
 
@@ -17,7 +17,7 @@ namespace StarterApp.ViewModels;
 /// <remarks>
 /// This ViewModel requires admin privileges to function properly. Non-admin users
 /// will be redirected to the main page when attempting to load users.
-/// 
+///
 /// Key features:
 /// - User loading with role information
 /// - Real-time filtering by role and search text
@@ -65,7 +65,11 @@ public partial class UserListViewModel : INotifyPropertyChanged
     /// The constructor automatically initiates user loading in the background
     /// and sets up role filter options based on available roles in the system.
     /// </remarks>
-    public UserListViewModel(AppDbContext context, INavigationService navigationService, IAuthenticationService authenticationService)
+    public UserListViewModel(
+        AppDbContext context,
+        INavigationService navigationService,
+        IAuthenticationService authenticationService
+    )
     {
         _context = context;
         _navigationService = navigationService;
@@ -73,7 +77,9 @@ public partial class UserListViewModel : INotifyPropertyChanged
 
         LoadUsersCommand = new Command(async () => await LoadUsersAsync());
         RefreshCommand = new Command(async () => await RefreshUsersAsync());
-        UserSelectedCommand = new Command<UserListItem>(async (user) => await NavigateToUserDetailAsync(user));
+        UserSelectedCommand = new Command<UserListItem>(
+            async (user) => await NavigateToUserDetailAsync(user)
+        );
         CreateUserCommand = new Command(async () => await NavigateToCreateUserAsync());
 
         RoleFilterOptions = new ObservableCollection<string> { "All" };
@@ -257,31 +263,34 @@ public partial class UserListViewModel : INotifyPropertyChanged
         IsLoading = true;
         try
         {
-            var users = await _context.Users
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
+            var users = await _context
+                .Users.Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
                 .Where(u => u.IsActive)
                 .OrderBy(u => u.FirstName)
                 .ThenBy(u => u.LastName)
                 .ToListAsync();
 
-            var userItems = users.Select(u => new UserListItem
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
-                FullName = u.FullName,
-                CreatedAt = u.CreatedAt ?? DateTime.MinValue,
-                IsActive = u.IsActive,
-                Roles = u.UserRoles
-                    .Where(ur => ur.IsActive)
-                    .Select(ur => ur.Role.Name)
-                    .ToList(),
-                RolesDisplay = string.Join(", ", u.UserRoles
-                    .Where(ur => ur.IsActive)
-                    .Select(ur => ur.Role.Name))
-            }).ToList();
+            var userItems = users
+                .Select(u => new UserListItem
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    FullName = u.FullName,
+                    CreatedAt = u.CreatedAt ?? DateTime.MinValue,
+                    IsActive = u.IsActive,
+                    Roles = u
+                        .UserRoles.Where(ur => ur.IsActive)
+                        .Select(ur => ur.Role.Name)
+                        .ToList(),
+                    RolesDisplay = string.Join(
+                        ", ",
+                        u.UserRoles.Where(ur => ur.IsActive).Select(ur => ur.Role.Name)
+                    ),
+                })
+                .ToList();
 
             Users = new ObservableCollection<UserListItem>(userItems);
             ApplyFilters();
@@ -322,7 +331,7 @@ public partial class UserListViewModel : INotifyPropertyChanged
     /// - Applies search text filter across FullName, Email, and RolesDisplay
     /// - Updates FilteredUsers collection with matching results
     /// - Uses case-insensitive string matching for search
-    /// 
+    ///
     /// Called automatically when SelectedRoleFilter or SearchText properties change.
     /// </remarks>
     private void ApplyFilters()
@@ -340,9 +349,10 @@ public partial class UserListViewModel : INotifyPropertyChanged
         {
             var searchLower = SearchText.ToLower();
             filtered = filtered.Where(u =>
-                u.FullName.ToLower().Contains(searchLower) ||
-                u.Email.ToLower().Contains(searchLower) ||
-                u.RolesDisplay.ToLower().Contains(searchLower));
+                u.FullName.ToLower().Contains(searchLower)
+                || u.Email.ToLower().Contains(searchLower)
+                || u.RolesDisplay.ToLower().Contains(searchLower)
+            );
         }
 
         FilteredUsers = new ObservableCollection<UserListItem>(filtered);
@@ -404,7 +414,9 @@ public partial class UserListViewModel : INotifyPropertyChanged
     /// This method is called by property setters to notify the UI of property changes.
     /// The CallerMemberName attribute automatically provides the property name when called from a property setter.
     /// </remarks>
-    protected virtual void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null)
+    protected virtual void OnPropertyChanged(
+        [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null
+    )
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

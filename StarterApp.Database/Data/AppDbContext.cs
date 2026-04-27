@@ -7,15 +7,15 @@ namespace StarterApp.Database.Data;
 
 public class AppDbContext : DbContext
 {
+    public AppDbContext() { }
 
-    public AppDbContext()
-    { }
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    { }
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (optionsBuilder.IsConfigured) return;
+        if (optionsBuilder.IsConfigured)
+            return;
 
         var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
@@ -24,9 +24,7 @@ public class AppDbContext : DbContext
             var a = Assembly.GetExecutingAssembly();
             using var stream = a.GetManifestResourceStream("StarterApp.Database.appsettings.json");
 
-            var config = new ConfigurationBuilder()
-                .AddJsonStream(stream)
-                .Build();
+            var config = new ConfigurationBuilder().AddJsonStream(stream).Build();
 
             connectionString = config.GetConnectionString("DevelopmentConnection");
         }
@@ -66,34 +64,32 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Rental>(entity =>
         {
-            entity.HasOne(r => r.Borrower)
-                  .WithMany()
-                  .HasForeignKey(r => r.BorrowerId)
-                  .OnDelete(DeleteBehavior.Restrict);
+            entity
+                .HasOne(r => r.Borrower)
+                .WithMany()
+                .HasForeignKey(r => r.BorrowerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasOne(r => r.Owner)
-                  .WithMany()
-                  .HasForeignKey(r => r.OwnerId)
-                  .OnDelete(DeleteBehavior.Restrict);
+            entity
+                .HasOne(r => r.Owner)
+                .WithMany()
+                .HasForeignKey(r => r.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasOne(r => r.Item)
-                  .WithMany()
-                  .HasForeignKey(r => r.ItemId)
-                  .OnDelete(DeleteBehavior.Restrict);
+            entity
+                .HasOne(r => r.Item)
+                .WithMany()
+                .HasForeignKey(r => r.ItemId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
         // Configure UserRole entity
         modelBuilder.Entity<UserRole>(entity =>
         {
             entity.HasIndex(e => new { e.UserId, e.RoleId }).IsUnique();
 
-            entity.HasOne(ur => ur.User)
-                  .WithMany(u => u.UserRoles)
-                  .HasForeignKey(ur => ur.UserId);
+            entity.HasOne(ur => ur.User).WithMany(u => u.UserRoles).HasForeignKey(ur => ur.UserId);
 
-            entity.HasOne(ur => ur.Role)
-                  .WithMany(r => r.UserRoles)
-                  .HasForeignKey(ur => ur.RoleId);
+            entity.HasOne(ur => ur.Role).WithMany(r => r.UserRoles).HasForeignKey(ur => ur.RoleId);
         });
     }
-
 }

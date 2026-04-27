@@ -34,8 +34,10 @@ public class ApiAuthenticationService : IAuthenticationService
             }
 
             var token = await response.Content.ReadFromJsonAsync<TokenResponse>();
-            _httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", token!.Token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                token!.Token
+            );
             await SecureStorage.SetAsync("auth_token", token!.Token);
 
             var meResponse = await _httpClient.GetAsync("users/me");
@@ -48,7 +50,7 @@ public class ApiAuthenticationService : IAuthenticationService
                 FirstName = profile.FirstName,
                 LastName = profile.LastName,
                 CreatedAt = profile.CreatedAt,
-                IsActive = true
+                IsActive = true,
             };
 
             AuthenticationStateChanged?.Invoke(this, true);
@@ -60,17 +62,25 @@ public class ApiAuthenticationService : IAuthenticationService
         }
     }
 
-    public async Task<AuthenticationResult> RegisterAsync(string firstName, string lastName, string email, string password)
+    public async Task<AuthenticationResult> RegisterAsync(
+        string firstName,
+        string lastName,
+        string email,
+        string password
+    )
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync("auth/register", new
-            {
-                firstName,
-                lastName,
-                email,
-                password
-            });
+            var response = await _httpClient.PostAsJsonAsync(
+                "auth/register",
+                new
+                {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                }
+            );
 
             if (!response.IsSuccessStatusCode)
             {
@@ -99,11 +109,9 @@ public class ApiAuthenticationService : IAuthenticationService
     public bool HasRole(string roleName) =>
         _currentUserRoles.Contains(roleName, StringComparer.OrdinalIgnoreCase);
 
-    public bool HasAnyRole(params string[] roleNames) =>
-        roleNames.Any(HasRole);
+    public bool HasAnyRole(params string[] roleNames) => roleNames.Any(HasRole);
 
-    public bool HasAllRoles(params string[] roleNames) =>
-        roleNames.All(HasRole);
+    public bool HasAllRoles(params string[] roleNames) => roleNames.All(HasRole);
 
     public Task<bool> ChangePasswordAsync(string currentPassword, string newPassword)
     {
@@ -116,7 +124,12 @@ public class ApiAuthenticationService : IAuthenticationService
     private record TokenResponse(string Token, DateTime ExpiresAt, int UserId);
 
     private record UserProfileResponse(
-        int Id, string Email, string FirstName, string LastName, DateTime CreatedAt);
+        int Id,
+        string Email,
+        string FirstName,
+        string LastName,
+        DateTime CreatedAt
+    );
 
     private record ApiErrorResponse(string Error, string Message);
 }

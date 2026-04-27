@@ -1,7 +1,7 @@
+using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using StarterApp.Database.Data;
 using StarterApp.Database.Models;
-using BCrypt.Net;
 
 namespace StarterApp.Services;
 
@@ -28,9 +28,9 @@ public class LocalAuthenticationService : IAuthenticationService
     {
         try
         {
-            var user = await _context.Users
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
+            var user = await _context
+                .Users.Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
                 .FirstOrDefaultAsync(u => u.Email == email && u.IsActive);
 
             if (user == null)
@@ -44,8 +44,8 @@ public class LocalAuthenticationService : IAuthenticationService
             }
 
             _currentUser = user;
-            _currentUserRoles = user.UserRoles
-                .Where(ur => ur.IsActive)
+            _currentUserRoles = user
+                .UserRoles.Where(ur => ur.IsActive)
                 .Select(ur => ur.Role.Name)
                 .ToList();
 
@@ -58,7 +58,12 @@ public class LocalAuthenticationService : IAuthenticationService
         }
     }
 
-    public async Task<AuthenticationResult> RegisterAsync(string firstName, string lastName, string email, string password)
+    public async Task<AuthenticationResult> RegisterAsync(
+        string firstName,
+        string lastName,
+        string email,
+        string password
+    )
     {
         try
         {
@@ -83,7 +88,7 @@ public class LocalAuthenticationService : IAuthenticationService
                 PasswordSalt = salt,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
-                IsActive = true
+                IsActive = true,
             };
 
             _context.Users.Add(user);

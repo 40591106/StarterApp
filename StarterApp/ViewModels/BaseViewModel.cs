@@ -2,7 +2,6 @@
 /// @brief Base view model class providing common functionality for all view models
 /// @author StarterApp Development Team
 /// @date 2025
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

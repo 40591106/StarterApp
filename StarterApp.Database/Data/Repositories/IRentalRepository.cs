@@ -7,4 +7,5 @@ public interface IRentalRepository
     Task<Rental> CreateAsync(int itemId, DateTime startDate, DateTime endDate, int borrowerId);
     Task<IEnumerable<Rental>> GetIncomingAsync(int userId);
     Task<IEnumerable<Rental>> GetOutgoingAsync(int userId);
+    Task UpdateStatusAsync(int rentalId, string status);
 }

@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Logging;
-using StarterApp.ViewModels;
 using StarterApp.Database.Data;
-using StarterApp.Views;
-using StarterApp.Services;
 using StarterApp.Database.Data.Repositories;
+using StarterApp.Services;
+using StarterApp.ViewModels;
+using StarterApp.Views;
 
 namespace StarterApp;
 
@@ -26,7 +26,7 @@ public static class MauiProgram
         {
             var httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://set09102-api.b-davison.workers.dev/")
+                BaseAddress = new Uri("https://set09102-api.b-davison.workers.dev/"),
             };
             builder.Services.AddSingleton(httpClient);
             builder.Services.AddSingleton<IAuthenticationService, ApiAuthenticationService>();

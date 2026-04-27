@@ -1,9 +1,9 @@
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StarterApp.Database.Data.Repositories;
 using StarterApp.Database.Models;
 using StarterApp.Services;
-using System.Windows.Input;
 
 namespace StarterApp.ViewModels;
 
@@ -36,8 +36,10 @@ public partial class CreateItemViewModel : ObservableObject
 
     [ObservableProperty]
     private double _latitude;
+
     [ObservableProperty]
     private double _longitude;
+
     [ObservableProperty]
     private bool _isLoading;
 
@@ -67,7 +69,11 @@ public partial class CreateItemViewModel : ObservableObject
     public ICommand SaveItemCommand { get; }
     public ICommand NavigateBackCommand { get; }
 
-    public CreateItemViewModel(IItemRepository itemRepository, IAuthenticationService authService, INavigationService navigationService)
+    public CreateItemViewModel(
+        IItemRepository itemRepository,
+        IAuthenticationService authService,
+        INavigationService navigationService
+    )
     {
         _itemRepository = itemRepository;
         _authService = authService;
@@ -84,6 +90,7 @@ public partial class CreateItemViewModel : ObservableObject
         var categories = await _itemRepository.GetCategoriesAsync();
         Categories = categories;
     }
+
     private async Task LoadItemAsync()
     {
         if (_itemId == 0)
@@ -119,7 +126,6 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
-
     private async Task SaveItemAsync()
     {
         ErrorMessage = string.Empty;
@@ -144,7 +150,7 @@ public partial class CreateItemViewModel : ObservableObject
                     CategoryId = SelectedCategory?.Id ?? 1,
                     Latitude = Latitude,
                     Longitude = Longitude,
-                    OwnerId = _authService.CurrentUser!.Id
+                    OwnerId = _authService.CurrentUser!.Id,
                 };
                 await _itemRepository.CreateAsync(item);
                 SuccessMessage = "Item created successfully!";

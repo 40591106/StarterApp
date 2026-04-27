@@ -1,9 +1,9 @@
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StarterApp.Database.Data.Repositories;
 using StarterApp.Database.Models;
 using StarterApp.Services;
-using System.Windows.Input;
 
 namespace StarterApp.ViewModels;
 
@@ -41,7 +41,12 @@ public partial class ItemDetailViewModel : ObservableObject
     public ICommand NavigateToEditAsyncCommand { get; }
     public ICommand NavigateToRentAsyncCommand { get; }
     public ICommand NavigateBackAsyncCommand { get; }
-    public ItemDetailViewModel(IItemRepository itemRepository, IAuthenticationService authService, INavigationService navigationService)
+
+    public ItemDetailViewModel(
+        IItemRepository itemRepository,
+        IAuthenticationService authService,
+        INavigationService navigationService
+    )
     {
         _itemRepository = itemRepository;
         _authService = authService;
@@ -84,7 +89,9 @@ public partial class ItemDetailViewModel : ObservableObject
     private async Task NavigateToRentAsync()
     {
         System.Diagnostics.Debug.WriteLine("RENT COMMAND FIRED");
-        await _navigationService.NavigateToAsync($"CreateRentalPage?itemId={_itemId}");
+        await _navigationService.NavigateToAsync(
+            $"CreateRentalPage?itemId={_itemId}&dailyRate={Item!.DailyRate}"
+        );
     }
 
     private async Task NavigateBackAsync()
