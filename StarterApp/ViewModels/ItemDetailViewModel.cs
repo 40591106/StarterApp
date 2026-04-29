@@ -41,6 +41,9 @@ public partial class ItemDetailViewModel : ObservableObject
     public ICommand NavigateToEditAsyncCommand { get; }
     public ICommand NavigateToRentAsyncCommand { get; }
     public ICommand NavigateBackAsyncCommand { get; }
+    public ICommand NavigateToReviewsAsyncCommand { get; }
+    public ICommand NavigateToOwnerProfileAsyncCommand { get; }
+
 
     public ItemDetailViewModel(
         IItemRepository itemRepository,
@@ -55,6 +58,8 @@ public partial class ItemDetailViewModel : ObservableObject
         NavigateToEditAsyncCommand = new AsyncRelayCommand(NavigateToEditAsync);
         NavigateToRentAsyncCommand = new AsyncRelayCommand(NavigateToRentAsync);
         NavigateBackAsyncCommand = new AsyncRelayCommand(NavigateBackAsync);
+        NavigateToReviewsAsyncCommand = new AsyncRelayCommand(NavigateToReviewsAsync);
+        NavigateToOwnerProfileAsyncCommand = new AsyncRelayCommand(NavigateToOwnerProfileAsync);
     }
 
     private async Task LoadItemAsync()
@@ -98,4 +103,15 @@ public partial class ItemDetailViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync("..");
     }
+    private async Task NavigateToReviewsAsync()
+    {
+        await _navigationService.NavigateToAsync($"ReviewsPage?itemId={_itemId}");
+    }
+    private async Task NavigateToOwnerProfileAsync()
+    {
+        await _navigationService.NavigateToAsync(
+            $"ProfilePage?userId={Item!.OwnerId}&userName={Item.OwnerName}");
+    }
+
+
 }

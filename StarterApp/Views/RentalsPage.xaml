@@ -175,6 +175,12 @@
                       CommandParameter="{Binding}"
                       BackgroundColor="#54C054"
                       TextColor="White"/>
+              <Button Text="Leave Review"
+                      IsVisible="{Binding IsCompleted}"
+                      Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RentalsViewModel}}, Path=LeaveReviewCommand}"
+                      CommandParameter="{Binding}"
+                      BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                      TextColor="White"/>
             </StackLayout>
           </Border>
         </DataTemplate>

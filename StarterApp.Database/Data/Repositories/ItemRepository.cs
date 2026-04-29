@@ -40,11 +40,24 @@ public class ItemRepository : IItemRepository
     public async Task<Item?> GetByIdAsync(int id)
     {
         using var context = _contextFactory.CreateDbContext();
-        var item = await context
-            .Items.Include(i => i.CategoryNavigation)
+        var item = await context.Items
+            .Include(i => i.CategoryNavigation)
             .FirstOrDefaultAsync(i => i.Id == id);
+
         if (item != null)
+        {
             item.Category = item.CategoryNavigation?.Name;
+
+            var reviews = await context.Reviews
+                .Where(r => r.ItemId == id)
+                .ToListAsync();
+
+            item.TotalReviews = reviews.Count;
+            item.AverageRating = reviews.Count > 0
+                ? reviews.Average(r => r.Rating)
+                : null;
+        }
+
         return item;
     }
 

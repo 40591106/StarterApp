@@ -60,11 +60,14 @@ public class ApiService : IApiService
         {
             await HandleUnauthorizedAsync();
             throw new Exception("Session expired. Please log in again.");
+
         }
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             return null;
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<Item>();
+        var item = await response.Content.ReadFromJsonAsync<Item>();
+        System.Diagnostics.Debug.WriteLine($"AVERAGE RATING: {item?.AverageRating}, TOTAL REVIEWS: {item?.TotalReviews}");
+        return item;
     }
 
     public async Task<Item> CreateItemAsync(CreateItemRequest request)

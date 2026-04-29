@@ -30,10 +30,13 @@ public class Item
     public bool IsAvailable { get; set; } = true;
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
+    public double? AverageRating { get; set; }
+    public int? TotalReviews { get; set; }
 
     // Foreign key
     public int OwnerId { get; set; }
 
     [ForeignKey(nameof(OwnerId))]
     public User Owner { get; set; } = null!;
+    public string? OwnerName { get; set; }
 }

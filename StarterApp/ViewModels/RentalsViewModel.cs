@@ -12,6 +12,7 @@ public partial class RentalsViewModel : ObservableObject
     private readonly IRentalService _rentalService;
     private readonly IRentalRepository _rentalRepository;
     private readonly IAuthenticationService _authService;
+    private readonly INavigationService _navigationService;
 
     [ObservableProperty]
     private ObservableCollection<Rental> _incomingRentals = new();
@@ -168,5 +169,12 @@ public partial class RentalsViewModel : ObservableObject
         {
             IsLoading = false;
         }
+    }
+
+    [RelayCommand]
+    private async Task LeaveReviewAsync(Rental rental)
+    {
+        await _navigationService.NavigateToAsync(
+            $"CreateReviewPage?itemId={rental.ItemId}&rentalId={rental.Id}");
     }
 }

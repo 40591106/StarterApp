@@ -16,12 +16,14 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(Views.RegisterPage), typeof(Views.RegisterPage));
         Routing.RegisterRoute(nameof(Views.UserListPage), typeof(Views.UserListPage));
         Routing.RegisterRoute(nameof(Views.UserDetailPage), typeof(Views.UserDetailPage));
-        Routing.RegisterRoute(nameof(Views.TempPage), typeof(Views.TempPage));
+        Routing.RegisterRoute(nameof(Views.ProfilePage), typeof(Views.ProfilePage));
         Routing.RegisterRoute(nameof(Views.ItemsListPage), typeof(Views.ItemsListPage));
         Routing.RegisterRoute(nameof(Views.ItemDetailPage), typeof(Views.ItemDetailPage));
         Routing.RegisterRoute(nameof(Views.CreateItemPage), typeof(Views.CreateItemPage));
         Routing.RegisterRoute(nameof(Views.RentalsPage), typeof(Views.RentalsPage));
         Routing.RegisterRoute(nameof(Views.CreateRentalPage), typeof(Views.CreateRentalPage));
+        Routing.RegisterRoute(nameof(Views.ReviewsPage), typeof(Views.ReviewsPage));
+        Routing.RegisterRoute(nameof(Views.CreateReviewPage), typeof(Views.CreateReviewPage));
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
