@@ -13,6 +13,27 @@ public partial class ItemsListViewModel : ObservableObject
     private readonly IItemRepository _itemRepository;
     private readonly INavigationService _navigationService;
 
+    [ObservableProperty]
+    private string _searchText = string.Empty;
+
+    [ObservableProperty]
+    private Category? _selectedCategory;
+
+    [ObservableProperty]
+    private ObservableCollection<Category> _categories = new();
+
+    partial void OnSearchTextChanged(string value) => _ = Task.Run(LoadItemsAsync);
+
+    partial void OnSelectedCategoryChanged(Category? value)
+    {
+        _ = Task.Run(LoadItemsAsync);
+        OnPropertyChanged(nameof(HasCategoryFilter));
+    }
+
+    [RelayCommand]
+    private void ClearCategory() => SelectedCategory = null;
+
+    public bool HasCategoryFilter => SelectedCategory != null;
     private ObservableCollection<Item>? _items;
     public ObservableCollection<Item> Items
     {
@@ -31,11 +52,24 @@ public partial class ItemsListViewModel : ObservableObject
         LoadItemsCommand = new AsyncRelayCommand(LoadItemsAsync);
         NavigateToDetailCommand = new AsyncRelayCommand<int>(NavigateToDetailAsync);
         NavigateToCreateCommand = new AsyncRelayCommand(NavigateToCreateAsync);
+        _ = Task.Run(async () =>
+        {
+            await LoadCategoriesAsync();
+        });
+    }
+
+    private async Task LoadCategoriesAsync()
+    {
+        var categories = await _itemRepository.GetCategoriesAsync();
+        Categories = new ObservableCollection<Category>(categories);
     }
 
     private async Task LoadItemsAsync()
     {
-        var items = await _itemRepository.GetAllAsync();
+        var items = await _itemRepository.GetAllAsync(
+            category: SelectedCategory?.Slug,
+            search: SearchText
+        );
         Items = new ObservableCollection<Item>(items);
     }
 

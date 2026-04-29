@@ -9,6 +9,7 @@ namespace StarterApp.ViewModels;
 
 public partial class RentalsViewModel : ObservableObject
 {
+    private readonly IRentalService _rentalService;
     private readonly IRentalRepository _rentalRepository;
     private readonly IAuthenticationService _authService;
 
@@ -32,8 +33,13 @@ public partial class RentalsViewModel : ObservableObject
     public Color IncomingTabColor => ShowIncoming ? Colors.DarkBlue : Colors.Gray;
     public Color OutgoingTabColor => !ShowIncoming ? Colors.DarkBlue : Colors.Gray;
 
-    public RentalsViewModel(IRentalRepository rentalRepository, IAuthenticationService authService)
+    public RentalsViewModel(
+        IRentalService rentalService,
+        IRentalRepository rentalRepository,
+        IAuthenticationService authService
+    )
     {
+        _rentalService = rentalService;
         _rentalRepository = rentalRepository;
         _authService = authService;
         _ = Task.Run(LoadRentalsAsync);
@@ -57,8 +63,10 @@ public partial class RentalsViewModel : ObservableObject
     {
         IsLoading = true;
         ErrorMessage = string.Empty;
+
         try
         {
+            await _rentalService.UpdateOutForRentAsync();
             var currentUserId = _authService.CurrentUser?.Id ?? 0;
             var incoming = await _rentalRepository.GetIncomingAsync(currentUserId);
             var outgoing = await _rentalRepository.GetOutgoingAsync(currentUserId);
@@ -89,7 +97,7 @@ public partial class RentalsViewModel : ObservableObject
         ErrorMessage = string.Empty;
         try
         {
-            await _rentalRepository.UpdateStatusAsync(rental.Id, "Approved");
+            await _rentalService.ApproveRentalAsync(rental.Id);
             await LoadRentalsAsync();
         }
         catch (Exception ex)
@@ -109,12 +117,52 @@ public partial class RentalsViewModel : ObservableObject
         ErrorMessage = string.Empty;
         try
         {
-            await _rentalRepository.UpdateStatusAsync(rental.Id, "Rejected");
+            await _rentalService.RejectRentalAsync(rental.Id);
             await LoadRentalsAsync();
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Error rejecting rental: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ReturnRentalAsync(Rental rental)
+    {
+        IsLoading = true;
+        ErrorMessage = string.Empty;
+        try
+        {
+            await _rentalService.ReturnRentalAsync(rental.Id);
+            await LoadRentalsAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error returning rental: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task CompleteRentalAsync(Rental rental)
+    {
+        IsLoading = true;
+        ErrorMessage = string.Empty;
+        try
+        {
+            await _rentalService.CompleteRentalAsync(rental.Id);
+            await LoadRentalsAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error completing rental: {ex.Message}";
         }
         finally
         {

@@ -13,7 +13,8 @@ public class ApiItemRepository : IItemRepository
         _apiService = apiService;
     }
 
-    public async Task<List<Item>> GetAllAsync() => await _apiService.GetItemsAsync();
+    public async Task<List<Item>> GetAllAsync(string? category = null, string? search = null) =>
+        await _apiService.GetItemsAsync(category: category, search: search);
 
     public async Task<Item?> GetByIdAsync(int id) => await _apiService.GetItemByIdAsync(id);
 

@@ -9,7 +9,7 @@ namespace StarterApp.ViewModels;
 [QueryProperty(nameof(ItemId), "itemId")]
 public partial class CreateRentalViewModel : ObservableObject
 {
-    private readonly IRentalRepository _rentalRepository;
+    private readonly IRentalService _RentalService;
     private readonly IAuthenticationService _authService;
 
     [ObservableProperty]
@@ -32,12 +32,9 @@ public partial class CreateRentalViewModel : ObservableObject
 
     public decimal EstimatedTotal => (decimal)(EndDate - StartDate).Days * DailyRate;
 
-    public CreateRentalViewModel(
-        IRentalRepository rentalRepository,
-        IAuthenticationService authService
-    )
+    public CreateRentalViewModel(IRentalService rentalService, IAuthenticationService authService)
     {
-        _rentalRepository = rentalRepository;
+        _RentalService = rentalService;
         _authService = authService;
     }
 
@@ -55,7 +52,7 @@ public partial class CreateRentalViewModel : ObservableObject
         try
         {
             var borrowerId = _authService.CurrentUser?.Id ?? 0;
-            await _rentalRepository.CreateAsync(ItemId, StartDate, EndDate, borrowerId);
+            await _RentalService.RequestRentalAsync(ItemId, borrowerId, StartDate, EndDate);
             await Shell.Current.GoToAsync("..");
         }
         catch (Exception ex)

@@ -16,6 +16,10 @@ public class Rental
     [ForeignKey(nameof(ItemId))]
     public Item? Item { get; set; }
     public bool IsPending => Status == "Requested";
+    public bool IsApproved => Status == "Approved";
+    public bool IsOutForRent => Status == "Out for Rent";
+    public bool IsReturned => Status == "Returned";
+    public bool IsOverdue => Status == "Out for Rent" && EndDate < DateTime.UtcNow;
     public string ItemTitle { get; set; } = string.Empty;
 
     [Required]

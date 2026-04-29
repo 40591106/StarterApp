@@ -36,7 +36,7 @@ public static class MauiProgram
         }
         else
         {
-            builder.Services.AddDbContext<AppDbContext>();
+            builder.Services.AddDbContextFactory<AppDbContext>();
             builder.Services.AddSingleton<IAuthenticationService, LocalAuthenticationService>();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
             builder.Services.AddScoped<IRentalRepository, RentalRepository>();
@@ -78,6 +78,7 @@ public static class MauiProgram
         builder.Services.AddTransient<RentalsPage>();
         builder.Services.AddTransient<CreateRentalViewModel>();
         builder.Services.AddTransient<CreateRentalPage>();
+        builder.Services.AddTransient<IRentalService, RentalService>();
 
         // Temp
         builder.Services.AddSingleton<TempViewModel>();

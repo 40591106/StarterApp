@@ -5,11 +5,11 @@ namespace StarterApp.Database.Data.Repositories;
 
 public class RentalRepository : IRentalRepository
 {
-    private readonly AppDbContext _context;
+    private readonly IDbContextFactory<AppDbContext> _contextFactory;
 
-    public RentalRepository(AppDbContext context)
+    public RentalRepository(IDbContextFactory<AppDbContext> contextFactory)
     {
-        _context = context;
+        _contextFactory = contextFactory;
     }
 
     public async Task<Rental> CreateAsync(
@@ -21,15 +21,24 @@ public class RentalRepository : IRentalRepository
     {
         try
         {
+            using var context = _contextFactory.CreateDbContext();
             var item =
-                await _context.Items.FindAsync(itemId) ?? throw new Exception("Item not found");
-            var borrower = await _context.Users.FindAsync(borrowerId);
-            if (borrower != null)
-                _context.Entry(borrower).State = EntityState.Detached;
+                await context.Items.FindAsync(itemId) ?? throw new Exception("Item not found");
 
-            var owner = await _context.Users.FindAsync(item.OwnerId);
-            if (owner != null)
-                _context.Entry(owner).State = EntityState.Detached;
+            var borrowerName =
+                await context
+                    .Users.Where(u => u.Id == borrowerId)
+                    .Select(u => u.FirstName + " " + u.LastName)
+                    .FirstOrDefaultAsync()
+                ?? string.Empty;
+
+            var ownerName =
+                await context
+                    .Users.Where(u => u.Id == item.OwnerId)
+                    .Select(u => u.FirstName + " " + u.LastName)
+                    .FirstOrDefaultAsync()
+                ?? string.Empty;
+
             var days = (endDate - startDate).Days;
             var rental = new Rental
             {
@@ -37,9 +46,8 @@ public class RentalRepository : IRentalRepository
                 ItemTitle = item.Title,
                 BorrowerId = borrowerId,
                 OwnerId = item.OwnerId,
-                BorrowerName =
-                    borrower != null ? $"{borrower.FirstName} {borrower.LastName}" : string.Empty,
-                OwnerName = owner != null ? $"{owner.FirstName} {owner.LastName}" : string.Empty,
+                BorrowerName = borrowerName,
+                OwnerName = ownerName,
                 StartDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc),
                 EndDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc),
                 Status = "Requested",
@@ -47,8 +55,8 @@ public class RentalRepository : IRentalRepository
                 TotalPrice = item.DailyRate * days,
             };
 
-            _context.Rentals.Add(rental);
-            await _context.SaveChangesAsync();
+            context.Rentals.Add(rental);
+            await context.SaveChangesAsync();
             return rental;
         }
         catch (Exception ex)
@@ -59,7 +67,8 @@ public class RentalRepository : IRentalRepository
 
     public async Task<IEnumerable<Rental>> GetIncomingAsync(int userId)
     {
-        return await _context
+        using var context = _contextFactory.CreateDbContext();
+        return await context
             .Rentals.Where(r => r.OwnerId == userId)
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync();
@@ -67,19 +76,36 @@ public class RentalRepository : IRentalRepository
 
     public async Task<IEnumerable<Rental>> GetOutgoingAsync(int userId)
     {
-        return await _context
+        using var context = _contextFactory.CreateDbContext();
+        return await context
             .Rentals.Where(r => r.BorrowerId == userId)
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId)
+    {
+        using var context = _contextFactory.CreateDbContext();
+        return await context.Rentals.Where(r => r.ItemId == itemId).ToListAsync();
+    }
+
     public async Task UpdateStatusAsync(int rentalId, string status)
     {
+        using var context = _contextFactory.CreateDbContext();
         var rental =
-            await _context.Rentals.FindAsync(rentalId) ?? throw new Exception("Rental not found");
-
+            await context.Rentals.FindAsync(rentalId) ?? throw new Exception("Rental not found");
         rental.Status = status;
-        _context.Rentals.Update(rental);
-        await _context.SaveChangesAsync();
+        context.Rentals.Update(rental);
+        await context.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Rental>> GetAllActiveAsync()
+    {
+        using var context = _contextFactory.CreateDbContext();
+        return await context
+            .Rentals.Where(r =>
+                r.Status == "Approved" || r.Status == "Out for Rent" || r.Status == "Requested"
+            )
+            .ToListAsync();
     }
 }

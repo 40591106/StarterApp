@@ -79,6 +79,16 @@ public class ApiRentalRepository : IRentalRepository
         }
     }
 
+    public Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId)
+    {
+        return Task.FromResult(Enumerable.Empty<Rental>());
+    }
+
+    public Task<IEnumerable<Rental>> GetAllActiveAsync()
+    {
+        return Task.FromResult(Enumerable.Empty<Rental>());
+    }
+
     private record RentalsResponse(List<Rental> Rentals, int TotalRentals);
 
     private record ErrorResponse(string Error, string Message);
