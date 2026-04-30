@@ -18,6 +18,9 @@ jobs:
       with:
         dotnet-version: '10.0.x'
 
+    - name: Install MAUI workloads
+      run: dotnet workload install maui-android
+
     - name: Restore Database
       run: dotnet restore RentalApp.Database/RentalApp.Database.csproj
 
@@ -29,12 +32,6 @@ jobs:
 
     - name: Build Migrations
       run: dotnet build RentalApp.Migrations/RentalApp.Migrations.csproj --no-restore -c Debug
-
-    - name: Restore App
-      run: dotnet restore RentalApp/RentalApp.csproj -p:TargetFramework=net10.0
-
-    - name: Build App
-      run: dotnet build RentalApp/RentalApp.csproj --no-restore -c Debug -f net10.0
 
     - name: Restore Test project
       run: dotnet restore RentalApp.Test/RentalApp.Test.csproj -p:TargetFramework=net10.0
