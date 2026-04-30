@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="RentalApp.Views.ReviewsPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:vm="clr-namespace:RentalApp.ViewModels"
+  Title="Reviews">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Refresh"
+                 Command="{Binding LoadReviewsCommand}"/>
+  </ContentPage.ToolbarItems>
+
+  <Grid RowDefinitions="Auto,Auto,*"
+        Padding="20"
+        RowSpacing="10">
+
+
+    <!-- Loading / Error -->
+    <StackLayout Grid.Row="1">
+      <ActivityIndicator
+        IsRunning="{Binding IsLoading}"
+        IsVisible="{Binding IsLoading}"
+        HorizontalOptions="Center"/>
+      <Label
+        Text="{Binding ErrorMessage}"
+        IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"
+        TextColor="Red"
+        HorizontalOptions="Center"/>
+    </StackLayout>
+
+    <!-- List -->
+    <!-- List -->
+    <CollectionView Grid.Row="2"
+                    ItemsSource="{Binding Reviews}">
+      <CollectionView.EmptyView>
+        <Label Text="No reviews yet."
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+      </CollectionView.EmptyView>
+      <CollectionView.ItemTemplate>
+        <DataTemplate>
+          <Border Margin="0,5"
+                  Padding="15"
+                  Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                  StrokeThickness="1">
+            <Border.StrokeShape>
+              <RoundRectangle CornerRadius="8"/>
+            </Border.StrokeShape>
+            <StackLayout Spacing="5">
+              <Label Text="{Binding ReviewerName}"
+                     FontSize="16"
+                     FontAttributes="Bold"/>
+              <Label Text="{Binding Rating, StringFormat='{0} ★'}"
+                     FontSize="14"
+                     FontAttributes="Bold"
+                     TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+              <Label Text="{Binding Comment}"
+                     FontSize="14"/>
+              <Label Text="{Binding CreatedAt, StringFormat='{0:dd MMM yyyy}'}"
+                     FontSize="12"
+                     TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+            </StackLayout>
+          </Border>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+    </CollectionView>
+  </Grid>
+</ContentPage>

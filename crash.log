@@ -4,7 +4,7 @@
 04-12 16:25:53.599  1217  1217 D TaplEvents: TIS / TouchInteractionService.onInputEvent: MotionEvent { action=ACTION_DOWN, actionButton=0, id[0]=0, x[0]=549.9541, y[0]=1489.8926, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, classification=NONE, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=124793438, downTime=124793438, deviceId=4, source=0x5002, displayId=0, eventId=862003474 }
 04-12 16:25:53.644 16296 16316 D EGL_emulation: app_time_stats: avg=342.33ms min=13.70ms max=5563.68ms count=17
 04-12 16:25:53.661  1217  1217 D TaplEvents: TIS / TouchInteractionService.onInputEvent: MotionEvent { action=ACTION_UP, actionButton=0, id[0]=0, x[0]=549.9541, y[0]=1489.8926, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, classification=NONE, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=124793495, downTime=124793438, deviceId=4, source=0x5002, displayId=0, eventId=178117978 }
-04-12 16:25:54.150 16296 16296 I name.starterapp: Explicit concurrent copying GC freed 9926(456KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 4772KB/9544KB, paused 1.697ms,75us total 24.360ms
+04-12 16:25:54.150 16296 16296 I name.RentalApp: Explicit concurrent copying GC freed 9926(456KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 4772KB/9544KB, paused 1.697ms,75us total 24.360ms
 --------- beginning of system
 04-12 16:25:56.384   553   643 W CpuMonitorService: Current CPU frequency (1409561) is greater than maximum CPU frequency (2) for policy ID (2). Skipping CPU frequency policy
 04-12 16:25:56.384   553   643 W CpuMonitorService: Current CPU frequency (1488842) is greater than maximum CPU frequency (2) for policy ID (3). Skipping CPU frequency policy
@@ -13,7 +13,7 @@
 04-12 16:25:58.144  1217  1217 D TaplEvents: TIS / TouchInteractionService.onInputEvent: MotionEvent { action=ACTION_UP, actionButton=0, id[0]=0, x[0]=542.9668, y[0]=1535.8887, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, classification=NONE, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=124797985, downTime=124797868, deviceId=4, source=0x5002, displayId=0, eventId=63464899 }
 04-12 16:25:58.313 16296 16296 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
 04-12 16:25:58.313 16296 16296 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-04-12 16:25:58.317   553   657 I InputDispatcher: ef39a2b com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity (server) spent 4657ms processing MotionEvent(deviceId=4, eventTime=124793495678000, source=TOUCHSCREEN | STYLUS, displayId=0, action=UP, actionButton=0x00000000, flags=0x00000000, metaState=0x00000000, buttonState=0x00000000, classification=NONE, edgeFlags=0x00000000, xPrecision=30.3, yPrecision=13.7, xCursorPosition=nan, yCursorPosition=nan, pointers=[0: (550.0, 1489.9)]), policyFlags=0x62000000
+04-12 16:25:58.317   553   657 I InputDispatcher: ef39a2b com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity (server) spent 4657ms processing MotionEvent(deviceId=4, eventTime=124793495678000, source=TOUCHSCREEN | STYLUS, displayId=0, action=UP, actionButton=0x00000000, flags=0x00000000, metaState=0x00000000, buttonState=0x00000000, classification=NONE, edgeFlags=0x00000000, xPrecision=30.3, yPrecision=13.7, xCursorPosition=nan, yCursorPosition=nan, pointers=[0: (550.0, 1489.9)]), policyFlags=0x62000000
 04-12 16:25:58.331 16296 16316 D EGL_emulation: app_time_stats: avg=4687.13ms min=4687.13ms max=4687.13ms count=1
 04-12 16:25:59.660 16296 16316 D EGL_emulation: app_time_stats: avg=126.43ms min=3.68ms max=782.15ms count=10
 04-12 16:26:00.017  1771  2258 I AiAiEcho: Predicting[0]: 
@@ -28,11 +28,11 @@
 04-12 16:26:00.846 16296 16316 D EGL_emulation: app_time_stats: avg=582.60ms min=5.48ms max=1159.73ms count=2
 04-12 16:26:00.897  1217  1217 D TaplEvents: TIS / TouchInteractionService.onInputEvent: MotionEvent { action=ACTION_UP, actionButton=0, id[0]=0, x[0]=435.98145, y[0]=465.9668, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, classification=NONE, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=124800737, downTime=124800642, deviceId=4, source=0x5002, displayId=0, eventId=660057891 }
 04-12 16:26:00.944   905   905 D StatusBarIconController: ignoring old pipeline callback because the new wifi icon is enabled
-04-12 16:26:01.436 16296 16296 I name.starterapp: Explicit concurrent copying GC freed 9386(441KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 5328KB/10MB, paused 1.521ms,160us total 286.105ms
+04-12 16:26:01.436 16296 16296 I name.RentalApp: Explicit concurrent copying GC freed 9386(441KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 5328KB/10MB, paused 1.521ms,160us total 286.105ms
 04-12 16:26:01.497 16296 16296 D AndroidRuntime: Shutting down VM
 --------- beginning of crash
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: FATAL EXCEPTION: main
-04-12 16:26:01.501 16296 16296 E AndroidRuntime: Process: com.companyname.starterapp, PID: 16296
+04-12 16:26:01.501 16296 16296 E AndroidRuntime: Process: com.companyname.RentalApp, PID: 16296
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: android.runtime.JavaProxyThrowable: [Microsoft.Maui.Controls.Xaml.XamlParseException]: Position 12:22. Cannot assign property "IsVisible": Property does not exist, or is not assignable, or mismatching type between value and property
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at Microsoft.Maui.Controls.Xaml.ApplyPropertiesVisitor.SetPropertyValue + 0xb9(Unknown Source)
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at Microsoft.Maui.Controls.Xaml.ApplyPropertiesVisitor.Visit + 0xf6(Unknown Source)
@@ -44,8 +44,8 @@
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at Microsoft.Maui.Controls.Xaml.XamlLoader.Load + 0x0(Unknown Source)
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at Microsoft.Maui.Controls.Xaml.XamlLoader.Load + 0x29(Unknown Source)
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at Microsoft.Maui.Controls.Xaml.Extensions.LoadFromXaml + 0x0(Unknown Source)
-04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at StarterApp.Views.ItemDetailPage.InitializeComponent + 0x1(Unknown Source)
-04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at StarterApp.Views.ItemDetailPage..ctor + 0x8(Unknown Source)
+04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at RentalApp.Views.ItemDetailPage.InitializeComponent + 0x1(Unknown Source)
+04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at RentalApp.Views.ItemDetailPage..ctor + 0x8(Unknown Source)
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at Unknown.Unknown(Unknown Source)
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Constructor + 0x0(Unknown Source)
 04-12 16:26:01.501 16296 16296 E AndroidRuntime: 	at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs + 0x7e(Unknown Source)
@@ -76,13 +76,13 @@
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification + 0x2d(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd + 0x8(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.GetResult + 0x0(Unknown Source)
-04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at StarterApp.Services.NavigationService+<NavigateToAsync>d__0.MoveNext + 0x73(Unknown Source)
+04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at RentalApp.Services.NavigationService+<NavigateToAsync>d__0.MoveNext + 0x73(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw + 0x11(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess + 0x37(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification + 0x2d(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd + 0x8(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.GetResult + 0x0(Unknown Source)
-04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at StarterApp.ViewModels.ItemsListViewModel+<NavigateToDetailAsync>d__17.MoveNext + 0x99(Unknown Source)
+04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at RentalApp.ViewModels.ItemsListViewModel+<NavigateToDetailAsync>d__17.MoveNext + 0x99(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw + 0x11(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess + 0x37(Unknown Source)
 04-12 16:26:01.507 16296 16296 E AndroidRuntime: 	at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification + 0x2d(Unknown Source)
@@ -111,26 +111,26 @@
 04-12 16:26:01.521 16296 16296 I MonoDroid:   --- End of managed Android.Runtime.JavaProxyThrowable stack trace ---
 04-12 16:26:01.522 16296 16296 I MonoDroid: android.runtime.JavaProxyThrowable
 04-12 16:26:01.522 16296 16296 I MonoDroid: 
-04-12 16:26:01.540   553  2616 E ActivityManager: App crashed on incremental package com.companyname.starterapp which is 100% loaded.
-04-12 16:26:01.545   553  2616 W ActivityTaskManager:   Force finishing activity com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity
+04-12 16:26:01.540   553  2616 E ActivityManager: App crashed on incremental package com.companyname.RentalApp which is 100% loaded.
+04-12 16:26:01.545   553  2616 W ActivityTaskManager:   Force finishing activity com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity
 04-12 16:26:01.546   553 16346 I DropBoxManagerService: add tag=data_app_crash isTagEnabled=true flags=0x2
 04-12 16:26:01.549   905   946 V WindowManagerShell: Transition requested: android.os.BinderProxy@eb78bfd TransitionRequestInfo { type = CLOSE, triggerTask = null, remoteTransition = null, displayChange = null }
 04-12 16:26:01.559 16296 16296 I Process : Sending signal. PID: 16296 SIG: 9
 04-12 16:26:01.589   429   429 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
-04-12 16:26:01.591   553  2620 I WindowManager: WIN DEATH: Window{ef39a2b u0 com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity}
-04-12 16:26:01.596   553  2617 I ActivityManager: Process com.companyname.starterapp (pid 16296) has died: fg  TOP 
+04-12 16:26:01.591   553  2620 I WindowManager: WIN DEATH: Window{ef39a2b u0 com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity}
+04-12 16:26:01.596   553  2617 I ActivityManager: Process com.companyname.RentalApp (pid 16296) has died: fg  TOP 
 04-12 16:26:01.596   362   362 I Zygote  : Process 16296 exited due to signal 9 (Killed)
-04-12 16:26:01.599   553  2111 I ImeTracker: com.companyname.starterapp:25ffa78d: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_REMOVE_CLIENT
-04-12 16:26:01.601   553  2620 W InputManager-JNI: Input channel object 'ef39a2b com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity (client)' was disposed without first being removed with the input manager!
+04-12 16:26:01.599   553  2111 I ImeTracker: com.companyname.RentalApp:25ffa78d: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_REMOVE_CLIENT
+04-12 16:26:01.601   553  2620 W InputManager-JNI: Input channel object 'ef39a2b com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity (client)' was disposed without first being removed with the input manager!
 04-12 16:26:01.603   553   587 I libprocessgroup: Successfully killed process cgroup uid 10212 pid 16296 in 6ms
-04-12 16:26:01.606   553  2111 I ImeTracker: com.companyname.starterapp:25ffa78d: onCancelled at PHASE_SERVER_SHOULD_HIDE
+04-12 16:26:01.606   553  2111 I ImeTracker: com.companyname.RentalApp:25ffa78d: onCancelled at PHASE_SERVER_SHOULD_HIDE
 04-12 16:26:01.607   553   575 V WindowManager: Unknown focus tokens, dropping reportFocusChanged
 04-12 16:26:01.609   553   573 D DisplayManagerService: Drop pending events for gone uid 10212
 04-12 16:26:01.632 13408 14535 E OpenGLRenderer: Unable to match the desired swap behavior.
 04-12 16:26:01.641   553  2111 W ProcessStats: Tracking association SourceState{dd13ab com.google.android.apps.nexuslauncher/10169 BTop #72060} whose proc state 2 is better than process ProcessState{68b943d com.google.android.googlequicksearchbox:search/10132 pkg=com.google.android.googlequicksearchbox} proc state 8 (5 skipped)
 04-12 16:26:01.649   553  1841 W AppSearchIcing: icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
 04-12 16:26:01.655  1217  2259 D OneSearchSuggestProvider: Created the binder channel successfully for end point service =com.google.android.apps.search.googleapp.search.suggest.plugins.onesearch.server.OneSearchSuggestService , mChannel=z1{delegate=s1{logId=341, target=directaddress:///AndroidComponentAddress%5BIntent%20%7B%20act=grpc.io.action.BIND%20cmp=com.google.android.googlequicksearchbox/com.google.android.apps.search.googleapp.search.suggest.plugins.onesearch.server.OneSearchSuggestService%20%7D%5D}} , mOneSearchConnection=X1.T@688e64c
-04-12 16:26:01.659   553   576 W WindowManager: Failed to deliver inset control state change to w=Window{ef39a2b u0 com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity EXITING}
+04-12 16:26:01.659   553   576 W WindowManager: Failed to deliver inset control state change to w=Window{ef39a2b u0 com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity EXITING}
 04-12 16:26:01.659   553   576 W WindowManager: android.os.DeadObjectException
 04-12 16:26:01.659   553   576 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
 04-12 16:26:01.659   553   576 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:584)
@@ -190,7 +190,7 @@
 04-12 16:26:01.732  1771  2258 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
 04-12 16:26:01.733   553   572 V WindowManager: Sent Transition #270 createdAt=04-12 16:26:01.546 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, remoteTransition = null, displayChange = null }
 04-12 16:26:01.734   553   572 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
-04-12 16:26:01.734   553   572 V WindowManager:     info={id=270 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{6b11caf Task{7ed7ba6 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x1c51c1a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{WCT{RemoteToken{7b72c7d Task{ed19609 #109 type=standard A=10212:com.companyname.starterapp}}} m=CLOSE f=NONE leash=Surface(name=Task=109)/@0x498fd41 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{5cfdce token=android.os.Binder@d8727cc})/@0x9165236 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0}]}
+04-12 16:26:01.734   553   572 V WindowManager:     info={id=270 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{6b11caf Task{7ed7ba6 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x1c51c1a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{WCT{RemoteToken{7b72c7d Task{ed19609 #109 type=standard A=10212:com.companyname.RentalApp}}} m=CLOSE f=NONE leash=Surface(name=Task=109)/@0x498fd41 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{5cfdce token=android.os.Binder@d8727cc})/@0x9165236 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0}]}
 04-12 16:26:01.744   905   946 V WindowManagerShell: onTransitionReady android.os.BinderProxy@eb78bfd: {id=270 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@7e31a3e} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x37be0f2 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@7a5409f} m=CLOSE f=NONE leash=Surface(name=Task=109)/@0x774b343 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{5cfdce token=android.os.Binder@d8727cc})/@0x420edc0 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0}]}
 04-12 16:26:01.744   905   946 V WindowManagerShell: Playing animation for (#270)android.os.BinderProxy@eb78bfd@0
 04-12 16:26:01.744   905   946 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@9dd0c20
@@ -216,7 +216,7 @@
 04-12 16:26:01.844  1621  1621 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.google.android.apps.nexuslauncher fieldId=0 fieldName=null extras=null}, false)
 04-12 16:26:01.844  1621  1621 I GoogleInputMethodService: GoogleInputMethodService.shouldHideHeaderOnInitialState():4008 ShouldHideHeaderOnInitialState = false
 04-12 16:26:01.844  1621  1621 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2087 repeatCheckTimes = 2, unlocked = true
-04-12 16:26:01.853   553   576 W WindowManager: Failed to deliver inset control state change to w=Window{ef39a2b u0 com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity EXITING}
+04-12 16:26:01.853   553   576 W WindowManager: Failed to deliver inset control state change to w=Window{ef39a2b u0 com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity EXITING}
 04-12 16:26:01.853   553   576 W WindowManager: android.os.DeadObjectException
 04-12 16:26:01.853   553   576 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
 04-12 16:26:01.853   553   576 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:584)
@@ -259,11 +259,11 @@
 04-12 16:26:01.941  1217  1234 W System  : A resource failed to call release. 
 04-12 16:26:01.942  1217  1234 W System  : A resource failed to call release. 
 04-12 16:26:01.943  1217  1234 W System  : A resource failed to call release. 
-04-12 16:26:02.049   553   575 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{4631b10 u0 com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity t109 f} isExiting}
+04-12 16:26:02.049   553   575 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{4631b10 u0 com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity t109 f} isExiting}
 04-12 16:26:02.112   429   884 W VsyncModulator: setTransactionSchedule: Unexpected EarlyEnd
 04-12 16:26:02.421   905   946 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#270)android.os.BinderProxy@eb78bfd@0
 04-12 16:26:02.424   553   572 V WindowManager: Finish Transition #270: created at 04-12 16:26:01.546 collect-started=0.361ms request-sent=0.476ms started=14.617ms ready=72.779ms sent=186.328ms finished=878.046ms
-04-12 16:26:02.426   553  2618 W WindowManager: Exception thrown during dispatchAppVisibility Window{ef39a2b u0 com.companyname.starterapp/crc640b95e6222dc6e077.MainActivity EXITING}
+04-12 16:26:02.426   553  2618 W WindowManager: Exception thrown during dispatchAppVisibility Window{ef39a2b u0 com.companyname.RentalApp/crc640b95e6222dc6e077.MainActivity EXITING}
 04-12 16:26:02.426   553  2618 W WindowManager: android.os.DeadObjectException
 04-12 16:26:02.426   553  2618 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
 04-12 16:26:02.426   553  2618 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:584)

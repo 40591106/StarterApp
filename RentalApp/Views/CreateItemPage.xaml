@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="RentalApp.Views.CreateItemPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:vm="clr-namespace:RentalApp.ViewModels"
+  x:DataType="vm:CreateItemViewModel"
+  Title="{Binding PageTitle}">
+  <ScrollView>
+    <Grid Padding="20"
+          RowSpacing="15">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <ActivityIndicator
+        Grid.Row="0"
+        IsRunning="{Binding IsLoading}"
+        IsVisible="{Binding IsLoading}"
+        HorizontalOptions="Center"/>
+
+      <StackLayout Grid.Row="1"
+                   Spacing="15">
+        <Label
+          Text="{Binding ErrorMessage}"
+          TextColor="Red"
+          IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"/>
+
+        <Label
+          Text="{Binding SuccessMessage}"
+          TextColor="Green"
+          IsVisible="{Binding SuccessMessage, Converter={StaticResource StringToBoolConverter}}"/>
+
+        <Border
+          BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}"
+          Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+          StrokeThickness="1"
+          Padding="20">
+          <Border.StrokeShape>
+            <RoundRectangle CornerRadius="12"/>
+          </Border.StrokeShape>
+          <StackLayout Spacing="15">
+            <Label Text="Title"
+                   FontAttributes="Bold"/>
+            <Entry Text="{Binding Title}"
+                   Placeholder="Enter item title"/>
+
+            <Label Text="Description"
+                   FontAttributes="Bold"/>
+            <Editor
+              Text="{Binding Description}"
+              Placeholder="Enter item description"
+              HeightRequest="100"/>
+
+            <Label Text="Daily Rate (£)"
+                   FontAttributes="Bold"/>
+            <Entry Text="{Binding DailyRate}"
+                   Placeholder="0.00"
+                   Keyboard="Numeric"/>
+
+            <Label Text="Category"
+                   FontAttributes="Bold"/>
+            <Picker
+              ItemsSource="{Binding Categories}"
+              SelectedItem="{Binding SelectedCategory}"
+              ItemDisplayBinding="{Binding Name}"/>
+            <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+              <CheckBox IsChecked="{Binding UseMyLocation}"/>
+              <Label Text="Use My Location"
+                     VerticalOptions="Center"
+                     FontAttributes="Bold"/>
+            </StackLayout>
+
+            <Label Text="Latitude"
+                   FontAttributes="Bold"/>
+            <Entry Text="{Binding Latitude}"
+                   Placeholder="Enter latitude"
+                   Keyboard="Numeric"/>
+
+            <Label Text="Longitude"
+                   FontAttributes="Bold"/>
+            <Entry Text="{Binding Longitude}"
+                   Placeholder="Enter longitude"
+                   Keyboard="Numeric"/>
+          </StackLayout>
+        </Border>
+      </StackLayout>
+
+      <StackLayout Grid.Row="2"
+                   Orientation="Horizontal"
+                   Spacing="15">
+        <Button
+          Text="Back"
+          Command="{Binding NavigateBackCommand}"
+          BackgroundColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray700}}"
+          TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}"
+          CornerRadius="8"
+          HeightRequest="50"
+          HorizontalOptions="FillAndExpand"/>
+        <Button
+          Text="Save"
+          Command="{Binding SaveItemCommand}"
+          BackgroundColor="{StaticResource Primary}"
+          TextColor="White"
+          CornerRadius="8"
+          HeightRequest="50"
+          HorizontalOptions="FillAndExpand"/>
+      </StackLayout>
+    </Grid>
+  </ScrollView>
+</ContentPage>
