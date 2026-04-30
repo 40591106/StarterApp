@@ -84,6 +84,9 @@
                 <Label Text="{Binding Category}"
                        FontSize="12"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
+                <Label Text="{Binding Distance, StringFormat='{0:F1} km away'}"
+                       FontSize="12"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
               </StackLayout>
               <Label Grid.Column="1"
                      Text="{Binding DailyRate, StringFormat='£{0:F2}/day'}"
@@ -91,10 +94,6 @@
                      FontAttributes="Bold"
                      VerticalOptions="Center"
                      TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
-              <Label Text="{Binding Distance, StringFormat='{0:F1} km away'}"
-                     FontSize="12"
-                     IsVisible="{Binding Distance, Converter={StaticResource StringToBoolConverter}}"
-                     TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"/>
             </Grid>
           </Border>
         </DataTemplate>
