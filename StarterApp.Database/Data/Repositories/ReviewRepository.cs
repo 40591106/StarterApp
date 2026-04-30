@@ -27,6 +27,10 @@ public class ReviewRepository : IReviewRepository
             var item =
                 await context.Items.FindAsync(itemId) ?? throw new Exception("Item not found");
 
+            var existing = await context.Reviews.FirstOrDefaultAsync(r => r.RentalId == rentalId);
+            if (existing != null)
+                throw new Exception("You have already reviewed this rental.");
+
             var reviewerName =
                 await context
                     .Users.Where(u => u.Id == reviewerId)
@@ -65,6 +69,13 @@ public class ReviewRepository : IReviewRepository
     public async Task<IEnumerable<Review>> GetByUserIdAsync(int userId)
     {
         using var context = _contextFactory.CreateDbContext();
-        return await context.Reviews.Where(r => r.ReviewerId == userId).ToListAsync();
+        var ownerItemIds = await context.Items
+            .Where(i => i.OwnerId == userId)
+            .Select(i => i.Id)
+            .ToListAsync();
+
+        return await context.Reviews
+            .Where(r => ownerItemIds.Contains(r.ItemId))
+            .ToListAsync();
     }
 }

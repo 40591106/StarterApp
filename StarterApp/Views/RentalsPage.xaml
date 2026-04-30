@@ -107,6 +107,13 @@
                   TextColor="White"/>
               </Grid>
 
+              <Button Text="Mark as Out for Rent"
+                      IsVisible="{Binding IsApprovedAndStarted}"
+                      Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RentalsViewModel}}, Path=MarkOutForRentCommand}"
+                      CommandParameter="{Binding}"
+                      BackgroundColor="#5C6BC0"
+                      TextColor="White"/>
+
               <Button
                 Text="Mark as Completed"
                 IsVisible="{Binding IsReturned}"

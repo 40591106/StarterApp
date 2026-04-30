@@ -51,6 +51,10 @@ public class RentalService : IRentalService
         await _rentalRepository.UpdateStatusAsync(rentalId, "Rejected");
     }
 
+    public async Task MarkOutForRentAsync(int rentalId)
+    {
+        await _rentalRepository.UpdateStatusAsync(rentalId, "Out for Rent");
+    }
     public async Task ReturnRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Returned");

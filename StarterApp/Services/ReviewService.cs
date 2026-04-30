@@ -22,12 +22,12 @@ public class ReviewService : IReviewService
     string comment,
     int rating
 )
-{
-    if (rating < 1 || rating > 5)
-        throw new Exception("Rating must be between 1 and 5.");
+    {
+        if (rating < 1 || rating > 5)
+            throw new Exception("Rating must be between 1 and 5.");
 
-    return await _reviewRepository.CreateAsync(rentalId, itemId, reviewerId, comment, rating);
-}
+        return await _reviewRepository.CreateAsync(rentalId, itemId, reviewerId, comment, rating);
+    }
 
     public async Task<IEnumerable<Review>> GetItemReviewsAsync(int itemId)
     {
@@ -39,5 +39,4 @@ public class ReviewService : IReviewService
         return await _reviewRepository.GetByUserIdAsync(userId);
     }
 
-    
 }

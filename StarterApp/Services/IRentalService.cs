@@ -16,4 +16,5 @@ public interface IRentalService
     Task ReturnRentalAsync(int rentalId);
     Task UpdateOutForRentAsync();
     Task CompleteRentalAsync(int rentalId);
+    Task MarkOutForRentAsync(int rentalId);
 }

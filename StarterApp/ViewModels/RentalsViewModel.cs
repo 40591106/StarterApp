@@ -37,12 +37,14 @@ public partial class RentalsViewModel : ObservableObject
     public RentalsViewModel(
         IRentalService rentalService,
         IRentalRepository rentalRepository,
-        IAuthenticationService authService
+        IAuthenticationService authService,
+        INavigationService navigationService
     )
     {
         _rentalService = rentalService;
         _rentalRepository = rentalRepository;
         _authService = authService;
+        _navigationService = navigationService;
         _ = Task.Run(LoadRentalsAsync);
     }
 
@@ -72,7 +74,7 @@ public partial class RentalsViewModel : ObservableObject
             var incoming = await _rentalRepository.GetIncomingAsync(currentUserId);
             var outgoing = await _rentalRepository.GetOutgoingAsync(currentUserId);
 
-            var activeStatuses = new[] { "Requested", "Approved", "Out for Rent", "Returned" };
+            var activeStatuses = new[] { "Requested", "Approved", "Out for Rent", "Returned", "Completed" };
 
             IncomingRentals = new ObservableCollection<Rental>(
                 incoming.Where(r => activeStatuses.Contains(r.Status))
@@ -124,6 +126,26 @@ public partial class RentalsViewModel : ObservableObject
         catch (Exception ex)
         {
             ErrorMessage = $"Error rejecting rental: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task MarkOutForRentAsync(Rental rental)
+    {
+        IsLoading = true;
+        ErrorMessage = string.Empty;
+        try
+        {
+            await _rentalService.MarkOutForRentAsync(rental.Id);
+            await LoadRentalsAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error updating rental: {ex.Message}";
         }
         finally
         {

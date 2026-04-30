@@ -36,7 +36,7 @@ public class ApiService : IApiService
         int page = 1
     )
     {
-        var query = $"items?page={page}";
+        var query = $"items?page={page}&pageSize=100";
         if (!string.IsNullOrEmpty(category))
             query += $"&category={category}";
         if (!string.IsNullOrEmpty(search))

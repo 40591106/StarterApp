@@ -6,6 +6,7 @@ using StarterApp.Services;
 namespace StarterApp.ViewModels;
 
 [QueryProperty(nameof(ItemId), "itemId")]
+[QueryProperty(nameof(RentalId), "rentalId")]
 public partial class CreateReviewViewModel : ObservableObject
 {
     private readonly IReviewService _reviewService;
@@ -18,10 +19,10 @@ public partial class CreateReviewViewModel : ObservableObject
     private int rentalId;
 
     [ObservableProperty]
-    private string comment;
-    
+    private string comment = string.Empty;
+
     [ObservableProperty]
-    private int rating;
+    private int rating = 5;
 
     [ObservableProperty]
     private string _errorMessage = string.Empty;
@@ -39,18 +40,20 @@ public partial class CreateReviewViewModel : ObservableObject
     [RelayCommand]
     private async Task SubmitReviewAsync()
     {
-        
         IsLoading = true;
         ErrorMessage = string.Empty;
         try
         {
             var reviewerId = _authService.CurrentUser?.Id ?? 0;
-            await _reviewService.SubmitReviewAsync(rentalId, ItemId, reviewerId, comment, rating);
+            await _reviewService.SubmitReviewAsync(RentalId, ItemId, reviewerId, Comment, Rating);
             await Shell.Current.GoToAsync("..");
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Error submitting request: {ex.Message}";
+            await Application.Current.MainPage.DisplayAlert(
+                "Error",
+                ex.Message,
+                "OK");
         }
         finally
         {

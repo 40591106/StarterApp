@@ -42,12 +42,13 @@ public class ItemRepository : IItemRepository
         using var context = _contextFactory.CreateDbContext();
         var item = await context.Items
             .Include(i => i.CategoryNavigation)
+            .Include(i => i.Owner)
             .FirstOrDefaultAsync(i => i.Id == id);
 
         if (item != null)
         {
             item.Category = item.CategoryNavigation?.Name;
-
+            item.OwnerName = item.Owner != null ? $"{item.Owner.FirstName} {item.Owner.LastName}" : string.Empty;
             var reviews = await context.Reviews
                 .Where(r => r.ItemId == id)
                 .ToListAsync();

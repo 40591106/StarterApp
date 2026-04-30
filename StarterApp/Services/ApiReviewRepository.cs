@@ -68,6 +68,10 @@ int reviewerId,
         return result?.Reviews ?? Enumerable.Empty<Review>();
     }
 
+    public Task<IEnumerable<Review>> GetByRentalIdAsync(int rentalId)
+    {
+        return Task.FromResult(Enumerable.Empty<Review>());
+    }
     private record ReviewsResponse(List<Review> Reviews, int TotalReviews);
 
     private record ErrorResponse(string Message);
