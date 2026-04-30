@@ -30,11 +30,11 @@ jobs:
     - name: Build Migrations
       run: dotnet build RentalApp.Migrations/RentalApp.Migrations.csproj --no-restore -c Debug
 
-      - name: Restore Test project
-  run: dotnet restore RentalApp.Test/RentalApp.Test.csproj
+    - name: Restore Test project
+      run: dotnet restore RentalApp.Test/RentalApp.Test.csproj
 
-- name: Build Test project
-  run: dotnet build RentalApp.Test/RentalApp.Test.csproj --no-restore -c Debug
+    - name: Build Test project
+      run: dotnet build RentalApp.Test/RentalApp.Test.csproj --no-restore -c Debug
 
-- name: Run Tests
-  run: dotnet test RentalApp.Test/RentalApp.Test.csproj --no-build -c Debug --settings RentalApp.Test/coverage.runsettings
+    - name: Run Tests
+      run: dotnet test RentalApp.Test/RentalApp.Test.csproj --no-build -c Debug --settings RentalApp.Test/coverage.runsettings
