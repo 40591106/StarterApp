@@ -19,22 +19,21 @@ public class ApiItemRepository : IItemRepository
     public async Task<Item?> GetByIdAsync(int id) => await _apiService.GetItemByIdAsync(id);
 
     public async Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm) =>
-        await _apiService.GetItemsAsync(); // TODO: replace with GetNearbyItemsAsync in Week 2
-
+    await _apiService.GetNearbyItemsAsync(lat, lon, radiusKm);
     public async Task<List<Category>> GetCategoriesAsync() =>
         await _apiService.GetCategoriesAsync();
 
     public async Task<Item> CreateAsync(Item item) =>
         await _apiService.CreateItemAsync(
-            new CreateItemRequest(
-                item.Title,
-                item.Description,
-                item.DailyRate,
-                item.CategoryId,
-                55.9533, // TODO: replace with GPS latitude in Week 2
-                -3.1883
-            )
-        ); // TODO: replace with GPS longitude in Week 2
+    new CreateItemRequest(
+        item.Title,
+        item.Description,
+        item.DailyRate,
+        item.CategoryId,
+        item.Latitude ?? 55.9533,
+        item.Longitude ?? -3.1883
+    )
+);
 
     public async Task UpdateAsync(Item item) =>
         await _apiService.UpdateItemAsync(

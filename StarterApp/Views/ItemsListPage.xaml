@@ -7,6 +7,9 @@
   xmlns:models="clr-namespace:StarterApp.Database.Models;assembly=StarterApp.Database"
   x:DataType="vm:ItemsListViewModel"
   Title="Items">
+  <Shell.BackButtonBehavior>
+    <BackButtonBehavior Command="{Binding NavigateToMainCommand}"/>
+  </Shell.BackButtonBehavior>
   <ContentPage.ToolbarItems>
     <ToolbarItem
       Text="Add Item"

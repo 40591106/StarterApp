@@ -119,6 +119,21 @@ public class ApiService : IApiService
         return result?.Categories ?? new List<Category>();
     }
 
+    public async Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radiusKm)
+    {
+        System.Diagnostics.Debug.WriteLine($"NEARBY URL: items/nearby?lat={lat}&lon={lon}&radius={radiusKm}");
+        var response = await _httpClient.GetAsync(
+            $"items/nearby?lat={lat}&lon={lon}&radius={radiusKm}");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<NearbyItemsResponse>();
+        return result?.Items ?? new List<Item>();
+    }
+    private record NearbyItemsResponse(List<Item> Items, int TotalResults);
     private record ItemsListResponse(List<Item> Items, int TotalItems, int Page, int PageSize);
 
     private record CategoriesResponse(List<Category> Categories);

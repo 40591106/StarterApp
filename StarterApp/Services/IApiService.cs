@@ -17,7 +17,7 @@ public interface IApiService
     Task<Item> UpdateItemAsync(int id, UpdateItemRequest request);
 
     // Nearby Items (Week 2)
-    //Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radius = 5.0, string? category = null);
+    Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radiusKm);
 
     // Categories (Week 1)
     Task<List<Category>> GetCategoriesAsync();

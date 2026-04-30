@@ -34,7 +34,20 @@ public class ItemRepository : IItemRepository
     public async Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm)
     {
         using var context = _contextFactory.CreateDbContext();
-        return await context.Items.ToListAsync();
+        var radiusMetres = radiusKm * 1000;
+
+        return await context.Items
+            .FromSqlRaw(@"
+            SELECT * FROM items
+            WHERE ""Latitude"" IS NOT NULL 
+            AND ""Longitude"" IS NOT NULL
+            AND ST_DWithin(
+                ST_MakePoint(""Longitude"", ""Latitude"")::geography,
+                ST_MakePoint({0}, {1})::geography,
+                {2}
+            )", lon, lat, radiusMetres)
+            .Include(i => i.CategoryNavigation)
+            .ToListAsync();
     }
 
     public async Task<Item?> GetByIdAsync(int id)

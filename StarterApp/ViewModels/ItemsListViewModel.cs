@@ -64,6 +64,11 @@ public partial class ItemsListViewModel : ObservableObject
         Categories = new ObservableCollection<Category>(categories);
     }
 
+    [RelayCommand]
+    private async Task NavigateToMainAsync()
+    {
+        await _navigationService.NavigateToAsync("//MainPage");
+    }
     private async Task LoadItemsAsync()
     {
         var items = await _itemRepository.GetAllAsync(

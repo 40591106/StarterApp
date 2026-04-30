@@ -13,6 +13,7 @@ public partial class CreateItemViewModel : ObservableObject
     private readonly IItemRepository _itemRepository;
     private readonly IAuthenticationService _authService;
     private readonly INavigationService _navigationService;
+    private readonly ILocationService _locationService;
 
     private Item? _currentItem;
 
@@ -52,6 +53,8 @@ public partial class CreateItemViewModel : ObservableObject
     [ObservableProperty]
     private string _successMessage = string.Empty;
 
+    [ObservableProperty]
+    private bool _useMyLocation;
     public string PageTitle => IsNewItem ? "Create New Item" : "Edit Item";
 
     private int _itemId;
@@ -72,12 +75,14 @@ public partial class CreateItemViewModel : ObservableObject
     public CreateItemViewModel(
         IItemRepository itemRepository,
         IAuthenticationService authService,
-        INavigationService navigationService
+        INavigationService navigationService,
+        ILocationService locationService
     )
     {
         _itemRepository = itemRepository;
         _authService = authService;
         _navigationService = navigationService;
+        _locationService = locationService;
 
         SaveItemCommand = new AsyncRelayCommand(SaveItemAsync);
         NavigateBackCommand = new AsyncRelayCommand(NavigateBackAsync);
@@ -142,6 +147,7 @@ public partial class CreateItemViewModel : ObservableObject
         {
             if (IsNewItem)
             {
+                System.Diagnostics.Debug.WriteLine($"SAVING LAT: {Latitude}, LON: {Longitude}");
                 var item = new Item
                 {
                     Title = Title.Trim(),
@@ -180,6 +186,21 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+
+
+    partial void OnUseMyLocationChanged(bool value)
+    {
+        if (value) _ = Task.Run(async () =>
+        {
+            var location = await _locationService.GetCurrentLocationAsync();
+            if (location != null)
+            {
+                Latitude = location.Value.Latitude;
+                Longitude = location.Value.Longitude;
+            }
+        });
+    }
     private async Task NavigateBackAsync()
     {
         await _navigationService.NavigateToAsync("ItemsListPage");
