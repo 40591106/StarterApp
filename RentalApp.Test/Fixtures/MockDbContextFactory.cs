@@ -5,12 +5,12 @@ namespace RentalApp.Test.Fixtures;
 
 public class MockDbContextFactory : IDbContextFactory<AppDbContext>
 {
-    private readonly AppDbContext _context;
+    private readonly DbContextOptions<AppDbContext> _options;
 
-    public MockDbContextFactory(AppDbContext context)
+    public MockDbContextFactory(DbContextOptions<AppDbContext> options)
     {
-        _context = context;
+        _options = options;
     }
 
-    public AppDbContext CreateDbContext() => _context;
+    public AppDbContext CreateDbContext() => new AppDbContext(_options);
 }

@@ -1,0 +1,56 @@
+Summary
+  Generated on: 4/30/2026 - 7:55:06 PM
+  Coverage date: 4/30/2026 - 7:53:03 PM
+  Parser: Cobertura
+  Assemblies: 2
+  Classes: 32
+  Files: 31
+  Line coverage: 44.4%
+  Covered lines: 572
+  Uncovered lines: 715
+  Coverable lines: 1287
+  Total lines: 2685
+  Branch coverage: 32.3% (55 of 170)
+  Covered branches: 55
+  Total branches: 170
+  Method coverage: 46% (121 of 263)
+  Full method coverage: 41.4% (109 of 263)
+  Covered methods: 121
+  Fully covered methods: 109
+  Total methods: 263
+
+RentalApp                                                   32%
+  RentalApp.Services.AuthenticationResult                    0%
+  RentalApp.Services.AuthResult                              0%
+  RentalApp.Services.AuthStateChangedEventArgs               0%
+  RentalApp.Services.CreateItemRequest                       0%
+  RentalApp.Services.RentalService                         100%
+  RentalApp.Services.ReviewService                         100%
+  RentalApp.Services.UpdateItemRequest                       0%
+  RentalApp.ViewModels.AppShellViewModel                     0%
+  RentalApp.ViewModels.BaseViewModel                         0%
+  RentalApp.ViewModels.CreateItemViewModel                   0%
+  RentalApp.ViewModels.CreateRentalViewModel                 0%
+  RentalApp.ViewModels.CreateReviewViewModel                 0%
+  RentalApp.ViewModels.ItemDetailViewModel                53.6%
+  RentalApp.ViewModels.ItemsListViewModel                   76%
+  RentalApp.ViewModels.LoginViewModel                        0%
+  RentalApp.ViewModels.MainViewModel                         0%
+  RentalApp.ViewModels.NearbyItemsViewModel               82.2%
+  RentalApp.ViewModels.ProfileViewModel                      0%
+  RentalApp.ViewModels.RegisterViewModel                     0%
+  RentalApp.ViewModels.RentalsViewModel                   68.4%
+  RentalApp.ViewModels.ReviewsViewModel                    100%
+
+RentalApp.Database                                        71.4%
+  RentalApp.Database.Data.AppDbContext                    85.2%
+  RentalApp.Database.Data.Repositories.ItemRepository     60.6%
+  RentalApp.Database.Data.Repositories.RentalRepository    100%
+  RentalApp.Database.Data.Repositories.ReviewRepository    100%
+  RentalApp.Database.Models.Category                       100%
+  RentalApp.Database.Models.Item                          94.4%
+  RentalApp.Database.Models.Rental                        54.5%
+  RentalApp.Database.Models.Review                         100%
+  RentalApp.Database.Models.Role                             0%
+  RentalApp.Database.Models.User                          83.3%
+  RentalApp.Database.Models.UserRole                         0%

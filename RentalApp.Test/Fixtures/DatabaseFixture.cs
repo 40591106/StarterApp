@@ -6,17 +6,22 @@ namespace RentalApp.Test.Fixtures;
 public class DatabaseFixture : IDisposable
 {
     public AppDbContext Context { get; private set; }
+    public DbContextOptions<AppDbContext> Options { get; private set; }
+    // In DatabaseFixture.cs
+    public AppDbContext CreateFreshContext() => new AppDbContext(Options);
 
     public DatabaseFixture()
     {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+        Options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
-        Context = new AppDbContext(options);
+        Context = new AppDbContext(Options);
         Context.Database.EnsureCreated();
         SeedData();
     }
+    // rest stays the same
+
 
     private void SeedData()
     {

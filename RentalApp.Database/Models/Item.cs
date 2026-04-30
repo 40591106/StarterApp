@@ -27,6 +27,7 @@ public class Item
     public Category? CategoryNavigation { get; set; }
     public double? Longitude { get; set; } = 0.0;
     public double? Latitude { get; set; } = 0.0;
+    [NotMapped]
     public double? Distance { get; set; }
     public bool IsAvailable { get; set; } = true;
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
