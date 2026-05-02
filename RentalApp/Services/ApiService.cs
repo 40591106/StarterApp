@@ -4,6 +4,7 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
+// Service for communicating with the shared API, handling item retrieval, creation, updates, and fetching categories and nearby items.
 public class ApiService : IApiService
 {
     private readonly HttpClient _httpClient;
@@ -133,8 +134,131 @@ public class ApiService : IApiService
         var result = await response.Content.ReadFromJsonAsync<NearbyItemsResponse>();
         return result?.Items ?? new List<Item>();
     }
+
+    public async Task<Rental> RequestRentalAsync(int itemId, DateTime startDate, DateTime endDate)
+    {
+        await SetAuthHeader();
+        var request = new
+        {
+            itemId,
+            startDate = startDate.ToString("yyyy-MM-dd"),
+            endDate = endDate.ToString("yyyy-MM-dd")
+        };
+        var response = await _httpClient.PostAsJsonAsync("rentals", request);
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+            throw new Exception(error?.Message ?? "Failed to create rental request");
+        }
+        return await response.Content.ReadFromJsonAsync<Rental>()
+            ?? throw new Exception("Invalid response");
+    }
+
+    public async Task<IEnumerable<Rental>> GetIncomingRentalsAsync()
+    {
+        await SetAuthHeader();
+        var response = await _httpClient.GetAsync("rentals/incoming");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<RentalsResponse>();
+        return result?.Rentals ?? Enumerable.Empty<Rental>();
+    }
+
+    public async Task<IEnumerable<Rental>> GetOutgoingRentalsAsync()
+    {
+        await SetAuthHeader();
+        var response = await _httpClient.GetAsync("rentals/outgoing");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<RentalsResponse>();
+        return result?.Rentals ?? Enumerable.Empty<Rental>();
+    }
+
+    public async Task UpdateRentalStatusAsync(int rentalId, string status)
+    {
+        await SetAuthHeader();
+        var request = new { status };
+        var response = await _httpClient.PatchAsJsonAsync($"rentals/{rentalId}/status", request);
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+            throw new Exception(error?.Message ?? "Failed to update rental status");
+        }
+    }
+
+    public Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId)
+    {
+        return Task.FromResult(Enumerable.Empty<Rental>());
+    }
+
+    public async Task<Review> CreateReviewAsync(int rentalId, int itemId, int reviewerId, string comment, int rating)
+    {
+        await SetAuthHeader();
+        var request = new { rentalId, rating, comment };
+        var response = await _httpClient.PostAsJsonAsync("reviews", request);
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+            throw new Exception(error?.Message ?? "Failed to create review");
+        }
+        return await response.Content.ReadFromJsonAsync<Review>()
+            ?? throw new Exception("Invalid response");
+    }
+
+    public async Task<IEnumerable<Review>> GetItemReviewsAsync(int itemId)
+    {
+        await SetAuthHeader();
+        var response = await _httpClient.GetAsync($"items/{itemId}/reviews");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ReviewsResponse>();
+        return result?.Reviews ?? Enumerable.Empty<Review>();
+    }
+
+    public async Task<IEnumerable<Review>> GetUserReviewsAsync(int userId)
+    {
+        await SetAuthHeader();
+        var response = await _httpClient.GetAsync($"users/{userId}/reviews");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await HandleUnauthorizedAsync();
+            throw new Exception("Session expired. Please log in again.");
+        }
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ReviewsResponse>();
+        return result?.Reviews ?? Enumerable.Empty<Review>();
+    }
     private record NearbyItemsResponse(List<Item> Items, int TotalResults);
     private record ItemsListResponse(List<Item> Items, int TotalItems, int Page, int PageSize);
+    private record RentalsResponse(List<Rental> Rentals, int TotalRentals);
+    private record ReviewsResponse(List<Review> Reviews, int TotalReviews);
 
     private record CategoriesResponse(List<Category> Categories);
 

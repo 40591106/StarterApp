@@ -4,25 +4,33 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
+// Repository for managing items by communicating with the shared API, handling CRUD operations and fetching item data.
 public class ApiItemRepository : IItemRepository
 {
     private readonly IApiService _apiService;
 
+    // Initializes the repository with the API service
     public ApiItemRepository(IApiService apiService)
     {
         _apiService = apiService;
     }
 
+    // Gets all items, optionally filtered by category or search term.
     public async Task<List<Item>> GetAllAsync(string? category = null, string? search = null) =>
         await _apiService.GetItemsAsync(category: category, search: search);
 
+    // Gets an item by its ID.
     public async Task<Item?> GetByIdAsync(int id) => await _apiService.GetItemByIdAsync(id);
 
+    // Gets nearby items based on location and radius.
     public async Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm) =>
     await _apiService.GetNearbyItemsAsync(lat, lon, radiusKm);
+
+    // Gets all categories available for items.
     public async Task<List<Category>> GetCategoriesAsync() =>
         await _apiService.GetCategoriesAsync();
 
+    // Creates a new item by sending the item details to the API.
     public async Task<Item> CreateAsync(Item item) =>
         await _apiService.CreateItemAsync(
     new CreateItemRequest(
@@ -33,8 +41,9 @@ public class ApiItemRepository : IItemRepository
         item.Latitude ?? 55.9533,
         item.Longitude ?? -3.1883
     )
-);
+    );
 
+    // Updates an existing item by sending the updated details to the API.
     public async Task UpdateAsync(Item item) =>
         await _apiService.UpdateItemAsync(
             item.Id,

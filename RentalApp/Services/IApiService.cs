@@ -4,35 +4,27 @@ namespace RentalApp.Services;
 
 public interface IApiService
 {
-    // Authentication (handled by ApiAuthenticationService)
-    //Task<User> RegisterAsync(string firstName, string lastName, string email, string password);
-    //Task<AuthToken> LoginAsync(string email, string password);
-    //Task<User> GetCurrentUserAsync();
-    //Task<User> GetUserProfileAsync(int userId);
-
-    // Items (Week 1)
+    // Items
     Task<List<Item>> GetItemsAsync(string? category = null, string? search = null, int page = 1);
     Task<Item?> GetItemByIdAsync(int id);
     Task<Item> CreateItemAsync(CreateItemRequest request);
     Task<Item> UpdateItemAsync(int id, UpdateItemRequest request);
-
-    // Nearby Items (Week 2)
     Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radiusKm);
 
-    // Categories (Week 1)
+    // Categories
     Task<List<Category>> GetCategoriesAsync();
 
-    // Rentals (Week 3)
-    //Task<Rental> RequestRentalAsync(int itemId, DateTime startDate, DateTime endDate);
-    //Task<List<Rental>> GetIncomingRentalsAsync(string? status = null);
-    //Task<List<Rental>> GetOutgoingRentalsAsync(string? status = null);
-    //Task<Rental> GetRentalAsync(int id);
-    //Task UpdateRentalStatusAsync(int rentalId, string status);
+    // Rentals
+    Task<Rental> RequestRentalAsync(int itemId, DateTime startDate, DateTime endDate);
+    Task<IEnumerable<Rental>> GetIncomingRentalsAsync();
+    Task<IEnumerable<Rental>> GetOutgoingRentalsAsync();
+    Task UpdateRentalStatusAsync(int rentalId, string status);
+    Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId);
 
-    // Reviews (Week 4)
-    //Task<Review> CreateReviewAsync(int rentalId, int rating, string comment);
-    //Task<List<Review>> GetItemReviewsAsync(int itemId, int page = 1);
-    //Task<List<Review>> GetUserReviewsAsync(int userId, int page = 1);
+    // Reviews
+    Task<Review> CreateReviewAsync(int rentalId, int itemId, int reviewerId, string comment, int rating);
+    Task<IEnumerable<Review>> GetItemReviewsAsync(int itemId);
+    Task<IEnumerable<Review>> GetUserReviewsAsync(int userId);
 }
 
 public record CreateItemRequest(

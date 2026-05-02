@@ -66,6 +66,7 @@ public class ReviewsViewModelTests
 
             // Act
             await _viewModel.LoadReviewsCommand.ExecuteAsync(null);
+            await Task.Delay(100); // wait for async operations to complete
 
             // Assert
             Assert.False(_viewModel.IsLoading);

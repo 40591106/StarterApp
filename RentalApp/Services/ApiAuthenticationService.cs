@@ -1,9 +1,12 @@
+// Authentication service that interacts with the shared API for login and registration.
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
+
+// Implements authentication by communicating with the shared API, handling login, registration, and logout.
 public class ApiAuthenticationService : IAuthenticationService
 {
     private readonly HttpClient _httpClient;
@@ -21,6 +24,7 @@ public class ApiAuthenticationService : IAuthenticationService
         _httpClient = httpClient;
     }
 
+    // Logs in the user by sending credentials to the API, storing the token, and fetching the user profile.
     public async Task<AuthenticationResult> LoginAsync(string email, string password)
     {
         try
@@ -62,6 +66,7 @@ public class ApiAuthenticationService : IAuthenticationService
         }
     }
 
+    // Registers a new user by sending their details to the API.
     public async Task<AuthenticationResult> RegisterAsync(
         string firstName,
         string lastName,
@@ -96,6 +101,7 @@ public class ApiAuthenticationService : IAuthenticationService
         }
     }
 
+    // Logs out the user by clearing the token and resetting the authentication state.
     public Task LogoutAsync()
     {
         _currentUser = null;
@@ -115,12 +121,12 @@ public class ApiAuthenticationService : IAuthenticationService
 
     public Task<bool> ChangePasswordAsync(string currentPassword, string newPassword)
     {
-        // Not supported by the shared API
         return Task.FromResult(false);
     }
 
     // --- API response DTOs ---
 
+    // These records represent the expected structure of responses from the API for authentication and user profile requests.
     private record TokenResponse(string Token, DateTime ExpiresAt, int UserId);
 
     private record UserProfileResponse(

@@ -1,5 +1,6 @@
 name: Build
 
+/// Workflow is triggered on pushes and pull requests to the main branch
 on:
   push:
     branches: [ main ]

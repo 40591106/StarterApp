@@ -1,91 +1,145 @@
----
-title: "RentalApp readme"
-parent: RentalApp
-grand_parent: C# practice
-nav_order: 5
-mermaid: true
----
+# RentalApp - Library of Things Peer-to-Peer Rental Marketplace
 
-# RentalApp
+A .NET MAUI mobile application that allows community members to list items for rent, discover nearby items using location-based search, manage rental requests, and leave reviews.
 
-The purpose of this app is to act as a starting point for further development. It provides some
-basic features including:
+## Features
 
-* Database integration and migrations
-* Role-based security
-* Local authentication
-* Example navigation
+### Tier 1 - Core Features
+- User authentication (local and API-based)
+- Item listing with title, description, daily rate, category and location
+- Browse and search items by category or keyword
+- View detailed item information including reviews and ratings
+- Submit rental requests
 
-This version of the app uses PostgreSQL for data storage and Entity Framework Core for object-relational mapping
-and migrations.
+### Tier 2 - Intermediate Features
+- Location-based item discovery using GPS (find items within configurable radius)
+- Full rental workflow (Requested → Approved/Rejected → Out for Rent → Returned → Completed)
+- Double-booking prevention
+- Approve/reject rental requests (owner side)
+- Submit and view reviews after completed rentals
 
-To fully understand how it works, you should follow an appropriate set of tutorials such as 
-[this one](https://edinburgh-napier.github.io/SET09102/tutorials/csharp/) which covers all of the main
-concepts and techniques used here. However, if you want to jump straight in and work out any problems
-as you go along, that will also work. The code uses structured comments for use with the 
-[Doxygen](https://www.doxygen.nl/) documentation generator tool. 
+## Architecture
 
-You can use any development environment with this project including
+The project follows a clean architecture with three projects:
+RentalApp/
+├── RentalApp/                  # Main MAUI project (Views, ViewModels, Services)
+├── RentalApp.Database/         # Shared library (Models, Repositories, DbContext)
+├── RentalApp.Migrations/       # EF Core migrations
+└── RentalApp.Test/             # xUnit test project
 
-* [Rider](https://www.jetbrains.com/rider/)
-* [Visual Studio](https://visualstudio.microsoft.com/)
-* [Visual Studio Code](https://code.visualstudio.com/)
-
-The instructions assume you will be using VSCode since that is a lowest-common-denominator choice.
+**Design patterns used:**
+- MVVM (Model-View-ViewModel)
+- Repository Pattern
+- Service Layer
 
 ## Compatibility
 
-This app is built using the following tool versions.
+| Name | Version |
+|---|---|
+| .NET | 10.0 |
+| .NET MAUI | 10.0 |
+| PostgreSQL | 16 |
+| xUnit | 2.x |
 
-| Name                                                                                      | Version     |
-|-------------------------------------------------------------------------------------------|-------------|
-| [.NET](https://dotnet.microsoft.com/en-us/)                                               | 8.0 / 9.0   |
-| [PostgreSQL Docker image](https://hub.docker.com/_/postgres)                              | 16          |
+## Prerequisites
 
+1. **.NET SDK 10.0** installed
+2. **Docker Desktop** installed and running
+3. **Android Emulator** running with ADB server on host
+4. **VS Code** with C# Dev Kit extension
 
-## Getting started
+## Getting Started
 
-### Prerequisites
+### 1. Clone the repository
 
-Before using this app, ensure you have:
+```bash
+git clone <https://github.com/40591106/StarterApp.git>
+cd RentalApp
+```
 
-1. **.NET SDK 8.0** or later installed
-2. **Docker** installed and running
-3. **PostgreSQL container** running (see [dev-environment tutorial](https://edinburgh-napier.github.io/SET09102/tutorials/csharp/dev-environment/))
+### 2. Configure the database connection
 
-### Configuration
+Copy the template and update with your credentials:
 
-1. Copy `RentalApp.Database/appsettings.json.template` to `RentalApp.Database/appsettings.json`
-2. Update the connection string with your PostgreSQL credentials:
-   ```json
-   {
-     "ConnectionStrings": {
-       "DevelopmentConnection": "Host=localhost;Username=student_user;Password=password123;Database=RentalApp"
-     }
-   }
-   ```
+```bash
+cp RentalApp.Database/appsettings.json.template RentalApp.Database/appsettings.json
+```
 
-### Initial Setup
+Update `appsettings.json`:
 
-1. Navigate to the Migrations project and create the initial migration:
-   ```bash
-   cd RentalApp.Migrations
-   dotnet ef migrations add InitialCreate
-   ```
+```json
+{
+  "ConnectionStrings": {
+    "DevelopmentConnection": "Host=10.0.2.2:5432;Username=app_user;Password=app_password;Database=appdb"
+  }
+}
+```
 
-2. Apply the migration to create the database:
-   ```bash
-   dotnet ef database update
-   ```
+### 3. Start the Docker environment
 
-3. Build and run the application:
-   ```bash
-   cd ../RentalApp
-   dotnet build
-   dotnet run
-   ```
+```bash
+docker compose down -v   # Clean slate
+docker compose up -d     # Start containers
+```
 
-### Tutorial
+### 4. Open in VS Code Dev Container
 
-For a comprehensive guide on using this app and understanding its architecture, see the
-[MAUI + MVVM + Database Tutorial](https://edinburgh-napier.github.io/SET09102/tutorials/csharp/maui-mvvm-database/).
+Open the project folder in VS Code and click **Reopen in Container** when prompted.
+
+### 5. Build the project
+
+```bash
+dotnet clean
+dotnet build -c Debug
+```
+
+### 6. Install and run on emulator
+
+```bash
+adb uninstall com.companyname.rentalapp
+adb install -r bin/Debug/net10.0-android/com.companyname.rentalapp-Signed.apk
+```
+
+## Running Tests
+
+```bash
+dotnet test RentalApp.Test/RentalApp.Test.csproj
+```
+
+To generate a coverage report:
+
+```bash
+dotnet test RentalApp.Test/RentalApp.Test.csproj --collect:"XPlat Code Coverage"
+reportgenerator \
+  -reports:"RentalApp.Test/TestResults/**/coverage.cobertura.xml" \
+  -targetdir:"coverage-report" \
+  -reporttypes:Html \
+  "-assemblyfilters:+RentalApp.Database" \
+  "-classfilters:-RentalApp.Database.Migrations.*"
+```
+
+Open `coverage-report/index.html` to view the full report.
+
+## API
+
+This app connects to the SET09102 API at:
+`https://set09102-api.b-davison.workers.dev`
+
+For full API documentation see the Swagger UI at the above URL.
+
+## CI/CD
+
+GitHub Actions workflow runs on every push to `main` and on pull requests:
+- Builds `RentalApp.Database`, `RentalApp.Migrations` and `RentalApp.Test`
+- Runs all 96 unit tests
+- Uploads test results as a build artifact
+
+## Testing
+
+The test suite covers:
+- **Repositories** — `ItemRepository`, `RentalRepository`, `ReviewRepository`
+- **Services** — `RentalService`, `ReviewService`  
+- **ViewModels** — `ItemsListViewModel`, `RentalsViewModel`, `NearbyItemsViewModel`, `ReviewsViewModel`, `ItemDetailViewModel`
+- **Mocking** — `MockLocationService` for GPS abstraction
+
+**Coverage:** 71.4% line coverage on `RentalApp.Database`
