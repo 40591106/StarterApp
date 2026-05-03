@@ -153,4 +153,4 @@ The test suite covers:
 - **ViewModels** — `ItemsListViewModel`, `RentalsViewModel`, `NearbyItemsViewModel`, `ReviewsViewModel`, `ItemDetailViewModel`
 - **Mocking** — `MockLocationService` for GPS abstraction
 
-**Coverage:** 70.1% line coverage on `RentalApp.Database`
+**Coverage:** 70.1% on RentalApp.Database, 64% full solution (via Codecov)
