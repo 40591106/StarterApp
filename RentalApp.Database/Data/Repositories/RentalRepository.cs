@@ -3,15 +3,18 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Database.Data.Repositories;
 
+// Repository implementation for rental persistence using the database context.
 public class RentalRepository : IRentalRepository
 {
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
 
+    // Initializes the rental repository with a database context factory.
     public RentalRepository(IDbContextFactory<AppDbContext> contextFactory)
     {
         _contextFactory = contextFactory;
     }
 
+    // Creates a rental record for the specified item and borrower.
     public async Task<Rental> CreateAsync(
         int itemId,
         DateTime startDate,
@@ -65,6 +68,7 @@ public class RentalRepository : IRentalRepository
         }
     }
 
+    // Gets incoming rental requests for the specified owner.
     public async Task<IEnumerable<Rental>> GetIncomingAsync(int userId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -74,6 +78,7 @@ public class RentalRepository : IRentalRepository
             .ToListAsync();
     }
 
+    // Gets outgoing rental requests for the specified borrower.
     public async Task<IEnumerable<Rental>> GetOutgoingAsync(int userId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -83,12 +88,14 @@ public class RentalRepository : IRentalRepository
             .ToListAsync();
     }
 
+    // Gets rentals associated with a specific item.
     public async Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId)
     {
         using var context = _contextFactory.CreateDbContext();
         return await context.Rentals.Where(r => r.ItemId == itemId).ToListAsync();
     }
 
+    // Updates the status of an existing rental record.
     public async Task UpdateStatusAsync(int rentalId, string status)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -99,6 +106,7 @@ public class RentalRepository : IRentalRepository
         await context.SaveChangesAsync();
     }
 
+    // Gets all active rentals that are requested, approved, or out for rent.
     public async Task<IEnumerable<Rental>> GetAllActiveAsync()
     {
         using var context = _contextFactory.CreateDbContext();
@@ -107,5 +115,12 @@ public class RentalRepository : IRentalRepository
                 r.Status == "Approved" || r.Status == "Out for Rent" || r.Status == "Requested"
             )
             .ToListAsync();
+    }
+
+    // Gets a rental by its ID.
+    public async Task<Rental?> GetByIdAsync(int id)
+    {
+        using var context = _contextFactory.CreateDbContext();
+        return await context.Rentals.FindAsync(id);
     }
 }

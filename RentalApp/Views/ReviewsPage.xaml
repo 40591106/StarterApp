@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:vm="clr-namespace:RentalApp.ViewModels"
   Title="Reviews">
+  <!-- Reviews page displaying feedback for rental items. -->
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Refresh"
                  Command="{Binding LoadReviewsCommand}"/>

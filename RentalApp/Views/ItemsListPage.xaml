@@ -7,6 +7,7 @@
   xmlns:models="clr-namespace:RentalApp.Database.Models;assembly=RentalApp.Database"
   x:DataType="vm:ItemsListViewModel"
   Title="Items">
+  <!-- Items list page showing searchable and filterable items. -->
   <Shell.BackButtonBehavior>
     <BackButtonBehavior Command="{Binding NavigateToMainCommand}"/>
   </Shell.BackButtonBehavior>
@@ -29,6 +30,7 @@
               ItemsSource="{Binding Categories}"
               ItemDisplayBinding="{Binding Name}"
               SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"/>
+      <!-- Clear category filter button -->
       <Button Grid.Column="2"
               Text="X"
               Command="{Binding ClearCategoryCommand}"

@@ -72,6 +72,9 @@ public partial class CreateItemViewModel : ObservableObject
     public ICommand SaveItemCommand { get; }
     public ICommand NavigateBackCommand { get; }
 
+
+    /// Initializes a new instance of the CreateItemViewModel class.
+
     public CreateItemViewModel(
         IItemRepository itemRepository,
         IAuthenticationService authService,
@@ -90,12 +93,14 @@ public partial class CreateItemViewModel : ObservableObject
         _ = Task.Run(LoadCategoriesAsync); // load categories on startup for create mode
     }
 
+    // Loads categories asynchronously.
     private async Task LoadCategoriesAsync()
     {
         var categories = await _itemRepository.GetCategoriesAsync();
         Categories = categories;
     }
 
+    // Loads the item for editing asynchronously.
     private async Task LoadItemAsync()
     {
         if (_itemId == 0)
@@ -131,6 +136,7 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
+    // Saves the item asynchronously.
     private async Task SaveItemAsync()
     {
         ErrorMessage = string.Empty;
@@ -186,9 +192,7 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
-
-
+    // Handles the change of UseMyLocation property.
     partial void OnUseMyLocationChanged(bool value)
     {
         if (value) _ = Task.Run(async () =>
@@ -201,6 +205,8 @@ public partial class CreateItemViewModel : ObservableObject
             }
         });
     }
+
+    // Navigates back to the items list page asynchronously.
     private async Task NavigateBackAsync()
     {
         await _navigationService.NavigateToAsync("ItemsListPage");

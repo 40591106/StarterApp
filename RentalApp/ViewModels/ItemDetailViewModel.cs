@@ -45,6 +45,7 @@ public partial class ItemDetailViewModel : ObservableObject
     public ICommand NavigateToOwnerProfileAsyncCommand { get; }
 
 
+    // Initializes a new instance of the ItemDetailViewModel class.
     public ItemDetailViewModel(
         IItemRepository itemRepository,
         IAuthenticationService authService,
@@ -62,6 +63,7 @@ public partial class ItemDetailViewModel : ObservableObject
         NavigateToOwnerProfileAsyncCommand = new AsyncRelayCommand(NavigateToOwnerProfileAsync);
     }
 
+    // Loads the item details asynchronously.
     private async Task LoadItemAsync()
     {
         System.Diagnostics.Debug.WriteLine($"LOADING ITEM: {_itemId}");
@@ -85,12 +87,14 @@ public partial class ItemDetailViewModel : ObservableObject
         }
     }
 
+    // Navigates to the edit item page.
     private async Task NavigateToEditAsync()
     {
         System.Diagnostics.Debug.WriteLine("EDIT COMMAND FIRED");
         await _navigationService.NavigateToAsync($"CreateItemPage?itemId={_itemId}");
     }
 
+    // Navigates to the create rental page.
     private async Task NavigateToRentAsync()
     {
         System.Diagnostics.Debug.WriteLine("RENT COMMAND FIRED");
@@ -99,14 +103,19 @@ public partial class ItemDetailViewModel : ObservableObject
         );
     }
 
+    // Navigates back to the previous page.
     private async Task NavigateBackAsync()
     {
         await Shell.Current.GoToAsync("..");
     }
+
+    // Navigates to the reviews page for the item.
     private async Task NavigateToReviewsAsync()
     {
         await _navigationService.NavigateToAsync($"ReviewsPage?itemId={_itemId}");
     }
+
+    // Navigates to the owner's profile page.
     private async Task NavigateToOwnerProfileAsync()
     {
         await _navigationService.NavigateToAsync(

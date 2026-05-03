@@ -3,15 +3,18 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Database.Data.Repositories;
 
+// Repository implementation for item persistence using the database context.
 public class ItemRepository : IItemRepository
 {
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
 
+    // Initializes the item repository with a database context factory.
     public ItemRepository(IDbContextFactory<AppDbContext> contextFactory)
     {
         _contextFactory = contextFactory;
     }
 
+    // Gets all items from the database, optionally filtering by category or search term.
     public async Task<List<Item>> GetAllAsync(string? category = null, string? search = null)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -31,6 +34,7 @@ public class ItemRepository : IItemRepository
         return items;
     }
 
+    // Gets nearby items using a spatial query and calculates each item distance.
     public async Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -73,6 +77,7 @@ public class ItemRepository : IItemRepository
         return R * 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
     }
 
+    // Gets an item by ID including category and owner details.
     public async Task<Item?> GetByIdAsync(int id)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -98,12 +103,14 @@ public class ItemRepository : IItemRepository
         return item;
     }
 
+    // Gets all categories from the database.
     public async Task<List<Category>> GetCategoriesAsync()
     {
         using var context = _contextFactory.CreateDbContext();
         return await context.Categories.ToListAsync();
     }
 
+    // Creates a new item record in the database.
     public async Task<Item> CreateAsync(Item item)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -113,6 +120,7 @@ public class ItemRepository : IItemRepository
         return item;
     }
 
+    // Updates an existing item record in the database.
     public async Task UpdateAsync(Item item)
     {
         using var context = _contextFactory.CreateDbContext();

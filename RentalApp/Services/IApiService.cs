@@ -19,7 +19,7 @@ public interface IApiService
     Task<IEnumerable<Rental>> GetIncomingRentalsAsync();
     Task<IEnumerable<Rental>> GetOutgoingRentalsAsync();
     Task UpdateRentalStatusAsync(int rentalId, string status);
-    Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId);
+
 
     // Reviews
     Task<Review> CreateReviewAsync(int rentalId, int itemId, int reviewerId, string comment, int rating);

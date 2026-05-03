@@ -2,6 +2,7 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
+// Contract for authentication services supporting login, registration, and role checks.
 public interface IAuthenticationService
 {
     event EventHandler<bool>? AuthenticationStateChanged;

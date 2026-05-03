@@ -7,10 +7,9 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace RentalApp.ViewModels;
 
-/// @brief Base view model class that provides common properties and functionality
-/// @details Extends ObservableObject to provide property change notifications and includes
-/// common properties like IsBusy, Title, and error handling
-/// @extends ObservableObject
+
+// Base view model class that provides common properties and functionality.
+
 public partial class BaseViewModel : ObservableObject
 {
     /// @brief Indicates whether the view model is currently performing a busy operation
@@ -33,25 +32,21 @@ public partial class BaseViewModel : ObservableObject
     [ObservableProperty]
     private bool hasError;
 
-    /// @brief Sets an error message and updates the error state
-    /// @param message The error message to set
-    /// @details Updates both ErrorMessage and HasError properties
+    // Sets an error message and updates the error state.
     protected void SetError(string message)
     {
         ErrorMessage = message;
         HasError = !string.IsNullOrEmpty(message);
     }
 
-    /// @brief Clears the current error state
-    /// @details Resets both ErrorMessage and HasError properties
+    // Clears the current error state.
     protected void ClearError()
     {
         ErrorMessage = string.Empty;
         HasError = false;
     }
 
-    /// @brief Command to clear the current error state
-    /// @details Relay command that calls ClearError method
+    // Command to clear the current error state.
     [RelayCommand]
     private void ClearErrorCommand()
     {

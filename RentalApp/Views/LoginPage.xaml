@@ -6,6 +6,7 @@
   xmlns:vm="clr-namespace:RentalApp.ViewModels"
   Title="{Binding Title}"
   Shell.NavBarIsVisible="False">
+  <!-- Login page for user authentication and sign-in. -->
   <ContentPage.BindingContext>
     <vm:LoginViewModel/>
   </ContentPage.BindingContext>
@@ -120,6 +121,7 @@
       <StackLayout Grid.Row="7"
           Spacing="10"
           Margin="0,20,0,0">
+        <!-- Create account button -->
         <Button
           Text="Create Account"
           Command="{Binding NavigateToRegisterCommand}"
@@ -130,6 +132,7 @@
           HeightRequest="45"
           CornerRadius="8"/>
 
+        <!-- Forgot password button -->
         <Button
           Text="Forgot Password?"
           Command="{Binding ForgotPasswordCommand}"

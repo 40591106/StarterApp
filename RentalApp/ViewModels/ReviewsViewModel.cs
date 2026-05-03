@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using RentalApp.Database.Data.Repositories;
 using RentalApp.Database.Models;
 using RentalApp.Services;
 
@@ -11,8 +10,6 @@ namespace RentalApp.ViewModels;
 public partial class ReviewsViewModel : ObservableObject
 {
     private readonly IReviewService _reviewService;
-    private readonly IReviewRepository _reviewRepository;
-    private readonly IAuthenticationService _authService;
 
     [ObservableProperty]
     private int _itemId;
@@ -26,13 +23,19 @@ public partial class ReviewsViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Review> _reviews = new();
 
+    // Initializes a new instance of the ReviewsViewModel class.
     public ReviewsViewModel(IReviewService reviewService)
     {
         _reviewService = reviewService;
     }
 
+
+    // Handles the change of ItemId property by loading reviews asynchronously.
+
     partial void OnItemIdChanged(int value) => _ = Task.Run(LoadReviewsAsync);
 
+
+    // Loads reviews for the current item asynchronously.
     [RelayCommand]
     private async Task LoadReviewsAsync()
     {
@@ -53,5 +56,4 @@ public partial class ReviewsViewModel : ObservableObject
             IsLoading = false;
         }
     }
-
 }

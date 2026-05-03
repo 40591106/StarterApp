@@ -14,6 +14,7 @@ public class ApiService : IApiService
         _httpClient = httpClient;
     }
 
+    // Adds the stored auth token to outgoing API request headers.
     private async Task SetAuthHeader()
     {
         var token = await SecureStorage.GetAsync("auth_token");
@@ -24,6 +25,7 @@ public class ApiService : IApiService
             );
     }
 
+    // Clears auth state and navigates the user back to login when the API returns unauthorized.
     private async Task HandleUnauthorizedAsync()
     {
         SecureStorage.Remove("auth_token");
@@ -31,6 +33,7 @@ public class ApiService : IApiService
         await Shell.Current.GoToAsync("//LoginPage");
     }
 
+    // Get items with optional filtering by category and search term
     public async Task<List<Item>> GetItemsAsync(
         string? category = null,
         string? search = null,
@@ -54,6 +57,7 @@ public class ApiService : IApiService
         return result?.Items ?? new List<Item>();
     }
 
+    // Get a single item by ID
     public async Task<Item?> GetItemByIdAsync(int id)
     {
         var response = await _httpClient.GetAsync($"items/{id}");
@@ -71,6 +75,7 @@ public class ApiService : IApiService
         return item;
     }
 
+    // Create a new item
     public async Task<Item> CreateItemAsync(CreateItemRequest request)
     {
         await SetAuthHeader();
@@ -89,6 +94,7 @@ public class ApiService : IApiService
             ?? throw new Exception("Invalid response");
     }
 
+    // Update an existing item
     public async Task<Item> UpdateItemAsync(int id, UpdateItemRequest request)
     {
         await SetAuthHeader();
@@ -107,6 +113,7 @@ public class ApiService : IApiService
             ?? throw new Exception("Invalid response");
     }
 
+    // Get all categories
     public async Task<List<Category>> GetCategoriesAsync()
     {
         var response = await _httpClient.GetAsync("categories");
@@ -120,6 +127,7 @@ public class ApiService : IApiService
         return result?.Categories ?? new List<Category>();
     }
 
+    // Get nearby items based on location and radius
     public async Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radiusKm)
     {
         System.Diagnostics.Debug.WriteLine($"NEARBY URL: items/nearby?lat={lat}&lon={lon}&radius={radiusKm}");
@@ -135,6 +143,7 @@ public class ApiService : IApiService
         return result?.Items ?? new List<Item>();
     }
 
+    // Request a new rental
     public async Task<Rental> RequestRentalAsync(int itemId, DateTime startDate, DateTime endDate)
     {
         await SetAuthHeader();
@@ -159,6 +168,7 @@ public class ApiService : IApiService
             ?? throw new Exception("Invalid response");
     }
 
+    // Get incoming rentals
     public async Task<IEnumerable<Rental>> GetIncomingRentalsAsync()
     {
         await SetAuthHeader();
@@ -173,6 +183,7 @@ public class ApiService : IApiService
         return result?.Rentals ?? Enumerable.Empty<Rental>();
     }
 
+    // Get outgoing rentals
     public async Task<IEnumerable<Rental>> GetOutgoingRentalsAsync()
     {
         await SetAuthHeader();
@@ -187,6 +198,7 @@ public class ApiService : IApiService
         return result?.Rentals ?? Enumerable.Empty<Rental>();
     }
 
+    // Update the status of an existing rental
     public async Task UpdateRentalStatusAsync(int rentalId, string status)
     {
         await SetAuthHeader();
@@ -204,11 +216,13 @@ public class ApiService : IApiService
         }
     }
 
+    // Placeholder for retrieving rentals filtered by item ID, currently not supported by the API.
     public Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId)
     {
         return Task.FromResult(Enumerable.Empty<Rental>());
     }
 
+    // Create a new review
     public async Task<Review> CreateReviewAsync(int rentalId, int itemId, int reviewerId, string comment, int rating)
     {
         await SetAuthHeader();
@@ -228,6 +242,7 @@ public class ApiService : IApiService
             ?? throw new Exception("Invalid response");
     }
 
+    // Get reviews for a specific item
     public async Task<IEnumerable<Review>> GetItemReviewsAsync(int itemId)
     {
         await SetAuthHeader();
@@ -242,6 +257,7 @@ public class ApiService : IApiService
         return result?.Reviews ?? Enumerable.Empty<Review>();
     }
 
+    // Get reviews for a specific user
     public async Task<IEnumerable<Review>> GetUserReviewsAsync(int userId)
     {
         await SetAuthHeader();

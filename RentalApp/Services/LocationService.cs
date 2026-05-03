@@ -1,7 +1,9 @@
 namespace RentalApp.Services;
 
+// Location service that retrieves the current device coordinates when permission is granted.
 public class LocationService : ILocationService
 {
+    // Gets the current GPS location or returns null if unavailable.
     public async Task<(double Latitude, double Longitude)?> GetCurrentLocationAsync()
     {
         try

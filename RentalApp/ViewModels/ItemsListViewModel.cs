@@ -45,6 +45,7 @@ public partial class ItemsListViewModel : ObservableObject
     public ICommand NavigateToDetailCommand { get; }
     public ICommand NavigateToCreateCommand { get; }
 
+    // Initializes a new instance of the ItemsListViewModel class.
     public ItemsListViewModel(IItemRepository itemRepository, INavigationService navigationService)
     {
         _itemRepository = itemRepository;
@@ -58,17 +59,21 @@ public partial class ItemsListViewModel : ObservableObject
         });
     }
 
+    // Loads categories asynchronously.
     private async Task LoadCategoriesAsync()
     {
         var categories = await _itemRepository.GetCategoriesAsync();
         Categories = new ObservableCollection<Category>(categories);
     }
 
+    // Navigates to the main page.
     [RelayCommand]
     private async Task NavigateToMainAsync()
     {
         await _navigationService.NavigateToAsync("//MainPage");
     }
+
+    // Loads items asynchronously.
     private async Task LoadItemsAsync()
     {
         var items = await _itemRepository.GetAllAsync(
@@ -78,11 +83,13 @@ public partial class ItemsListViewModel : ObservableObject
         Items = new ObservableCollection<Item>(items);
     }
 
+    // Navigates to the item detail page.
     private async Task NavigateToDetailAsync(int id)
     {
         await _navigationService.NavigateToAsync($"ItemDetailPage?itemId={id}");
     }
 
+    // Navigates to the create item page.
     private async Task NavigateToCreateAsync()
     {
         await _navigationService.NavigateToAsync("CreateItemPage");

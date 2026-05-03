@@ -5,13 +5,14 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:vm="clr-namespace:RentalApp.ViewModels"
   Title="Profile">
+  <!-- Profile page for viewing and editing user account details. -->
 
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Back"
                  Command="{Binding NavigateBackCommand}"/>
   </ContentPage.ToolbarItems>
 
-  <Grid RowDefinitions="Auto,Auto,Auto,*"
+  <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"
         Padding="20"
         RowSpacing="10">
 
@@ -34,15 +35,21 @@
            HorizontalOptions="Center"
            Margin="0,0,0,10"/>
 
-    <!-- Reviews Header -->
     <Label Grid.Row="2"
+           Text="{Binding AverageRatingText}"
+           FontSize="16"
+           HorizontalOptions="Center"
+           Margin="0,0,0,10"/>
+
+    <!-- Reviews Header -->
+    <Label Grid.Row="3"
            Text="Reviews"
            FontSize="20"
            FontAttributes="Bold"
            Margin="0,10,0,5"/>
 
     <!-- Reviews List -->
-    <CollectionView Grid.Row="3"
+    <CollectionView Grid.Row="4"
                     ItemsSource="{Binding Reviews}">
       <CollectionView.EmptyView>
         <Label Text="No reviews yet."

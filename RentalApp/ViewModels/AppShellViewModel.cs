@@ -10,9 +10,7 @@ using RentalApp.Services;
 
 namespace RentalApp.ViewModels
 {
-    /// @brief View model for the application shell that manages navigation and authentication
-    /// @details Handles menu items, navigation commands, and authentication state changes
-    /// @extends BaseViewModel
+    // View model for the application shell that manages navigation and authentication.
     public partial class AppShellViewModel : BaseViewModel
     {
         /// @brief Authentication service for managing user authentication
@@ -25,17 +23,13 @@ namespace RentalApp.ViewModels
         /// @details Observable collection that can be modified at runtime based on user permissions
         public ObservableCollection<MenuBarItem> DynamicMenuBarItems { get; } = new();
 
-        /// @brief Default constructor for design-time support
-        /// @details Sets the title to "RentalApp"
+        // Default constructor for design-time support.
         public AppShellViewModel()
         {
             Title = "RentalApp";
         }
 
-        /// @brief Initializes a new instance of the AppShellViewModel class
-        /// @param authService The authentication service instance
-        /// @param navigationService The navigation service instance
-        /// @details Sets up authentication state change event handler and initializes the title
+        // Initializes a new instance of the AppShellViewModel class.
         public AppShellViewModel(
             IAuthenticationService authService,
             INavigationService navigationService
@@ -47,32 +41,24 @@ namespace RentalApp.ViewModels
             Title = "RentalApp";
         }
 
-        /// @brief Determines if guest actions can be executed
-        /// @return True if the current user has the "Guest" role
+        // Determines if guest actions can be executed.
         private bool CanExecuteGuestAction() => _authService.HasRole("Guest");
 
-        /// @brief Determines if user actions can be executed
-        /// @return True if the current user has the "OrdinaryUser" role
+        // Determines if user actions can be executed.
         private bool CanExecuteUserAction() => _authService.HasRole("OrdinaryUser");
-
-        /// @brief Determines if admin actions can be executed
-        /// @return True if the current user has the "Admin" role
+        /// Determines if admin actions can be executed.
         private bool CanExecuteAdminAction()
         {
             return _authService.HasRole("Admin");
         }
 
-        /// @brief Determines if authenticated actions can be executed
-        /// @return True if the user is authenticated
+        // Determines if authenticated actions can be executed.
         private bool CanExecuteAuthenticatedAction()
         {
             return _authService.IsAuthenticated;
         }
 
-        /// @brief Handles authentication state changes
-        /// @param sender The event sender
-        /// @param isAuthenticated Whether the user is authenticated
-        /// @details Updates command can-execute states and logs authentication information
+        // Handles authentication state changes.
         private void OnAuthenticationStateChanged(object? sender, bool isAuthenticated)
         {
             LogoutCommand.NotifyCanExecuteChanged();
@@ -82,25 +68,21 @@ namespace RentalApp.ViewModels
             Debug.WriteLine($"Current user is admin: {_authService.HasRole("Admin")}");
         }
 
-        /// @brief Navigates to the current user's profile page
-        /// @return A task representing the asynchronous navigation operation
+        // Navigates to the current user's profile page.
         [RelayCommand]
         private async Task NavigateToProfileAsync()
         {
             await _navigationService.NavigateToAsync("TempPage");
         }
 
-        /// @brief Navigates to the current user's settings page
-        /// @return A task representing the asynchronous navigation operation
+        // Navigates to the current user's settings page.
         [RelayCommand]
         private async Task NavigateToSettingsAsync()
         {
             await _navigationService.NavigateToAsync("TempPage");
         }
 
-        /// @brief Logs out the current user and navigates to login page
-        /// @details Relay command that can only be executed by authenticated users
-        /// @return A task representing the asynchronous logout operation
+        // Logs out the current user and navigates to login page.
         [RelayCommand(CanExecute = nameof(CanExecuteAuthenticatedAction))]
         private async Task LogoutAsync()
         {

@@ -9,9 +9,7 @@ using RentalApp.Services;
 
 namespace RentalApp.ViewModels;
 
-/// @brief View model for the main dashboard page
-/// @details Manages the main dashboard display, user information, and navigation to other sections
-/// @extends BaseViewModel
+// View model for the main dashboard page.
 public partial class MainViewModel : BaseViewModel
 {
     /// @brief Authentication service for managing user authentication
@@ -35,18 +33,14 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private bool isAdmin;
 
-    /// @brief Default constructor for design-time support
-    /// @details Sets the title to "Dashboard"
+    // Default constructor for design-time support.
     public MainViewModel()
     {
         // Default constructor for design time support
         Title = "Dashboard";
     }
 
-    /// @brief Initializes a new instance of the MainViewModel class
-    /// @param authService The authentication service instance
-    /// @param navigationService The navigation service instance
-    /// @details Sets up the required services, initializes the title, and loads user data
+    // Initializes a new instance of the MainViewModel class.
     public MainViewModel(IAuthenticationService authService, INavigationService navigationService)
     {
         _authService = authService;
@@ -56,8 +50,7 @@ public partial class MainViewModel : BaseViewModel
         LoadUserData();
     }
 
-    /// @brief Loads the current user's data and sets up the dashboard
-    /// @details Retrieves current user information and determines admin status
+    // Loads the current user's data and sets up the dashboard.
     private void LoadUserData()
     {
         CurrentUser = _authService.CurrentUser;

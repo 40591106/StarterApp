@@ -5,13 +5,14 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:vm="clr-namespace:RentalApp.ViewModels"
   Title="{Binding Title}">
+  <!-- Registration page for creating a new user account. -->
   <ContentPage.BindingContext>
     <vm:RegisterViewModel/>
   </ContentPage.BindingContext>
 
   <ScrollView>
     <Grid Padding="30"
-        RowSpacing="20">
+          RowSpacing="20">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
@@ -78,9 +79,9 @@
           <RoundRectangle CornerRadius="8"/>
         </Border.StrokeShape>
         <Entry Text="{Binding LastName}"
-            Placeholder="Last Name"
-            ReturnType="Next"
-            Margin="15,10"/>
+               Placeholder="Last Name"
+               ReturnType="Next"
+               Margin="15,10"/>
       </Border>
 
       <!-- Email Entry -->
@@ -136,12 +137,12 @@
 
       <!-- Terms and Conditions -->
       <StackLayout Grid.Row="7"
-          Orientation="Horizontal"
-          HorizontalOptions="Start">
+                   Orientation="Horizontal"
+                   HorizontalOptions="Start">
         <CheckBox IsChecked="{Binding AcceptTerms}"/>
         <Label Text="I accept the terms and conditions"
-            VerticalOptions="Center"
-            FontSize="14"/>
+               VerticalOptions="Center"
+               FontSize="14"/>
       </StackLayout>
 
       <!-- Register Button -->
@@ -159,13 +160,14 @@
 
       <!-- Footer -->
       <StackLayout Grid.Row="9"
-          Spacing="10"
-          Margin="0,20,0,0">
+                   Spacing="10"
+                   Margin="0,20,0,0">
         <ActivityIndicator
           IsVisible="{Binding IsBusy}"
           IsRunning="{Binding IsBusy}"
           Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
 
+        <!-- return to login button -->
         <Button
           Text="Already have an account? Login"
           Command="{Binding NavigateBackToLoginCommand}"

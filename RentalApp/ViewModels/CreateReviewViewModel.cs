@@ -31,12 +31,14 @@ public partial class CreateReviewViewModel : ObservableObject
     private bool _isLoading;
 
 
+    // Initializes a new instance of the CreateReviewViewModel class.
     public CreateReviewViewModel(IReviewService reviewService, IAuthenticationService authService)
     {
         _reviewService = reviewService;
         _authService = authService;
     }
 
+    // Submits the review asynchronously.
     [RelayCommand]
     private async Task SubmitReviewAsync()
     {
@@ -61,6 +63,7 @@ public partial class CreateReviewViewModel : ObservableObject
         }
     }
 
+    // Navigates back to the previous page.
     [RelayCommand]
     private async Task NavigateBackAsync()
     {

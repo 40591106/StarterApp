@@ -9,9 +9,7 @@ using RentalApp.Services;
 
 namespace RentalApp.ViewModels;
 
-/// @brief View model for the user registration page
-/// @details Manages user registration form data, validation, and registration process
-/// @extends BaseViewModel
+// View model for the user registration page.
 public partial class RegisterViewModel : BaseViewModel
 {
     /// @brief Authentication service for managing user registration
@@ -50,18 +48,14 @@ public partial class RegisterViewModel : BaseViewModel
     [ObservableProperty]
     private bool acceptTerms;
 
-    /// @brief Default constructor for design-time support
-    /// @details Sets the title to "Register"
+    // Default constructor for design-time support.
     public RegisterViewModel()
     {
         // Default constructor for design time support
         Title = "Register";
     }
 
-    /// @brief Initializes a new instance of the RegisterViewModel class
-    /// @param authService The authentication service instance
-    /// @param navigationService The navigation service instance
-    /// @details Sets up the required services and initializes the title
+    // Initializes a new instance of the RegisterViewModel class.
     public RegisterViewModel(
         IAuthenticationService authService,
         INavigationService navigationService
@@ -72,9 +66,7 @@ public partial class RegisterViewModel : BaseViewModel
         Title = "Register";
     }
 
-    /// @brief Registers a new user account
-    /// @details Relay command that validates form data and attempts to register the user
-    /// @return A task representing the asynchronous registration operation
+    // Registers a new user account.
     [RelayCommand]
     private async Task RegisterAsync()
     {
@@ -115,18 +107,14 @@ public partial class RegisterViewModel : BaseViewModel
         }
     }
 
-    /// @brief Navigates back to the login page
-    /// @details Relay command that returns to the login page
-    /// @return A task representing the asynchronous navigation operation
+    // Navigates back to the login page.
     [RelayCommand]
     private async Task NavigateBackToLoginAsync()
     {
         await _navigationService.NavigateBackAsync();
     }
 
-    /// @brief Validates the registration form data
-    /// @return True if validation passes, false otherwise
-    /// @details Checks all registration requirements and sets appropriate error messages
+    // Validates the registration form data.
     private bool ValidateForm()
     {
         if (string.IsNullOrWhiteSpace(FirstName))
@@ -180,10 +168,7 @@ public partial class RegisterViewModel : BaseViewModel
         return true;
     }
 
-    /// @brief Validates an email address format
-    /// @param email The email address to validate
-    /// @return True if the email format is valid, false otherwise
-    /// @details Uses regex pattern matching to validate email format
+    // Validates an email address format.
     private static bool IsValidEmail(string email)
     {
         const string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";

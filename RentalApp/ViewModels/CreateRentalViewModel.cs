@@ -32,12 +32,14 @@ public partial class CreateRentalViewModel : ObservableObject
 
     public decimal EstimatedTotal => (decimal)(EndDate - StartDate).Days * DailyRate;
 
+    // Initializes a new instance of the CreateRentalViewModel class.
     public CreateRentalViewModel(IRentalService rentalService, IAuthenticationService authService)
     {
         _RentalService = rentalService;
         _authService = authService;
     }
 
+    // Submits the rental request asynchronously.
     [RelayCommand]
     private async Task SubmitAsync()
     {
@@ -65,15 +67,19 @@ public partial class CreateRentalViewModel : ObservableObject
         }
     }
 
+    // Navigates back to the previous page.
     [RelayCommand]
     private async Task NavigateBackAsync()
     {
         await Shell.Current.GoToAsync("..");
     }
 
+    // Handles the change of StartDate property.
     partial void OnStartDateChanged(DateTime value) => OnPropertyChanged(nameof(EstimatedTotal));
 
+    // Handles the change of EndDate property.
     partial void OnEndDateChanged(DateTime value) => OnPropertyChanged(nameof(EstimatedTotal));
 
+    // Handles the change of DailyRate property.
     partial void OnDailyRateChanged(decimal value) => OnPropertyChanged(nameof(EstimatedTotal));
 }

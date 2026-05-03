@@ -28,6 +28,7 @@ public partial class NearbyItemsViewModel : ObservableObject
     [ObservableProperty]
     private string _locationStatus = string.Empty;
 
+    // Initializes a new instance of the NearbyItemsViewModel class.
     public NearbyItemsViewModel(
         IItemRepository itemRepository,
         ILocationService locationService,
@@ -38,6 +39,7 @@ public partial class NearbyItemsViewModel : ObservableObject
         _navigationService = navigationService;
     }
 
+    // Finds nearby items asynchronously.
     [RelayCommand]
     private async Task FindNearbyAsync()
     {
@@ -74,6 +76,7 @@ public partial class NearbyItemsViewModel : ObservableObject
         }
     }
 
+    // Navigates to the item detail page.
     [RelayCommand]
     private async Task NavigateToDetailAsync(int id)
     {

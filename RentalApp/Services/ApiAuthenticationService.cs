@@ -112,13 +112,17 @@ public class ApiAuthenticationService : IAuthenticationService
         return Task.CompletedTask;
     }
 
+    // Checks whether the current user has the specified role.
     public bool HasRole(string roleName) =>
         _currentUserRoles.Contains(roleName, StringComparer.OrdinalIgnoreCase);
 
+    // Checks whether the current user has any of the specified roles.
     public bool HasAnyRole(params string[] roleNames) => roleNames.Any(HasRole);
 
+    // Checks whether the current user has all of the specified roles.
     public bool HasAllRoles(params string[] roleNames) => roleNames.All(HasRole);
 
+    // Changes the current user's password for API-backed authentication.
     public Task<bool> ChangePasswordAsync(string currentPassword, string newPassword)
     {
         return Task.FromResult(false);

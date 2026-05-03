@@ -92,6 +92,7 @@
       <StackLayout Grid.Row="2"
                    Orientation="Horizontal"
                    Spacing="15">
+        <!-- Back button -->
         <Button
           Text="Back"
           Command="{Binding NavigateBackCommand}"
@@ -100,6 +101,7 @@
           CornerRadius="8"
           HeightRequest="50"
           HorizontalOptions="FillAndExpand"/>
+        <!-- Save item button -->
         <Button
           Text="Save"
           Command="{Binding SaveItemCommand}"

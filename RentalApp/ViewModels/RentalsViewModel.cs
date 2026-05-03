@@ -34,6 +34,7 @@ public partial class RentalsViewModel : ObservableObject
     public Color IncomingTabColor => ShowIncoming ? Colors.DarkBlue : Colors.Gray;
     public Color OutgoingTabColor => !ShowIncoming ? Colors.DarkBlue : Colors.Gray;
 
+    // Initializes a new instance of the RentalsViewModel class.
     public RentalsViewModel(
         IRentalService rentalService,
         IRentalRepository rentalRepository,
@@ -48,6 +49,7 @@ public partial class RentalsViewModel : ObservableObject
         _ = Task.Run(LoadRentalsAsync);
     }
 
+    // Handles the change of ShowIncoming property.
     partial void OnShowIncomingChanged(bool value)
     {
         OnPropertyChanged(nameof(ShowOutgoing));
@@ -55,12 +57,15 @@ public partial class RentalsViewModel : ObservableObject
         OnPropertyChanged(nameof(OutgoingTabColor));
     }
 
+    // Shows the incoming rentals tab.
     [RelayCommand]
     private void ShowIncomingTab() => ShowIncoming = true;
 
+    // Shows the outgoing rentals tab.
     [RelayCommand]
     private void ShowOutgoingTab() => ShowIncoming = false;
 
+    // Loads rentals asynchronously.
     [RelayCommand]
     private async Task LoadRentalsAsync()
     {
@@ -93,6 +98,7 @@ public partial class RentalsViewModel : ObservableObject
         }
     }
 
+    // Approves a rental request.
     [RelayCommand]
     private async Task ApproveRentalAsync(Rental rental)
     {
@@ -113,6 +119,7 @@ public partial class RentalsViewModel : ObservableObject
         }
     }
 
+    // Rejects a rental request.
     [RelayCommand]
     private async Task RejectRentalAsync(Rental rental)
     {
@@ -133,6 +140,7 @@ public partial class RentalsViewModel : ObservableObject
         }
     }
 
+    // Marks a rental as out for rent.
     [RelayCommand]
     private async Task MarkOutForRentAsync(Rental rental)
     {
@@ -153,6 +161,7 @@ public partial class RentalsViewModel : ObservableObject
         }
     }
 
+    // Returns a rental.
     [RelayCommand]
     private async Task ReturnRentalAsync(Rental rental)
     {
@@ -173,6 +182,7 @@ public partial class RentalsViewModel : ObservableObject
         }
     }
 
+    // Completes a rental.
     [RelayCommand]
     private async Task CompleteRentalAsync(Rental rental)
     {
@@ -193,6 +203,7 @@ public partial class RentalsViewModel : ObservableObject
         }
     }
 
+    // Navigates to leave a review for the rental.
     [RelayCommand]
     private async Task LeaveReviewAsync(Rental rental)
     {

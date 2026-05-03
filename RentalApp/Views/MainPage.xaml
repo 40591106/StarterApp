@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:vm="clr-namespace:RentalApp.ViewModels"
   Title="{Binding Title}">
+  <!-- Main dashboard page showing user summary and navigation. -->
   <ContentPage.BindingContext>
     <vm:MainViewModel/>
   </ContentPage.BindingContext>
@@ -70,6 +71,7 @@
               FontSize="14"
               VerticalOptions="Center"
               HorizontalOptions="StartAndExpand"/>
+            <!-- Clear error button -->
             <Button
               Text="×"
               Command="{Binding ClearErrorCommand}"

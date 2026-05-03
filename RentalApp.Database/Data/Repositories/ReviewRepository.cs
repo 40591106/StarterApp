@@ -3,15 +3,18 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Database.Data.Repositories;
 
+// Repository implementation for review persistence using the database context.
 public class ReviewRepository : IReviewRepository
 {
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
 
+    // Initializes the review repository with a database context factory.
     public ReviewRepository(IDbContextFactory<AppDbContext> contextFactory)
     {
         _contextFactory = contextFactory;
     }
 
+    // Creates a review record for the specified rental and item.
     public async Task<Review> CreateAsync(
         int rentalId,
         int itemId,
@@ -60,12 +63,14 @@ public class ReviewRepository : IReviewRepository
         }
     }
 
+    // Gets reviews associated with a specific item.
     public async Task<IEnumerable<Review>> GetByItemIdAsync(int itemId)
     {
         using var context = _contextFactory.CreateDbContext();
         return await context.Reviews.Where(r => r.ItemId == itemId).ToListAsync();
     }
 
+    // Gets reviews for items owned by the specified user.
     public async Task<IEnumerable<Review>> GetByUserIdAsync(int userId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -77,5 +82,12 @@ public class ReviewRepository : IReviewRepository
         return await context.Reviews
             .Where(r => ownerItemIds.Contains(r.ItemId))
             .ToListAsync();
+    }
+
+    // Gets a review by its ID.
+    public async Task<Review?> GetByIdAsync(int id)
+    {
+        using var context = _contextFactory.CreateDbContext();
+        return await context.Reviews.FindAsync(id);
     }
 }

@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:vm="clr-namespace:RentalApp.ViewModels"
   Title="Rentals">
+  <!-- Rentals page listing current rental requests and status. -->
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Refresh"
                  Command="{Binding LoadRentalsCommand}"/>
@@ -16,12 +17,14 @@
     <!-- Tab Toggle -->
     <Grid Grid.Row="0"
           ColumnDefinitions="*,*">
+      <!-- Incoming tab button -->
       <Button
         Grid.Column="0"
         Text="Incoming"
         Command="{Binding ShowIncomingTabCommand}"
         BackgroundColor="{Binding IncomingTabColor}"
         TextColor="White"/>
+      <!-- Outgoing tab button -->
       <Button
         Grid.Column="1"
         Text="Outgoing"
@@ -91,6 +94,7 @@
               <Grid ColumnDefinitions="*,*"
                     ColumnSpacing="10"
                     IsVisible="{Binding IsPending}">
+                <!-- Approve rental button -->
                 <Button
                   Grid.Column="0"
                   Text="Approve"
@@ -98,6 +102,7 @@
                   CommandParameter="{Binding}"
                   BackgroundColor="#54C054"
                   TextColor="White"/>
+                <!-- Reject rental button -->
                 <Button
                   Grid.Column="1"
                   Text="Reject"
@@ -107,6 +112,7 @@
                   TextColor="White"/>
               </Grid>
 
+              <!-- Mark out for rent button -->
               <Button Text="Mark as Out for Rent"
                       IsVisible="{Binding IsApprovedAndStarted}"
                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RentalsViewModel}}, Path=MarkOutForRentCommand}"
@@ -114,6 +120,7 @@
                       BackgroundColor="#5C6BC0"
                       TextColor="White"/>
 
+              <!-- Mark completed button -->
               <Button
                 Text="Mark as Completed"
                 IsVisible="{Binding IsReturned}"
@@ -176,12 +183,14 @@
                      TextColor="Red"
                      FontAttributes="Bold"
                      FontSize="14"/>
+              <!-- Mark returned button -->
               <Button Text="Mark as Returned"
                       IsVisible="{Binding IsOutForRent}"
                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RentalsViewModel}}, Path=ReturnRentalCommand}"
                       CommandParameter="{Binding}"
                       BackgroundColor="#54C054"
                       TextColor="White"/>
+              <!-- Leave review button -->
               <Button Text="Leave Review"
                       IsVisible="{Binding IsCompleted}"
                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RentalsViewModel}}, Path=LeaveReviewCommand}"

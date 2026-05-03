@@ -26,8 +26,13 @@ public partial class ProfileViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollection<Review> _reviews = new();
 
+    public string AverageRatingText => Reviews.Count > 0
+    ? $"{Reviews.Average(r => r.Rating):F1} ★"
+    : "No ratings yet";
+
     partial void OnUserIdChanged(int value) => _ = Task.Run(LoadProfileAsync);
 
+    // Initializes a new instance of the ProfileViewModel class.
     public ProfileViewModel(
         IAuthenticationService authService,
         INavigationService navigationService,
@@ -41,6 +46,7 @@ public partial class ProfileViewModel : BaseViewModel
         CurrentUser = _authService.CurrentUser;
     }
 
+    // Loads the user's profile data asynchronously.
     private async Task LoadProfileAsync()
     {
         IsBusy = true;
@@ -48,6 +54,7 @@ public partial class ProfileViewModel : BaseViewModel
         {
             var reviews = await _reviewService.GetUserReviewsAsync(UserId);
             Reviews = new ObservableCollection<Review>(reviews);
+            OnPropertyChanged(nameof(AverageRatingText));
         }
         catch (Exception ex)
         {
@@ -59,6 +66,7 @@ public partial class ProfileViewModel : BaseViewModel
         }
     }
 
+    // Navigates back to the previous page.
     [RelayCommand]
     private async Task NavigateBackAsync()
     {

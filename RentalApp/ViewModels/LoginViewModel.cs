@@ -8,9 +8,7 @@ using RentalApp.Services;
 
 namespace RentalApp.ViewModels;
 
-/// @brief View model for the login page that handles user authentication
-/// @details Manages login form data, validation, and authentication process
-/// @extends BaseViewModel
+// View model for the login page that handles user authentication.
 public partial class LoginViewModel : BaseViewModel
 {
     /// @brief Authentication service for managing user login
@@ -40,18 +38,14 @@ public partial class LoginViewModel : BaseViewModel
     [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
     private bool _isBusy;
 
-    /// @brief Default constructor for design-time support
-    /// @details Sets the title to "Login"
+    // Default constructor for design-time support.
     public LoginViewModel()
     {
         // Default constructor for design time support
         Title = "Login";
     }
 
-    /// @brief Initializes a new instance of the LoginViewModel class
-    /// @param authService The authentication service instance
-    /// @param navigationService The navigation service instance
-    /// @details Sets up the required services and initializes the title
+    // Initializes a new instance of the LoginViewModel class.
     public LoginViewModel(IAuthenticationService authService, INavigationService navigationService)
     {
         _authService = authService;
@@ -59,9 +53,7 @@ public partial class LoginViewModel : BaseViewModel
         Title = "Login";
     }
 
-    /// @brief Performs user login authentication
-    /// @details Relay command that validates input and attempts to authenticate the user
-    /// @return A task representing the asynchronous login operation
+    // Performs user login authentication.
     [RelayCommand]
     private async Task LoginAsync()
     {
@@ -100,19 +92,14 @@ public partial class LoginViewModel : BaseViewModel
         }
     }
 
-    /// @brief Navigates to the registration page
-    /// @details Relay command that navigates to the user registration page
-    /// @return A task representing the asynchronous navigation operation
+    // Navigates to the registration page.
     [RelayCommand]
     private async Task NavigateToRegisterAsync()
     {
         await _navigationService.NavigateToAsync("RegisterPage");
     }
 
-    /// @brief Handles forgot password functionality
-    /// @details Relay command that displays a placeholder message for forgot password
-    /// @return A task representing the asynchronous operation
-    /// @todo Implement actual forgot password functionality
+    // Handles forgot password functionality.
     [RelayCommand]
     private async Task ForgotPasswordAsync()
     {

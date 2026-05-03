@@ -2,6 +2,7 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
+// Contract for rental services managing booking status and availability checks.
 public interface IRentalService
 {
     Task<bool> CanRentItemAsync(int itemId, DateTime startDate, DateTime endDate);

@@ -3,17 +3,20 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
+// Service that applies rental business rules and delegates persistence to the repository.
 public class RentalService : IRentalService
 {
     private readonly IRentalRepository _rentalRepository;
     private readonly IItemRepository _itemRepository;
 
+    // Creates the rental service with repository dependencies.
     public RentalService(IRentalRepository rentalRepository, IItemRepository itemRepository)
     {
         _rentalRepository = rentalRepository;
         _itemRepository = itemRepository;
     }
 
+    // Determines whether an item can be rented for the requested date range.
     public async Task<bool> CanRentItemAsync(int itemId, DateTime startDate, DateTime endDate)
     {
         var startUtc = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
@@ -27,6 +30,7 @@ public class RentalService : IRentalService
         );
     }
 
+    // Requests a rental if the item is available.
     public async Task<Rental> RequestRentalAsync(
         int itemId,
         int borrowerId,
@@ -41,25 +45,31 @@ public class RentalService : IRentalService
         return await _rentalRepository.CreateAsync(itemId, startDate, endDate, borrowerId);
     }
 
+    // Approves a rental request.
     public async Task ApproveRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Approved");
     }
 
+    // Rejects a rental request.
     public async Task RejectRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Rejected");
     }
 
+    // Marks a rental as out for rent when it starts.
     public async Task MarkOutForRentAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Out for Rent");
     }
+
+    // Marks a rental as returned.
     public async Task ReturnRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Returned");
     }
 
+    // Advances approved rentals to out-for-rent when their start date arrives.
     public async Task UpdateOutForRentAsync()
     {
         var rentals = await _rentalRepository.GetAllActiveAsync();
@@ -73,6 +83,7 @@ public class RentalService : IRentalService
         }
     }
 
+    // Completes a rental and updates its status.
     public async Task CompleteRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Completed");

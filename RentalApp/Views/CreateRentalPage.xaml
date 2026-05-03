@@ -6,6 +6,7 @@
   xmlns:vm="clr-namespace:RentalApp.ViewModels"
   xmlns:sys="clr-namespace:System;assembly=netstandard"
   Title="Request to Rent">
+  <!-- Rental request page for booking a rental item. -->
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Back"
         Command="{Binding NavigateBackCommand}"/>

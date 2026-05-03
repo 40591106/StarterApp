@@ -6,6 +6,7 @@
        xmlns:vm="clr-namespace:RentalApp.ViewModels"
        xmlns:sys="clr-namespace:System;assembly=netstandard"
        Title="Leave a Review">
+       <!-- Review creation page for submitting feedback. -->
        <ContentPage.ToolbarItems>
               <ToolbarItem Text="Back"
                            Command="{Binding NavigateBackCommand}"/>
