@@ -5,6 +5,9 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Database.Data;
 
+/// <summary>
+/// Entity Framework Core database context for the RentalApp local database.
+/// </summary>
 public class AppDbContext : DbContext
 {
     public AppDbContext() { }

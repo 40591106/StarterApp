@@ -189,6 +189,9 @@ public class LocalAuthenticationService : IAuthenticationService
 }
 
 // Result object returned by authentication operations.
+/// <summary>
+/// Result object returned by authentication operations indicating success or failure.
+/// </summary>
 public class AuthenticationResult
 {
     /// <inheritdoc/>
