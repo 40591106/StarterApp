@@ -1,0 +1,14 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 60%
+
+ignore:
+  - "RentalApp/Views/**"
+  - "RentalApp/Platforms/**"
+  - "RentalApp/MauiProgram.cs"
+  - "RentalApp/App.cs"
+  - "RentalApp/AppShell.cs"
+  - "RentalApp.Database/Migrations/**"
+  - "RentalApp.Migrations/**"
