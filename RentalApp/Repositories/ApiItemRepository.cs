@@ -1,8 +1,9 @@
 using System.ComponentModel;
 using RentalApp.Database.Data.Repositories;
 using RentalApp.Database.Models;
+using RentalApp.Services;
 
-namespace RentalApp.Services;
+namespace RentalApp.Repositories;
 
 // Repository for managing items by communicating with the shared API, handling CRUD operations and fetching item data.
 public class ApiItemRepository : IItemRepository

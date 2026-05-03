@@ -1,3 +1,4 @@
+using RentalApp.Repositories;
 using Microsoft.Extensions.Logging;
 using RentalApp.Database.Data;
 using RentalApp.Database.Data.Repositories;

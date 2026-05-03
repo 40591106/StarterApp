@@ -1,7 +1,8 @@
 using RentalApp.Database.Data.Repositories;
 using RentalApp.Database.Models;
+using RentalApp.Services;
 
-namespace RentalApp.Services;
+namespace RentalApp.Repositories;
 
 // Rental repository that forwards rental operations to the shared API.
 public class ApiRentalRepository : IRentalRepository

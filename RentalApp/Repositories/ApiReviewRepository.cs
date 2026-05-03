@@ -1,7 +1,8 @@
 using RentalApp.Database.Data.Repositories;
 using RentalApp.Database.Models;
+using RentalApp.Services;
 
-namespace RentalApp.Services;
+namespace RentalApp.Repositories;
 
 // Review repository that routes review operations through the shared API.
 public class ApiReviewRepository : IReviewRepository
