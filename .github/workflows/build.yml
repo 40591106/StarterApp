@@ -40,7 +40,7 @@ jobs:
       run: dotnet build RentalApp.Test/RentalApp.Test.csproj --no-restore -c Debug -f net10.0
 
     - name: Run Tests
-      run: dotnet test RentalApp.Test/RentalApp.Test.csproj --no-build -c Debug -f net10.0 --settings RentalApp.Test/coverage.runsettings --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test RentalApp.Test/RentalApp.Test.csproj --no-build -c Debug -f net10.0 --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test-results.trx"
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
@@ -48,3 +48,10 @@ jobs:
       with:
         name: test-results
         path: RentalApp.Test/TestResults/*.trx
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: RentalApp.Test/TestResults/**/coverage.cobertura.xml
+        fail_ci_if_error: false

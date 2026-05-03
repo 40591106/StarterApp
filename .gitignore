@@ -29,3 +29,17 @@ postgres_data/
 *.userosscache
 *.sln.docstates
 
+coverage-report/
+coverage.cobertura.xml
+# Coverage reports
+coverage-report/
+coverage.cobertura.xml
+TestResults/
+
+# Sensitive config
+RentalApp.Database/appsettings.json
+RentalApp.Migrations/appsettings.json
+
+# MAUI
+*.aab
+*.apk

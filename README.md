@@ -13,24 +13,33 @@ A .NET MAUI mobile application that allows community members to list items for r
 
 ### Tier 2 - Intermediate Features
 - Location-based item discovery using GPS (find items within configurable radius)
-- Full rental workflow (Requested → Approved/Rejected → Out for Rent → Returned → Completed)
+- Full rental workflow (Requested → Approved/Rejected → Out for Rent → Overdue → Returned → Completed)
 - Double-booking prevention
 - Approve/reject rental requests (owner side)
 - Submit and view reviews after completed rentals
+- Average rating display on item detail and user profile
+
+### Tier 3 - Advanced Features
+- Automatic overdue detection (Out for Rent → Overdue state transition)
+- Local device notifications for overdue rentals
 
 ## Architecture
 
 The project follows a clean architecture with three projects:
 RentalApp/
-├── RentalApp/                  # Main MAUI project (Views, ViewModels, Services)
+├── RentalApp/                  # Main MAUI project (Views, ViewModels, Services, Repositories)
 ├── RentalApp.Database/         # Shared library (Models, Repositories, DbContext)
 ├── RentalApp.Migrations/       # EF Core migrations
 └── RentalApp.Test/             # xUnit test project
+### Design Patterns
+- **MVVM** — Views bind to ViewModels via data binding, no logic in code-behind
+- **Repository Pattern** — `IRepository<T>` base interface with local and API implementations
+- **Service Layer** — Business logic in `RentalService`, `ReviewService`, `LocationService`
 
-**Design patterns used:**
-- MVVM (Model-View-ViewModel)
-- Repository Pattern
-- Service Layer
+### Authentication Modes
+The app supports two modes controlled by `useSharedApi` in `MauiProgram.cs`:
+- `true` (default) — uses the shared SET09102 API for all data
+- `false` — uses local PostgreSQL database via Entity Framework Core
 
 ## Compatibility
 
@@ -53,7 +62,7 @@ RentalApp/
 ### 1. Clone the repository
 
 ```bash
-git clone <https://github.com/40591106/StarterApp.git>
+git clone https://github.com/40591106/StarterApp.git
 cd RentalApp
 ```
 
@@ -131,15 +140,15 @@ For full API documentation see the Swagger UI at the above URL.
 
 GitHub Actions workflow runs on every push to `main` and on pull requests:
 - Builds `RentalApp.Database`, `RentalApp.Migrations` and `RentalApp.Test`
-- Runs all 96 unit tests
+- Runs all 100 unit tests
 - Uploads test results as a build artifact
 
 ## Testing
 
 The test suite covers:
 - **Repositories** — `ItemRepository`, `RentalRepository`, `ReviewRepository`
-- **Services** — `RentalService`, `ReviewService`  
+- **Services** — `RentalService`, `ReviewService`, `LocationService`
 - **ViewModels** — `ItemsListViewModel`, `RentalsViewModel`, `NearbyItemsViewModel`, `ReviewsViewModel`, `ItemDetailViewModel`
 - **Mocking** — `MockLocationService` for GPS abstraction
 
-**Coverage:** 71.4% line coverage on `RentalApp.Database`
+**Coverage:** 70.1% line coverage on `RentalApp.Database`
