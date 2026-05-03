@@ -1,5 +1,7 @@
 # RentalApp - Library of Things Peer-to-Peer Rental Marketplace
 
+[![codecov](https://codecov.io/gh/40591106/StarterApp/branch/main/graph/badge.svg)](https://codecov.io/gh/40591106/StarterApp)
+
 A .NET MAUI mobile application that allows community members to list items for rent, discover nearby items using location-based search, manage rental requests, and leave reviews.
 
 ## Features
