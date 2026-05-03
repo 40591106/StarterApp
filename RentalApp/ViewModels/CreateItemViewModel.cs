@@ -192,16 +192,33 @@ public partial class CreateItemViewModel : ObservableObject
         }
     }
 
-    // Handles the change of UseMyLocation property.
+    // Handles the change of UseMyLocation property, asks for permission to use device location when checked
     partial void OnUseMyLocationChanged(bool value)
     {
         if (value) _ = Task.Run(async () =>
         {
+            var status = await MainThread.InvokeOnMainThreadAsync(
+                () => Permissions.RequestAsync<Permissions.LocationWhenInUse>()
+            );
+
+            if (status != PermissionStatus.Granted)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    UseMyLocation = false;
+                    ErrorMessage = "Location permission is required.";
+                });
+                return;
+            }
+
             var location = await _locationService.GetCurrentLocationAsync();
             if (location != null)
             {
-                Latitude = location.Value.Latitude;
-                Longitude = location.Value.Longitude;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Latitude = location.Value.Latitude;
+                    Longitude = location.Value.Longitude;
+                });
             }
         });
     }

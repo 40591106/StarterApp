@@ -24,9 +24,9 @@ public class ReviewRepositoryTests : IClassFixture<DatabaseFixture>
             // Arrange
             _fixture.Context.Rentals.Add(new Rental
             {
-                Id = 1,
+                Id = 100,
                 ItemId = 1,
-                BorrowerId = 2,
+                BorrowerId = 99,
                 OwnerId = 1,
                 StartDate = DateTime.UtcNow.AddDays(-5),
                 EndDate = DateTime.UtcNow.AddDays(-3),
@@ -36,7 +36,7 @@ public class ReviewRepositoryTests : IClassFixture<DatabaseFixture>
             await _fixture.Context.SaveChangesAsync();
 
             // Act
-            var review = await _repository.CreateAsync(1, 1, 2, "Great item!", 5);
+            var review = await _repository.CreateAsync(100, 1, 99, "Great item!", 5);
 
             // Assert
             Assert.NotNull(review);
@@ -50,7 +50,7 @@ public class ReviewRepositoryTests : IClassFixture<DatabaseFixture>
             // Arrange
             _fixture.Context.Rentals.Add(new Rental
             {
-                Id = 2,
+                Id = 101,
                 ItemId = 1,
                 BorrowerId = 2,
                 OwnerId = 1,
@@ -61,7 +61,7 @@ public class ReviewRepositoryTests : IClassFixture<DatabaseFixture>
             });
             _fixture.Context.Reviews.Add(new Review
             {
-                RentalId = 2,
+                RentalId = 101,
                 ItemId = 1,
                 ReviewerId = 2,
                 Comment = "Already reviewed",
@@ -71,7 +71,7 @@ public class ReviewRepositoryTests : IClassFixture<DatabaseFixture>
 
             // Act & Assert
             await Assert.ThrowsAsync<Exception>(() =>
-                _repository.CreateAsync(2, 1, 2, "Trying again", 5));
+                _repository.CreateAsync(101, 1, 2, "Trying again", 5));
         }
     }
 
@@ -92,7 +92,7 @@ public class ReviewRepositoryTests : IClassFixture<DatabaseFixture>
             var reviews = await _repository.GetByItemIdAsync(1);
 
             // Assert
-            Assert.Equal(2, reviews.Count());
+            Assert.Equal(3, reviews.Count());
         }
 
         [Fact]
@@ -119,7 +119,7 @@ public class ReviewRepositoryTests : IClassFixture<DatabaseFixture>
             await _fixture.Context.SaveChangesAsync();
 
             // Act
-            var reviews = await _repository.GetByUserIdAsync(1);
+            var reviews = await _repository.GetByUserIdAsync(2);
 
             // Assert
             Assert.NotEmpty(reviews);

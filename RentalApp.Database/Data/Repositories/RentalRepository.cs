@@ -112,7 +112,7 @@ public class RentalRepository : IRentalRepository
         using var context = _contextFactory.CreateDbContext();
         return await context
             .Rentals.Where(r =>
-                r.Status == "Approved" || r.Status == "Out for Rent" || r.Status == "Requested"
+                r.Status == "Approved" || r.Status == "Out for Rent" || r.Status == "Requested" || r.Status == "Overdue"
             )
             .ToListAsync();
     }

@@ -185,7 +185,7 @@
                      FontSize="14"/>
               <!-- Mark returned button -->
               <Button Text="Mark as Returned"
-                      IsVisible="{Binding IsOutForRent}"
+                      IsVisible="{Binding CanReturn}"
                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RentalsViewModel}}, Path=ReturnRentalCommand}"
                       CommandParameter="{Binding}"
                       BackgroundColor="#54C054"

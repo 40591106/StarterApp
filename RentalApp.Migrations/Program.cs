@@ -184,6 +184,49 @@ if (!context.Items.Any())
                 Status = "Approved",
                 TotalPrice = 30.00m,
                 CreatedAt = DateTime.UtcNow.AddDays(-2),
+            },
+            new Rental
+            {
+                ItemId = 2,
+                ItemTitle = "Camping Tent",
+                BorrowerId = 1,
+                BorrowerName = "Test Customer",
+                OwnerId = 8,
+                OwnerName = "Test User",
+                StartDate = DateTime.UtcNow.AddDays(-5),
+                EndDate = DateTime.UtcNow.AddDays(-2),
+                Status = "Out for Rent",
+                TotalPrice = 60.00m,
+                CreatedAt = DateTime.UtcNow.AddDays(-6),
+            }
+        );
+        await context.SaveChangesAsync();
+    }
+
+    if (!context.Reviews.Any())
+    {
+        context.Reviews.AddRange(
+            new Review
+            {
+                RentalId = 1,
+                ItemId = 1,
+                ReviewerId = 1,
+                ReviewerName = "Test Customer",
+                Rating = 5,
+                Comment = "Great drill, worked perfectly!",
+                ItemTitle = "Power Drill",
+                CreatedAt = DateTime.UtcNow.AddDays(-3)
+            },
+            new Review
+            {
+                RentalId = 2,
+                ItemId = 2,
+                ReviewerId = 1,
+                ReviewerName = "Test Customer",
+                Rating = 4,
+                Comment = "Good tent, easy to set up.",
+                ItemTitle = "Camping Tent",
+                CreatedAt = DateTime.UtcNow.AddDays(-1)
             }
         );
         await context.SaveChangesAsync();

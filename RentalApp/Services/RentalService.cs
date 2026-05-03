@@ -88,4 +88,15 @@ public class RentalService : IRentalService
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Completed");
     }
+
+    // Sets rental status to Overdue if the end date has passed.
+    public async Task UpdateOverdueAsync()
+    {
+        var rentals = await _rentalRepository.GetAllActiveAsync();
+        foreach (var rental in rentals.Where(r =>
+            r.Status == "Out for Rent" && r.EndDate < DateTime.UtcNow))
+        {
+            await _rentalRepository.UpdateStatusAsync(rental.Id, "Overdue");
+        }
+    }
 }

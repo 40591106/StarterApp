@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.Input;
 using RentalApp.Database.Data.Repositories;
 using RentalApp.Database.Models;
 using RentalApp.Services;
+using Plugin.LocalNotification;
+using Plugin.LocalNotification.AndroidOption;
 
 namespace RentalApp.ViewModels;
 
@@ -46,6 +48,12 @@ public partial class RentalsViewModel : ObservableObject
         _rentalRepository = rentalRepository;
         _authService = authService;
         _navigationService = navigationService;
+        _ = Task.Run(async () =>
+        {
+            await MainThread.InvokeOnMainThreadAsync(
+                () => Permissions.RequestAsync<Permissions.PostNotifications>()
+            );
+        });
         _ = Task.Run(LoadRentalsAsync);
     }
 
@@ -75,11 +83,12 @@ public partial class RentalsViewModel : ObservableObject
         try
         {
             await _rentalService.UpdateOutForRentAsync();
+            await _rentalService.UpdateOverdueAsync();
             var currentUserId = _authService.CurrentUser?.Id ?? 0;
             var incoming = await _rentalRepository.GetIncomingAsync(currentUserId);
             var outgoing = await _rentalRepository.GetOutgoingAsync(currentUserId);
 
-            var activeStatuses = new[] { "Requested", "Approved", "Out for Rent", "Returned", "Completed" };
+            var activeStatuses = new[] { "Requested", "Approved", "Out for Rent", "Returned", "Completed", "Overdue" };
 
             IncomingRentals = new ObservableCollection<Rental>(
                 incoming.Where(r => activeStatuses.Contains(r.Status))
@@ -87,6 +96,24 @@ public partial class RentalsViewModel : ObservableObject
             OutgoingRentals = new ObservableCollection<Rental>(
                 outgoing.Where(r => activeStatuses.Contains(r.Status))
             );
+            // Check for overdue rentals and notify borrower
+            var overdueRentals = OutgoingRentals.Where(r => r.Status == "Overdue").ToList();
+            if (overdueRentals.Any())
+            {
+                await RequestNotificationPermissionAsync();
+                var notification = new NotificationRequest
+                {
+                    NotificationId = 1001,
+                    Title = "Overdue Rental",
+                    Description = $"You have {overdueRentals.Count} overdue rental(s). Please arrange return immediately.",
+                    ReturningData = "overdue",
+                    Schedule = new NotificationRequestSchedule
+                    {
+                        NotifyTime = DateTime.Now
+                    }
+                };
+                await LocalNotificationCenter.Current.Show(notification);
+            }
         }
         catch (Exception ex)
         {
@@ -95,6 +122,16 @@ public partial class RentalsViewModel : ObservableObject
         finally
         {
             IsLoading = false;
+        }
+    }
+
+
+    private async Task RequestNotificationPermissionAsync()
+    {
+        var status = await Permissions.RequestAsync<Permissions.PostNotifications>();
+        if (status != PermissionStatus.Granted)
+        {
+            System.Diagnostics.Debug.WriteLine("Notification permission denied");
         }
     }
 

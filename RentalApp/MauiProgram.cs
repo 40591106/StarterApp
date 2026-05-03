@@ -4,6 +4,7 @@ using RentalApp.Database.Data.Repositories;
 using RentalApp.Services;
 using RentalApp.ViewModels;
 using RentalApp.Views;
+using Plugin.LocalNotification;
 
 namespace RentalApp;
 
@@ -20,7 +21,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        const bool useSharedApi = true; // Set to true to use the shared API, false to use local database
+        const bool useSharedApi = false; // Set to true to use the shared API, false to use local database
 
         if (useSharedApi)
         {
@@ -96,6 +97,7 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
+        builder.UseLocalNotification();
         return builder.Build();
     }
 }

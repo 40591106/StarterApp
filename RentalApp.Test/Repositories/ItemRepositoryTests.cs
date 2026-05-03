@@ -24,7 +24,7 @@ public class ItemRepositoryTests : IClassFixture<DatabaseFixture>
         public async Task NoFilter_ReturnsAllItems()
         {
             var items = await _repository.GetAllAsync();
-            Assert.Equal(2, items.Count);
+            Assert.Equal(4, items.Count);
         }
 
         [Theory]
@@ -39,7 +39,7 @@ public class ItemRepositoryTests : IClassFixture<DatabaseFixture>
 
         [Theory]
         [InlineData("tools", 1)]
-        [InlineData("camping", 1)]
+        [InlineData("camping", 2)]
         public async Task WithCategory_ReturnsFilteredItems(string category, int expectedCount)
         {
             var items = await _repository.GetAllAsync(category: category);
@@ -128,7 +128,7 @@ public class ItemRepositoryTests : IClassFixture<DatabaseFixture>
             var categories = await _repository.GetCategoriesAsync();
 
             // Assert
-            Assert.Equal(2, categories.Count);
+            Assert.Equal(3, categories.Count);
         }
 
         [Fact]
@@ -140,6 +140,7 @@ public class ItemRepositoryTests : IClassFixture<DatabaseFixture>
             // Assert
             Assert.Contains(categories, c => c.Slug == "tools");
             Assert.Contains(categories, c => c.Slug == "camping");
+            Assert.Contains(categories, c => c.Slug == "sports");
         }
     }
 }

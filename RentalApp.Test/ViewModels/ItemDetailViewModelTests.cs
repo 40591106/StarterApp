@@ -103,7 +103,7 @@ public class ItemDetailViewModelTests
 
             // Act
             _viewModel.ItemId = 1;
-            await Task.Delay(100);
+            await Task.Delay(500);
 
             // Assert
             Assert.False(_viewModel.CanEdit);

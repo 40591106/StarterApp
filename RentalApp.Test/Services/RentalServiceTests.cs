@@ -291,4 +291,77 @@ public class RentalServiceTests
                 It.IsAny<string>()), Times.Never);
         }
     }
+
+    public class UpdateOverdueAsync : RentalServiceTests
+    {
+        public UpdateOverdueAsync() : base() { }
+
+        [Fact]
+        public async Task OutForRentPastEndDate_UpdatedToOverdue()
+        {
+            // Arrange
+            _rentalRepo.Setup(r => r.GetAllActiveAsync())
+                .ReturnsAsync(new List<Rental>
+                {
+                new Rental
+                {
+                    Id = 1,
+                    Status = "Out for Rent",
+                    EndDate = DateTime.UtcNow.AddDays(-1)
+                }
+                });
+
+            // Act
+            await _service.UpdateOverdueAsync();
+
+            // Assert
+            _rentalRepo.Verify(r => r.UpdateStatusAsync(1, "Overdue"), Times.Once);
+        }
+
+        [Fact]
+        public async Task OutForRentFutureEndDate_NotUpdated()
+        {
+            // Arrange
+            _rentalRepo.Setup(r => r.GetAllActiveAsync())
+                .ReturnsAsync(new List<Rental>
+                {
+                new Rental
+                {
+                    Id = 1,
+                    Status = "Out for Rent",
+                    EndDate = DateTime.UtcNow.AddDays(2)
+                }
+                });
+
+            // Act
+            await _service.UpdateOverdueAsync();
+
+            // Assert
+            _rentalRepo.Verify(r => r.UpdateStatusAsync(
+                It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task NonOutForRentStatus_NotUpdated()
+        {
+            // Arrange
+            _rentalRepo.Setup(r => r.GetAllActiveAsync())
+                .ReturnsAsync(new List<Rental>
+                {
+                new Rental
+                {
+                    Id = 1,
+                    Status = "Approved",
+                    EndDate = DateTime.UtcNow.AddDays(-1)
+                }
+                });
+
+            // Act
+            await _service.UpdateOverdueAsync();
+
+            // Assert
+            _rentalRepo.Verify(r => r.UpdateStatusAsync(
+                It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+        }
+    }
 }

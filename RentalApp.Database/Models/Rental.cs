@@ -20,8 +20,9 @@ public class Rental
     public bool IsApprovedAndStarted => Status == "Approved" && StartDate <= DateTime.UtcNow;
     public bool IsOutForRent => Status == "Out for Rent";
     public bool IsReturned => Status == "Returned";
-    public bool IsOverdue => Status == "Out for Rent" && EndDate < DateTime.UtcNow;
+    public bool IsOverdue => Status == "Overdue";
     public bool IsCompleted => Status == "Completed";
+    public bool CanReturn => IsOutForRent || IsOverdue;
 
     public string ItemTitle { get; set; } = string.Empty;
 
