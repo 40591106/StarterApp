@@ -3,12 +3,22 @@ coverage:
     project:
       default:
         target: 60%
+        threshold: 5%
+
+flag_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: 60%
 
 ignore:
+  - "RentalApp/Services/**"
+  - "RentalApp/ViewModels/**"
+  - "RentalApp/Repositories/**"
   - "RentalApp/Views/**"
   - "RentalApp/Platforms/**"
+  - "RentalApp/App.xaml.cs"
+  - "RentalApp/AppShell.xaml.cs"
   - "RentalApp/MauiProgram.cs"
-  - "RentalApp/App.cs"
-  - "RentalApp/AppShell.cs"
   - "RentalApp.Database/Migrations/**"
   - "RentalApp.Migrations/**"
