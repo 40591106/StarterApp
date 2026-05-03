@@ -6,6 +6,9 @@ using RentalApp.Database.Models;
 namespace RentalApp.Services;
 
 // Local authentication service that validates users and roles from the app database.
+/// <summary>
+/// Local database implementation of IAuthenticationService using BCrypt password hashing.
+/// </summary>
 public class LocalAuthenticationService : IAuthenticationService
 {
     private readonly AppDbContext _context;
@@ -21,6 +24,7 @@ public class LocalAuthenticationService : IAuthenticationService
     }
 
     // Indicates whether a user is currently authenticated.
+    /// <inheritdoc/>
     public bool IsAuthenticated => _currentUser != null;
 
     // Gets the currently authenticated user, if any.
@@ -30,6 +34,7 @@ public class LocalAuthenticationService : IAuthenticationService
     public List<string> CurrentUserRoles => _currentUserRoles;
 
     // Logs in a user by validating credentials against the local database.
+    /// <inheritdoc/>
     public async Task<AuthenticationResult> LoginAsync(string email, string password)
     {
         try
@@ -65,6 +70,7 @@ public class LocalAuthenticationService : IAuthenticationService
     }
 
     // Registers a new user in the local database if the email is not already taken.
+    /// <inheritdoc/>
     public async Task<AuthenticationResult> RegisterAsync(
         string firstName,
         string lastName,
@@ -119,6 +125,7 @@ public class LocalAuthenticationService : IAuthenticationService
     }
 
     // Logs out the current user and clears authentication state.
+    /// <inheritdoc/>
     public Task LogoutAsync()
     {
         _currentUser = null;
@@ -128,24 +135,28 @@ public class LocalAuthenticationService : IAuthenticationService
     }
 
     // Checks whether the current user has the specified role.
+    /// <inheritdoc/>
     public bool HasRole(string roleName)
     {
         return _currentUserRoles.Contains(roleName, StringComparer.OrdinalIgnoreCase);
     }
 
     // Checks whether the current user has any of the specified roles.
+    /// <inheritdoc/>
     public bool HasAnyRole(params string[] roleNames)
     {
         return roleNames.Any(role => HasRole(role));
     }
 
     // Checks whether the current user has all of the specified roles.
+    /// <inheritdoc/>
     public bool HasAllRoles(params string[] roleNames)
     {
         return roleNames.All(role => HasRole(role));
     }
 
     // Changes the current user's password after verifying the current password.
+    /// <inheritdoc/>
     public async Task<bool> ChangePasswordAsync(string currentPassword, string newPassword)
     {
         if (_currentUser == null)
@@ -180,6 +191,7 @@ public class LocalAuthenticationService : IAuthenticationService
 // Result object returned by authentication operations.
 public class AuthenticationResult
 {
+    /// <inheritdoc/>
     public bool IsSuccess { get; }
     public string Message { get; }
 

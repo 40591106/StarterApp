@@ -7,6 +7,9 @@ namespace RentalApp.Services;
 
 
 // Implements authentication by communicating with the shared API, handling login, registration, and logout.
+/// <summary>
+/// API implementation of IAuthenticationService using JWT token authentication.
+/// </summary>
 public class ApiAuthenticationService : IAuthenticationService
 {
     private readonly HttpClient _httpClient;
@@ -15,6 +18,7 @@ public class ApiAuthenticationService : IAuthenticationService
 
     public event EventHandler<bool>? AuthenticationStateChanged;
 
+    /// <inheritdoc/>
     public bool IsAuthenticated => _currentUser != null;
     public User? CurrentUser => _currentUser;
     public List<string> CurrentUserRoles => _currentUserRoles;
@@ -25,6 +29,7 @@ public class ApiAuthenticationService : IAuthenticationService
     }
 
     // Logs in the user by sending credentials to the API, storing the token, and fetching the user profile.
+    /// <inheritdoc/>
     public async Task<AuthenticationResult> LoginAsync(string email, string password)
     {
         try
@@ -67,6 +72,7 @@ public class ApiAuthenticationService : IAuthenticationService
     }
 
     // Registers a new user by sending their details to the API.
+    /// <inheritdoc/>
     public async Task<AuthenticationResult> RegisterAsync(
         string firstName,
         string lastName,
@@ -102,6 +108,7 @@ public class ApiAuthenticationService : IAuthenticationService
     }
 
     // Logs out the user by clearing the token and resetting the authentication state.
+    /// <inheritdoc/>
     public Task LogoutAsync()
     {
         _currentUser = null;
@@ -113,16 +120,20 @@ public class ApiAuthenticationService : IAuthenticationService
     }
 
     // Checks whether the current user has the specified role.
+    /// <inheritdoc/>
     public bool HasRole(string roleName) =>
         _currentUserRoles.Contains(roleName, StringComparer.OrdinalIgnoreCase);
 
     // Checks whether the current user has any of the specified roles.
+    /// <inheritdoc/>
     public bool HasAnyRole(params string[] roleNames) => roleNames.Any(HasRole);
 
     // Checks whether the current user has all of the specified roles.
+    /// <inheritdoc/>
     public bool HasAllRoles(params string[] roleNames) => roleNames.All(HasRole);
 
     // Changes the current user's password for API-backed authentication.
+    /// <inheritdoc/>
     public Task<bool> ChangePasswordAsync(string currentPassword, string newPassword)
     {
         return Task.FromResult(false);

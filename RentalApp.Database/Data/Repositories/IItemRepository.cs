@@ -2,20 +2,33 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Database.Data.Repositories;
 
-// Repository interface for item persistence operations.
+/// <summary>
+/// Repository interface for item persistence operations.
+/// </summary>
 public interface IItemRepository : IRepository<Item>
 {
-    // Gets all items, optionally filtering by category or search.
+    /// <summary>
+    /// Gets all items, optionally filtering by category slug or search term.
+    /// </summary>
     Task<List<Item>> GetAllAsync(string? category = null, string? search = null);
 
-    // Gets nearby items within the specified radius.
+    /// <summary>
+    /// Gets items within the specified radius of the given coordinates using PostGIS spatial queries.
+    /// </summary>
     Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm);
-    // Gets all item categories.
+
+    /// <summary>
+    /// Gets all available item categories.
+    /// </summary>
     Task<List<Category>> GetCategoriesAsync();
 
-    // Creates a new item record.
+    /// <summary>
+    /// Creates a new item record in the database.
+    /// </summary>
     Task<Item> CreateAsync(Item item);
 
-    // Updates an existing item record.
+    /// <summary>
+    /// Updates an existing item record in the database.
+    /// </summary>
     Task UpdateAsync(Item item);
 }

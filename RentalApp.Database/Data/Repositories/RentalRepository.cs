@@ -4,6 +4,9 @@ using RentalApp.Database.Models;
 namespace RentalApp.Database.Data.Repositories;
 
 // Repository implementation for rental persistence using the database context.
+/// <summary>
+/// Local database implementation of IRentalRepository using Entity Framework Core.
+/// </summary>
 public class RentalRepository : IRentalRepository
 {
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
@@ -15,6 +18,7 @@ public class RentalRepository : IRentalRepository
     }
 
     // Creates a rental record for the specified item and borrower.
+    /// <inheritdoc/>
     public async Task<Rental> CreateAsync(
         int itemId,
         DateTime startDate,
@@ -69,6 +73,7 @@ public class RentalRepository : IRentalRepository
     }
 
     // Gets incoming rental requests for the specified owner.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Rental>> GetIncomingAsync(int userId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -79,6 +84,7 @@ public class RentalRepository : IRentalRepository
     }
 
     // Gets outgoing rental requests for the specified borrower.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Rental>> GetOutgoingAsync(int userId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -89,6 +95,7 @@ public class RentalRepository : IRentalRepository
     }
 
     // Gets rentals associated with a specific item.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -96,6 +103,7 @@ public class RentalRepository : IRentalRepository
     }
 
     // Updates the status of an existing rental record.
+    /// <inheritdoc/>
     public async Task UpdateStatusAsync(int rentalId, string status)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -107,6 +115,7 @@ public class RentalRepository : IRentalRepository
     }
 
     // Gets all active rentals that are requested, approved, or out for rent.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Rental>> GetAllActiveAsync()
     {
         using var context = _contextFactory.CreateDbContext();
@@ -118,6 +127,7 @@ public class RentalRepository : IRentalRepository
     }
 
     // Gets a rental by its ID.
+    /// <inheritdoc/>
     public async Task<Rental?> GetByIdAsync(int id)
     {
         using var context = _contextFactory.CreateDbContext();

@@ -4,6 +4,9 @@ using RentalApp.Database.Models;
 namespace RentalApp.Database.Data.Repositories;
 
 // Repository implementation for review persistence using the database context.
+/// <summary>
+/// Local database implementation of IReviewRepository using Entity Framework Core.
+/// </summary>
 public class ReviewRepository : IReviewRepository
 {
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
@@ -15,6 +18,7 @@ public class ReviewRepository : IReviewRepository
     }
 
     // Creates a review record for the specified rental and item.
+    /// <inheritdoc/>
     public async Task<Review> CreateAsync(
         int rentalId,
         int itemId,
@@ -64,6 +68,7 @@ public class ReviewRepository : IReviewRepository
     }
 
     // Gets reviews associated with a specific item.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Review>> GetByItemIdAsync(int itemId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -71,6 +76,7 @@ public class ReviewRepository : IReviewRepository
     }
 
     // Gets reviews for items owned by the specified user.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Review>> GetByUserIdAsync(int userId)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -85,6 +91,7 @@ public class ReviewRepository : IReviewRepository
     }
 
     // Gets a review by its ID.
+    /// <inheritdoc/>
     public async Task<Review?> GetByIdAsync(int id)
     {
         using var context = _contextFactory.CreateDbContext();

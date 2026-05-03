@@ -1,8 +1,12 @@
 namespace RentalApp.Database.Data.Repositories;
 
-// Generic repository interface for basic entity retrieval operations.
+/// <summary>
+/// Generic base repository interface providing common entity retrieval operations.
+/// </summary>
 public interface IRepository<T> where T : class
 {
-    // Gets an entity by its ID.
+    /// <summary>
+    /// Gets an entity by its unique identifier.
+    /// </summary>
     Task<T?> GetByIdAsync(int id);
 }

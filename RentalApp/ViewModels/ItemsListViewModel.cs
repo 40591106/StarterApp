@@ -33,6 +33,8 @@ public partial class ItemsListViewModel : ObservableObject
     [RelayCommand]
     private void ClearCategory() => SelectedCategory = null;
 
+    /// <summary>Gets whether a category filter is currently active.</summary>
+    /// <summary>Gets whether a category filter is currently active.</summary>
     public bool HasCategoryFilter => SelectedCategory != null;
     private ObservableCollection<Item>? _items;
     public ObservableCollection<Item> Items

@@ -5,6 +5,9 @@ using RentalApp.Database.Models;
 namespace RentalApp.Services;
 
 // Service for communicating with the shared API, handling item retrieval, creation, updates, and fetching categories and nearby items.
+/// <summary>
+/// HTTP client service for communicating with the SET09102 shared API.
+/// </summary>
 public class ApiService : IApiService
 {
     private readonly HttpClient _httpClient;
@@ -34,6 +37,7 @@ public class ApiService : IApiService
     }
 
     // Get items with optional filtering by category and search term
+    /// <inheritdoc/>
     public async Task<List<Item>> GetItemsAsync(
         string? category = null,
         string? search = null,
@@ -58,6 +62,7 @@ public class ApiService : IApiService
     }
 
     // Get a single item by ID
+    /// <inheritdoc/>
     public async Task<Item?> GetItemByIdAsync(int id)
     {
         var response = await _httpClient.GetAsync($"items/{id}");
@@ -76,6 +81,7 @@ public class ApiService : IApiService
     }
 
     // Create a new item
+    /// <inheritdoc/>
     public async Task<Item> CreateItemAsync(CreateItemRequest request)
     {
         await SetAuthHeader();
@@ -95,6 +101,7 @@ public class ApiService : IApiService
     }
 
     // Update an existing item
+    /// <inheritdoc/>
     public async Task<Item> UpdateItemAsync(int id, UpdateItemRequest request)
     {
         await SetAuthHeader();
@@ -114,6 +121,7 @@ public class ApiService : IApiService
     }
 
     // Get all categories
+    /// <inheritdoc/>
     public async Task<List<Category>> GetCategoriesAsync()
     {
         var response = await _httpClient.GetAsync("categories");
@@ -128,6 +136,7 @@ public class ApiService : IApiService
     }
 
     // Get nearby items based on location and radius
+    /// <inheritdoc/>
     public async Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radiusKm)
     {
         System.Diagnostics.Debug.WriteLine($"NEARBY URL: items/nearby?lat={lat}&lon={lon}&radius={radiusKm}");
@@ -144,6 +153,7 @@ public class ApiService : IApiService
     }
 
     // Request a new rental
+    /// <inheritdoc/>
     public async Task<Rental> RequestRentalAsync(int itemId, DateTime startDate, DateTime endDate)
     {
         await SetAuthHeader();
@@ -169,6 +179,7 @@ public class ApiService : IApiService
     }
 
     // Get incoming rentals
+    /// <inheritdoc/>
     public async Task<IEnumerable<Rental>> GetIncomingRentalsAsync()
     {
         await SetAuthHeader();
@@ -184,6 +195,7 @@ public class ApiService : IApiService
     }
 
     // Get outgoing rentals
+    /// <inheritdoc/>
     public async Task<IEnumerable<Rental>> GetOutgoingRentalsAsync()
     {
         await SetAuthHeader();
@@ -199,6 +211,7 @@ public class ApiService : IApiService
     }
 
     // Update the status of an existing rental
+    /// <inheritdoc/>
     public async Task UpdateRentalStatusAsync(int rentalId, string status)
     {
         await SetAuthHeader();
@@ -217,12 +230,14 @@ public class ApiService : IApiService
     }
 
     // Placeholder for retrieving rentals filtered by item ID, currently not supported by the API.
+    /// <inheritdoc/>
     public Task<IEnumerable<Rental>> GetByItemIdAsync(int itemId)
     {
         return Task.FromResult(Enumerable.Empty<Rental>());
     }
 
     // Create a new review
+    /// <inheritdoc/>
     public async Task<Review> CreateReviewAsync(int rentalId, int itemId, int reviewerId, string comment, int rating)
     {
         await SetAuthHeader();
@@ -243,6 +258,7 @@ public class ApiService : IApiService
     }
 
     // Get reviews for a specific item
+    /// <inheritdoc/>
     public async Task<IEnumerable<Review>> GetItemReviewsAsync(int itemId)
     {
         await SetAuthHeader();
@@ -258,6 +274,7 @@ public class ApiService : IApiService
     }
 
     // Get reviews for a specific user
+    /// <inheritdoc/>
     public async Task<IEnumerable<Review>> GetUserReviewsAsync(int userId)
     {
         await SetAuthHeader();

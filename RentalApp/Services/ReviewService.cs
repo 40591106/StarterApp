@@ -3,20 +3,24 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
-// Service for validating and submitting reviews through the review repository.
+/// <summary>
+/// Service for validating and submitting reviews through the review repository.
+/// </summary>
 public class ReviewService : IReviewService
 {
     private readonly IReviewRepository _reviewRepository;
     private readonly IItemRepository _itemRepository;
 
-    // Creates the review service with repository dependencies.
+    /// <summary>
+    /// Creates the review service with repository dependencies.
+    /// </summary>
     public ReviewService(IReviewRepository reviewRepository, IItemRepository itemRepository)
     {
         _reviewRepository = reviewRepository;
         _itemRepository = itemRepository;
     }
 
-    // Validates and submits a review for a rental item.
+    /// <inheritdoc/>
     public async Task<Review> SubmitReviewAsync(
         int rentalId,
         int itemId,
@@ -31,13 +35,13 @@ public class ReviewService : IReviewService
         return await _reviewRepository.CreateAsync(rentalId, itemId, reviewerId, comment, rating);
     }
 
-    // Retrieves reviews for a specific item.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Review>> GetItemReviewsAsync(int itemId)
     {
         return await _reviewRepository.GetByItemIdAsync(itemId);
     }
 
-    // Retrieves reviews authored by a specific user.
+    /// <inheritdoc/>
     public async Task<IEnumerable<Review>> GetUserReviewsAsync(int userId)
     {
         return await _reviewRepository.GetByUserIdAsync(userId);

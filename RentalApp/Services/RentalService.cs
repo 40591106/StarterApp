@@ -3,20 +3,24 @@ using RentalApp.Database.Models;
 
 namespace RentalApp.Services;
 
-// Service that applies rental business rules and delegates persistence to the repository.
+/// <summary>
+/// Service that applies rental business rules and delegates persistence to the repository.
+/// </summary>
 public class RentalService : IRentalService
 {
     private readonly IRentalRepository _rentalRepository;
     private readonly IItemRepository _itemRepository;
 
-    // Creates the rental service with repository dependencies.
+    /// <summary>
+    /// Creates the rental service with repository dependencies.
+    /// </summary>
     public RentalService(IRentalRepository rentalRepository, IItemRepository itemRepository)
     {
         _rentalRepository = rentalRepository;
         _itemRepository = itemRepository;
     }
 
-    // Determines whether an item can be rented for the requested date range.
+    /// <inheritdoc/>
     public async Task<bool> CanRentItemAsync(int itemId, DateTime startDate, DateTime endDate)
     {
         var startUtc = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
@@ -30,7 +34,7 @@ public class RentalService : IRentalService
         );
     }
 
-    // Requests a rental if the item is available.
+    /// <inheritdoc/>
     public async Task<Rental> RequestRentalAsync(
         int itemId,
         int borrowerId,
@@ -45,31 +49,31 @@ public class RentalService : IRentalService
         return await _rentalRepository.CreateAsync(itemId, startDate, endDate, borrowerId);
     }
 
-    // Approves a rental request.
+    /// <inheritdoc/>
     public async Task ApproveRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Approved");
     }
 
-    // Rejects a rental request.
+    /// <inheritdoc/>
     public async Task RejectRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Rejected");
     }
 
-    // Marks a rental as out for rent when it starts.
+    /// <inheritdoc/>
     public async Task MarkOutForRentAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Out for Rent");
     }
 
-    // Marks a rental as returned.
+    /// <inheritdoc/>
     public async Task ReturnRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Returned");
     }
 
-    // Advances approved rentals to out-for-rent when their start date arrives.
+    /// <inheritdoc/>
     public async Task UpdateOutForRentAsync()
     {
         var rentals = await _rentalRepository.GetAllActiveAsync();
@@ -83,13 +87,13 @@ public class RentalService : IRentalService
         }
     }
 
-    // Completes a rental and updates its status.
+    /// <inheritdoc/>
     public async Task CompleteRentalAsync(int rentalId)
     {
         await _rentalRepository.UpdateStatusAsync(rentalId, "Completed");
     }
 
-    // Sets rental status to Overdue if the end date has passed.
+    /// <inheritdoc/>
     public async Task UpdateOverdueAsync()
     {
         var rentals = await _rentalRepository.GetAllActiveAsync();

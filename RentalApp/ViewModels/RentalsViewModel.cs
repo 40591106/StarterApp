@@ -31,6 +31,8 @@ public partial class RentalsViewModel : ObservableObject
     [ObservableProperty]
     private bool _showIncoming = true;
 
+    /// <summary>Gets whether the outgoing rentals tab is active.</summary>
+    /// <summary>Gets whether the outgoing rentals tab is active.</summary>
     public bool ShowOutgoing => !ShowIncoming;
 
     public Color IncomingTabColor => ShowIncoming ? Colors.DarkBlue : Colors.Gray;

@@ -4,6 +4,9 @@ using RentalApp.Database.Models;
 namespace RentalApp.Database.Data.Repositories;
 
 // Repository implementation for item persistence using the database context.
+/// <summary>
+/// Local database implementation of IItemRepository using Entity Framework Core.
+/// </summary>
 public class ItemRepository : IItemRepository
 {
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
@@ -15,6 +18,7 @@ public class ItemRepository : IItemRepository
     }
 
     // Gets all items from the database, optionally filtering by category or search term.
+    /// <inheritdoc/>
     public async Task<List<Item>> GetAllAsync(string? category = null, string? search = null)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -35,6 +39,7 @@ public class ItemRepository : IItemRepository
     }
 
     // Gets nearby items using a spatial query and calculates each item distance.
+    /// <inheritdoc/>
     public async Task<List<Item>> GetNearbyAsync(double lat, double lon, double radiusKm)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -78,6 +83,7 @@ public class ItemRepository : IItemRepository
     }
 
     // Gets an item by ID including category and owner details.
+    /// <inheritdoc/>
     public async Task<Item?> GetByIdAsync(int id)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -104,6 +110,7 @@ public class ItemRepository : IItemRepository
     }
 
     // Gets all categories from the database.
+    /// <inheritdoc/>
     public async Task<List<Category>> GetCategoriesAsync()
     {
         using var context = _contextFactory.CreateDbContext();
@@ -111,6 +118,7 @@ public class ItemRepository : IItemRepository
     }
 
     // Creates a new item record in the database.
+    /// <inheritdoc/>
     public async Task<Item> CreateAsync(Item item)
     {
         using var context = _contextFactory.CreateDbContext();
@@ -121,6 +129,7 @@ public class ItemRepository : IItemRepository
     }
 
     // Updates an existing item record in the database.
+    /// <inheritdoc/>
     public async Task UpdateAsync(Item item)
     {
         using var context = _contextFactory.CreateDbContext();

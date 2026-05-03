@@ -36,7 +36,9 @@ public partial class ItemDetailViewModel : ObservableObject
         }
     }
 
+    /// <summary>Gets whether the current user can edit this item.</summary>
     public bool CanEdit => Item?.OwnerId == _authService.CurrentUser?.Id;
+    /// <summary>Gets whether the current user can rent this item.</summary>
     public bool CanRent => !CanEdit;
     public ICommand NavigateToEditAsyncCommand { get; }
     public ICommand NavigateToRentAsyncCommand { get; }

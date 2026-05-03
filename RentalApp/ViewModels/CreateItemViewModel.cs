@@ -55,6 +55,8 @@ public partial class CreateItemViewModel : ObservableObject
 
     [ObservableProperty]
     private bool _useMyLocation;
+    /// <summary>Gets the page title based on whether creating or editing.</summary>
+    /// <summary>Gets the page title based on whether creating or editing.</summary>
     public string PageTitle => IsNewItem ? "Create New Item" : "Edit Item";
 
     private int _itemId;
