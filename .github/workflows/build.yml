@@ -73,7 +73,7 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"40591106_StarterApp" /o:"40591106" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.scanner.scanAll=false /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"40591106_StarterApp" /o:"40591106" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.scanner.scanAll=false /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.exclusions="**/Migrations/**,**/obj/**,**/bin/**"
 
     - name: Build Test project
       run: dotnet build RentalApp.Test/RentalApp.Test.csproj --no-restore -c Debug -f net10.0
