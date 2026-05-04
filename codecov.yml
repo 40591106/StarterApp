@@ -6,17 +6,7 @@ coverage:
         threshold: 5%
 
 ignore:
-  - "RentalApp/Repositories/**"
-  - "RentalApp/Views/**"
-  - "RentalApp/Platforms/**"
-  - "RentalApp/Converters/**"
-  - "RentalApp/App.xaml.cs"
-  - "RentalApp/AppShell.xaml.cs"
-  - "RentalApp/MauiProgram.cs"
-  - "RentalApp.Database/Migrations/**"
-  - "RentalApp.Database/Models/UserRole.cs"
-  - "RentalApp.Database/Models/Role.cs"
-  - "RentalApp.Database/Models/RoleConstants.cs"
+  - "RentalApp/**"
   - "RentalApp.Migrations/**"
   - "RentalApp.Test/**"
   - "**/*.g.cs"
