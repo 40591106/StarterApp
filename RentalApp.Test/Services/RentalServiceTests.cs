@@ -10,14 +10,12 @@ namespace RentalApp.Test.Services;
 public class RentalServiceTests
 {
     private readonly Mock<IRentalRepository> _rentalRepo;
-    private readonly Mock<IItemRepository> _itemRepo;
     private readonly RentalService _service;
 
     public RentalServiceTests()
     {
         _rentalRepo = new Mock<IRentalRepository>();
-        _itemRepo = new Mock<IItemRepository>();
-        _service = new RentalService(_rentalRepo.Object, _itemRepo.Object);
+        _service = new RentalService(_rentalRepo.Object);
     }
 
     public class CanRentItemAsync : RentalServiceTests

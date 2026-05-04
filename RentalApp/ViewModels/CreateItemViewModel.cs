@@ -73,7 +73,6 @@ public partial class CreateItemViewModel : ObservableObject
     public ICommand SaveItemCommand { get; }
     public ICommand NavigateBackCommand { get; }
 
-
     /// <summary>Initializes a new instance of the CreateItemViewModel class.</summary>
 
     public CreateItemViewModel(

@@ -20,8 +20,8 @@ public class ApiReviewRepository : IReviewRepository
 
     // Submits a review through the API.
     /// <inheritdoc/>
-    public async Task<Review> CreateAsync(int rentalId, int itemId, int reviewerId, string comment, int rating)
-        => await _apiService.CreateReviewAsync(rentalId, itemId, reviewerId, comment, rating);
+    public async Task<Review> CreateAsync(int rentalId, int itemId, int userId, string comment, int rating)
+        => await _apiService.CreateReviewAsync(rentalId, itemId, userId, comment, rating);
 
     // Retrieves reviews for a specific item.
     /// <inheritdoc/>

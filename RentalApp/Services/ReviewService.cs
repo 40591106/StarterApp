@@ -9,15 +9,13 @@ namespace RentalApp.Services;
 public class ReviewService : IReviewService
 {
     private readonly IReviewRepository _reviewRepository;
-    private readonly IItemRepository _itemRepository;
 
     /// <summary>
     /// Creates the review service with repository dependencies.
     /// </summary>
-    public ReviewService(IReviewRepository reviewRepository, IItemRepository itemRepository)
+    public ReviewService(IReviewRepository reviewRepository)
     {
         _reviewRepository = reviewRepository;
-        _itemRepository = itemRepository;
     }
 
     /// <inheritdoc/>

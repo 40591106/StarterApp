@@ -9,15 +9,13 @@ namespace RentalApp.Services;
 public class RentalService : IRentalService
 {
     private readonly IRentalRepository _rentalRepository;
-    private readonly IItemRepository _itemRepository;
 
     /// <summary>
     /// Creates the rental service with repository dependencies.
     /// </summary>
-    public RentalService(IRentalRepository rentalRepository, IItemRepository itemRepository)
+    public RentalService(IRentalRepository rentalRepository)
     {
         _rentalRepository = rentalRepository;
-        _itemRepository = itemRepository;
     }
 
     /// <inheritdoc/>

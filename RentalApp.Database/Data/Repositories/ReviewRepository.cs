@@ -22,7 +22,7 @@ public class ReviewRepository : IReviewRepository
     public async Task<Review> CreateAsync(
         int rentalId,
         int itemId,
-        int reviewerId,
+        int userId,
         string comment,
         int rating
     )
@@ -40,7 +40,7 @@ public class ReviewRepository : IReviewRepository
 
             var reviewerName =
                 await context
-                    .Users.Where(u => u.Id == reviewerId)
+                    .Users.Where(u => u.Id == userId)
                     .Select(u => u.FirstName + " " + u.LastName)
                     .FirstOrDefaultAsync()
                 ?? string.Empty;
@@ -49,7 +49,7 @@ public class ReviewRepository : IReviewRepository
             {
                 ItemId = itemId,
                 ItemTitle = item.Title,
-                ReviewerId = reviewerId,
+                ReviewerId = userId,
                 ReviewerName = reviewerName,
                 RentalId = rentalId,
                 Comment = comment,

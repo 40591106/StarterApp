@@ -10,14 +10,12 @@ namespace RentalApp.Test.Services;
 public class ReviewServiceTests
 {
     private readonly Mock<IReviewRepository> _reviewRepo;
-    private readonly Mock<IItemRepository> _itemRepo;
     private readonly ReviewService _service;
 
     public ReviewServiceTests()
     {
         _reviewRepo = new Mock<IReviewRepository>();
-        _itemRepo = new Mock<IItemRepository>();
-        _service = new ReviewService(_reviewRepo.Object, _itemRepo.Object);
+        _service = new ReviewService(_reviewRepo.Object);
     }
 
     public class SubmitReviewAsync : ReviewServiceTests
