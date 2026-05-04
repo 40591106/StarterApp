@@ -56,7 +56,6 @@ public partial class CreateItemViewModel : ObservableObject
     [ObservableProperty]
     private bool _useMyLocation;
     /// <summary>Gets the page title based on whether creating or editing.</summary>
-    /// <summary>Gets the page title based on whether creating or editing.</summary>
     public string PageTitle => IsNewItem ? "Create New Item" : "Edit Item";
 
     private int _itemId;
@@ -75,7 +74,7 @@ public partial class CreateItemViewModel : ObservableObject
     public ICommand NavigateBackCommand { get; }
 
 
-    /// Initializes a new instance of the CreateItemViewModel class.
+    /// <summary>Initializes a new instance of the CreateItemViewModel class.</summary>
 
     public CreateItemViewModel(
         IItemRepository itemRepository,
@@ -155,7 +154,6 @@ public partial class CreateItemViewModel : ObservableObject
         {
             if (IsNewItem)
             {
-                System.Diagnostics.Debug.WriteLine($"SAVING LAT: {Latitude}, LON: {Longitude}");
                 var item = new Item
                 {
                     Title = Title.Trim(),

@@ -29,7 +29,6 @@ public partial class ItemDetailViewModel : ObservableObject
         get => _itemId;
         set
         {
-            System.Diagnostics.Debug.WriteLine($"ITEMID SET: {value}");
             _itemId = value;
             OnPropertyChanged();
             _ = Task.Run(LoadItemAsync);
@@ -68,20 +67,16 @@ public partial class ItemDetailViewModel : ObservableObject
     // Loads the item details asynchronously.
     private async Task LoadItemAsync()
     {
-        System.Diagnostics.Debug.WriteLine($"LOADING ITEM: {_itemId}");
         IsLoading = true;
         try
         {
             Item = await _itemRepository.GetByIdAsync(_itemId);
-            System.Diagnostics.Debug.WriteLine($"ITEM LOADED: {Item?.Title ?? "null"}");
             OnPropertyChanged(nameof(CanEdit));
             OnPropertyChanged(nameof(CanRent));
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Error loading item: {ex.Message}";
-            System.Diagnostics.Debug.WriteLine($"ITEM ERROR: {ex.Message}");
-            System.Diagnostics.Debug.WriteLine($"STACK: {ex.StackTrace}");
         }
         finally
         {
@@ -92,14 +87,12 @@ public partial class ItemDetailViewModel : ObservableObject
     // Navigates to the edit item page.
     private async Task NavigateToEditAsync()
     {
-        System.Diagnostics.Debug.WriteLine("EDIT COMMAND FIRED");
         await _navigationService.NavigateToAsync($"CreateItemPage?itemId={_itemId}");
     }
 
     // Navigates to the create rental page.
     private async Task NavigateToRentAsync()
     {
-        System.Diagnostics.Debug.WriteLine("RENT COMMAND FIRED");
         await _navigationService.NavigateToAsync(
             $"CreateRentalPage?itemId={_itemId}&dailyRate={Item!.DailyRate}"
         );

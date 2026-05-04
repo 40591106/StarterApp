@@ -76,7 +76,6 @@ public class ApiService : IApiService
             return null;
         response.EnsureSuccessStatusCode();
         var item = await response.Content.ReadFromJsonAsync<Item>();
-        System.Diagnostics.Debug.WriteLine($"AVERAGE RATING: {item?.AverageRating}, TOTAL REVIEWS: {item?.TotalReviews}");
         return item;
     }
 
@@ -139,7 +138,6 @@ public class ApiService : IApiService
     /// <inheritdoc/>
     public async Task<List<Item>> GetNearbyItemsAsync(double lat, double lon, double radiusKm)
     {
-        System.Diagnostics.Debug.WriteLine($"NEARBY URL: items/nearby?lat={lat}&lon={lon}&radius={radiusKm}");
         var response = await _httpClient.GetAsync(
             $"items/nearby?lat={lat}&lon={lon}&radius={radiusKm}");
         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)

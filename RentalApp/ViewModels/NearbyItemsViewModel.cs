@@ -56,7 +56,6 @@ public partial class NearbyItemsViewModel : ObservableObject
                 LocationStatus = string.Empty;
                 return;
             }
-            System.Diagnostics.Debug.WriteLine($"SEARCHING FROM: {location.Value.Latitude}, {location.Value.Longitude} RADIUS: {RadiusKm}");
             LocationStatus = $"Searching within {RadiusKm}km...";
             var items = await _itemRepository.GetNearbyAsync(
                 location.Value.Latitude,

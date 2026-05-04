@@ -30,9 +30,10 @@ public partial class CreateRentalViewModel : ObservableObject
     [ObservableProperty]
     private decimal _dailyRate;
 
+    /// <summary>Gets the estimated total cost based on daily rate and rental duration.</summary>
     public decimal EstimatedTotal => (decimal)(EndDate - StartDate).Days * DailyRate;
 
-    // Initializes a new instance of the CreateRentalViewModel class.
+    /// <summary>Initializes a new instance of the CreateRentalViewModel class.</summary>
     public CreateRentalViewModel(IRentalService rentalService, IAuthenticationService authService)
     {
         _RentalService = rentalService;

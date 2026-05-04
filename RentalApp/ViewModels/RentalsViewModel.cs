@@ -133,7 +133,6 @@ public partial class RentalsViewModel : ObservableObject
         var status = await Permissions.RequestAsync<Permissions.PostNotifications>();
         if (status != PermissionStatus.Granted)
         {
-            System.Diagnostics.Debug.WriteLine("Notification permission denied");
         }
     }
 

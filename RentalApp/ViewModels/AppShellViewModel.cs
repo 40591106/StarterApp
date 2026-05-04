@@ -64,8 +64,6 @@ namespace RentalApp.ViewModels
             LogoutCommand.NotifyCanExecuteChanged();
             NavigateToProfileCommand.NotifyCanExecuteChanged();
             NavigateToSettingsCommand.NotifyCanExecuteChanged();
-            Debug.WriteLine($"Authentication state changed: {isAuthenticated}");
-            Debug.WriteLine($"Current user is admin: {_authService.HasRole("Admin")}");
         }
 
         // Navigates to the current user's profile page.

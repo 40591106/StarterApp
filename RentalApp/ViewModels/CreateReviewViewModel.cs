@@ -31,7 +31,7 @@ public partial class CreateReviewViewModel : ObservableObject
     private bool _isLoading;
 
 
-    // Initializes a new instance of the CreateReviewViewModel class.
+    /// <summary>Initializes a new instance of the CreateReviewViewModel class.</summary>
     public CreateReviewViewModel(IReviewService reviewService, IAuthenticationService authService)
     {
         _reviewService = reviewService;
