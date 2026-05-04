@@ -10,8 +10,6 @@ ignore:
   - "RentalApp.Migrations/**"
   - "RentalApp.Test/**"
   - "RentalApp.Database/Migrations/**"
-  - "RentalApp.Database/Models/UserRole.cs"
-  - "RentalApp.Database/Models/Role.cs"
-  - "RentalApp.Database/Models/RoleConstants.cs"
+  - "RentalApp.Database/Models"/**
   - "**/*.g.cs"
   - "**/*.Designer.cs"
