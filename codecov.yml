@@ -17,3 +17,7 @@ ignore:
   - "RentalApp/MauiProgram.cs"
   - "RentalApp.Database/Migrations/**"
   - "RentalApp.Migrations/**"
+  - "**/*.g.cs"
+  - "**/*.Designer.cs"
+  - "**/obj/**"
+  - "**/bin/**"
