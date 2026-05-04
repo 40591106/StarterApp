@@ -45,7 +45,7 @@ public partial class LoginViewModel : BaseViewModel
         Title = "Login";
     }
 
-    // Initializes a new instance of the LoginViewModel class.
+    /// <summary>Initializes a new instance of the LoginViewModel class.</summary>
     public LoginViewModel(IAuthenticationService authService, INavigationService navigationService)
     {
         _authService = authService;

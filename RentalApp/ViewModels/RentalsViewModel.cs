@@ -38,7 +38,7 @@ public partial class RentalsViewModel : ObservableObject
     public Color IncomingTabColor => ShowIncoming ? Colors.DarkBlue : Colors.Gray;
     public Color OutgoingTabColor => !ShowIncoming ? Colors.DarkBlue : Colors.Gray;
 
-    // Initializes a new instance of the RentalsViewModel class.
+    /// <summary>Initializes a new instance of the RentalsViewModel class.</summary>
     public RentalsViewModel(
         IRentalService rentalService,
         IRentalRepository rentalRepository,

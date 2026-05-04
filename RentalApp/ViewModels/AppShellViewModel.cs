@@ -10,7 +10,7 @@ using RentalApp.Services;
 
 namespace RentalApp.ViewModels
 {
-    // View model for the application shell that manages navigation and authentication.
+    /// <summary>View model for the application shell that manages navigation and authentication.
     public partial class AppShellViewModel : BaseViewModel
     {
         /// @brief Authentication service for managing user authentication

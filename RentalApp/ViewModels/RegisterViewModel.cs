@@ -55,7 +55,7 @@ public partial class RegisterViewModel : BaseViewModel
         Title = "Register";
     }
 
-    // Initializes a new instance of the RegisterViewModel class.
+    /// <summary>Initializes a new instance of the RegisterViewModel class.</summary>
     public RegisterViewModel(
         IAuthenticationService authService,
         INavigationService navigationService

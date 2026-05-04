@@ -28,7 +28,7 @@ public partial class NearbyItemsViewModel : ObservableObject
     [ObservableProperty]
     private string _locationStatus = string.Empty;
 
-    // Initializes a new instance of the NearbyItemsViewModel class.
+    /// <summary>Initializes a new instance of the NearbyItemsViewModel class.</summary>
     public NearbyItemsViewModel(
         IItemRepository itemRepository,
         ILocationService locationService,

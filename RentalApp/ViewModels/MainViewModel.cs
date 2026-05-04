@@ -40,7 +40,7 @@ public partial class MainViewModel : BaseViewModel
         Title = "Dashboard";
     }
 
-    // Initializes a new instance of the MainViewModel class.
+    /// <summary>Initializes a new instance of the MainViewModel class.</summary>
     public MainViewModel(IAuthenticationService authService, INavigationService navigationService)
     {
         _authService = authService;

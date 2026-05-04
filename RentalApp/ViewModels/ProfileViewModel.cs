@@ -32,7 +32,7 @@ public partial class ProfileViewModel : BaseViewModel
 
     partial void OnUserIdChanged(int value) => _ = Task.Run(LoadProfileAsync);
 
-    // Initializes a new instance of the ProfileViewModel class.
+    /// <summary>Initializes a new instance of the ProfileViewModel class.</summary>
     public ProfileViewModel(
         IAuthenticationService authService,
         INavigationService navigationService,

@@ -23,7 +23,7 @@ public partial class ReviewsViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Review> _reviews = new();
 
-    // Initializes a new instance of the ReviewsViewModel class.
+    /// <summary>Initializes a new instance of the ReviewsViewModel class.</summary>
     public ReviewsViewModel(IReviewService reviewService)
     {
         _reviewService = reviewService;

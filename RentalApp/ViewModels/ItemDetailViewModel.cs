@@ -46,7 +46,7 @@ public partial class ItemDetailViewModel : ObservableObject
     public ICommand NavigateToOwnerProfileAsyncCommand { get; }
 
 
-    // Initializes a new instance of the ItemDetailViewModel class.
+    /// <summary>Initializes a new instance of the ItemDetailViewModel class.</summary>
     public ItemDetailViewModel(
         IItemRepository itemRepository,
         IAuthenticationService authService,

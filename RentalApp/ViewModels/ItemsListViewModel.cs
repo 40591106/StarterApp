@@ -47,7 +47,7 @@ public partial class ItemsListViewModel : ObservableObject
     public ICommand NavigateToDetailCommand { get; }
     public ICommand NavigateToCreateCommand { get; }
 
-    // Initializes a new instance of the ItemsListViewModel class.
+    /// <summary>Initializes a new instance of the ItemsListViewModel class.</summary>
     public ItemsListViewModel(IItemRepository itemRepository, INavigationService navigationService)
     {
         _itemRepository = itemRepository;
